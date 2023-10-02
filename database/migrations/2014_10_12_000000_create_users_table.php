@@ -15,10 +15,16 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->unsignedBigInteger('karyawan_id')->nullable();
+            $table->foreign('karyawan_id')->references('id')->on('karyawans')->onDelete('set null');
+            $table->string('kode_user')->unique();
+            $table->string('qrcode_user')->nullable();
+            $table->enum('level', ['admin', 'owner', 'staff']);
+            $table->string('cek_hapus')->nullable();
+            $table->json('menu')->nullable();
+            $table->string('password')->nullable();
+            $table->string('tanggal_awal')->nullable();
+            $table->string('tanggal_akhir')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
