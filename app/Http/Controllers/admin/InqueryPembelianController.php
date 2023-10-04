@@ -3,21 +3,32 @@
 namespace App\Http\Controllers\Admin;
 
 use Carbon\Carbon;
-use App\Models\Tipe;
+use Dompdf\Dompdf;
+use App\Models\Divisi;
+use App\Models\Golongan;
+use App\Models\Kendaraan;
+use Illuminate\Http\Request;
+use App\Models\Jenis_kendaraan;
+use App\Http\Controllers\Controller;
 use App\Models\Merek;
 use App\Models\Modelken;
-use Barryvdh\DomPDF\PDF;
-use App\Models\Kendaraan;
 use App\Models\Pelanggan;
 use App\Models\Pembelian;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
+use App\Models\Tipe;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
-class PembelianController extends Controller
+class InqueryPembelianController extends Controller
 {
     public function index()
+    {
+        $pembelians = Pembelian::paginate(4);
+        return view('admin/inquerypembelian.index', compact('pembelians'));
+    }
+
+    public function create()
     {
         $pelanggans = Pelanggan::all();
         $mereks = Merek::all();
@@ -25,7 +36,6 @@ class PembelianController extends Controller
         $tipes = Tipe::all();
         return view('admin/pembelian.create', compact('pelanggans', 'mereks', 'modelkens', 'tipes'));
     }
-
     public function store(Request $request)
     {
         $validator = Validator::make(
@@ -158,7 +168,6 @@ class PembelianController extends Controller
                 'kode_pembelian' => $this->kode(),
                 'qrcode_pembelian' => 'https:///omega.id/pembelian/' . $kode,
                 'tanggal_awal' => $tanggal,
-                'status' => 'posting',
             ]
         ));
 
@@ -194,16 +203,8 @@ class PembelianController extends Controller
                 'tanggal_awal' => $tanggal,
             ]
         ));
-
-        $pembelians = Pembelian::find($pembelian_id);
-
-        $kendaraans = Kendaraan::where('pembelian_id', $pembelians->id)->get();
-
-
-        return view('admin.pembelian.show', compact('kendaraans', 'pembelians'));
+        return redirect('admin/pembelian')->with('success', 'Berhasil menambahkan kendaraan');
     }
-
-
 
     public function kode()
     {
@@ -240,23 +241,27 @@ class PembelianController extends Controller
         $kode_kendaraan = $data . $num;
         return $kode_kendaraan;
     }
+    
     public function show($id)
     {
         $pembelians = Pembelian::where('id', $id)->first();
 
         $kendaraans = Kendaraan::where('pembelian_id', $pembelians->id)->get();
 
-        return view('admin.pembelian.show', compact('kendaraans', 'pembelians'));
+        return view('admin.inquerypembelian.show', compact('kendaraans', 'pembelians'));
     }
+
 
     public function edit($id)
     {
-        $kendaraan = Kendaraan::where('id', $id)->first();
+        $pembelian = Pembelian::where('id', $id)->first();
+        $kendaraan = Kendaraan::where('pembelian_id', $pembelian->id)->first();
         $mereks = Merek::all();
         $tipes = Tipe::all();
         $modelkens = Modelken::all();
+        $pelanggans = Pelanggan::all();
 
-        return view('admin/kendaraan.update', compact('modelkens', 'kendaraan', 'mereks', 'tipes'));
+        return view('admin/inquerypembelian.update', compact('modelkens', 'kendaraan', 'pembelian', 'mereks', 'tipes', 'pelanggans'));
     }
 
     public function update(Request $request, $id)
@@ -264,6 +269,7 @@ class PembelianController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
+                'pelanggan_id' => 'required',
                 'no_pol' => 'required',
                 'no_rangka' => 'required',
                 'no_mesin' => 'required',
@@ -273,8 +279,11 @@ class PembelianController extends Controller
                 'tipe_id' => 'required',
                 'transmisi' => 'required',
                 'km_berjalan' => 'required',
+                'harga' => 'required',
+                'vi_marketing' => 'required',
             ],
             [
+                'pelanggan_id.required' => 'Pilih pelanggan',
                 'no_pol.required' => 'Masukkan no registrasi',
                 'no_rangka.required' => 'Masukkan no rangka',
                 'no_mesin.required' => 'Masukkan no mesin',
@@ -284,6 +293,8 @@ class PembelianController extends Controller
                 'tipe_id.required' => 'Pilih tipe',
                 'transmisi.required' => 'Masukkan transmisi',
                 'km_berjalan.required' => 'Masukka km berjalan',
+                'harga.required' => 'Masukkan harga',
+                'vi_marketing.required' => 'Masukkan vi marketing',
             ]
         );
 
@@ -384,9 +395,16 @@ class PembelianController extends Controller
             $namaGambar10 = $kendaraan->gambar_dashboard;
         }
 
-        $kode = $this->kode();
+        $pembelian = Pembelian::where('id', $id)->update(
+            [
+                'pelanggan_id' => $request->pelanggan_id,
+                'harga' => $request->harga,
+                'vi_marketing' => $request->vi_marketing,
+                'status' => 'posting',
+            ]
+        );
 
-        Kendaraan::where('id', $id)->update(
+        Kendaraan::where('id', $pembelian)->update(
             [
                 'no_pol' => $request->no_pol,
                 'no_rangka' => $request->no_pol,
@@ -409,34 +427,39 @@ class PembelianController extends Controller
                 'gambar_dashboard' => $namaGambar10,
             ]
         );
-        return redirect('admin/kendaraan')->with('success', 'Berhasil memperbarui kendaraan');
+        return redirect('admin/inquery_pembelian')->with('success', 'Berhasil memperbarui pembelian');
     }
+    
 
-    public function cetakpdf($id)
+    public function unpost($id)
     {
-        $pembelians = Pembelian::find($id);
-        $kendaraans = Kendaraan::where('pembelian_id', $pembelians->id)->get();
+        $ban = Pembelian::where('id', $id)->first();
 
-        // Create an instance of PDF
-        $pdf = app('dompdf.wrapper');
+        $ban->update([
+            'status' => 'unpost'
+        ]);
 
-        // Load the view into the PDF instance
-        $pdf->loadView('admin.pembelian.cetak_pdf', compact('kendaraans', 'pembelians'));
-
-        // Set other configurations if needed
-        $pdf->setPaper('letter', 'portrait'); // Example configuration
-
-        // Return the PDF as a response
-        return $pdf->stream('Faktur_Pembelian.pdf');
+        return back()->with('success', 'Berhasil');
     }
 
+    public function posting($id)
+    {
+        $ban = Pembelian::where('id', $id)->first();
+
+        $ban->update([
+            'status' => 'posting'
+        ]);
+
+        return back()->with('success', 'Berhasil');
+    }
 
     public function destroy($id)
     {
-        $kendaraan = Kendaraan::find($id);
-        $kendaraan->merek()->delete();
-        $kendaraan->delete();
+        $ban = Pembelian::find($id);
+        $ban->detail_kendaraan()->delete();
+        $ban->delete();
 
-        return redirect('admin/kendaraan')->with('success', 'Berhasil menghapus Kendaraan');
+        return redirect('admin/inquery_pembelian')->with('success', 'Berhasil menghapus Pembelian');
     }
+
 }

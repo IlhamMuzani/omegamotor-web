@@ -103,6 +103,13 @@ class KaryawanController extends Controller
         return redirect('admin/karyawan')->with('success', 'Berhasil menambahkan karyawan');
     }
 
+    public function karyawan($id)
+    {
+        $user = Karyawan::where('id', $id)->first();
+
+        return json_decode($user);
+    }
+
     public function kode()
     {
         $id = Karyawan::getId();

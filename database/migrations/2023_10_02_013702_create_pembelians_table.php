@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('tanggal')->nullable();
             $table->string('tanggal_awal')->nullable();
             $table->string('tanggal_akhir')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

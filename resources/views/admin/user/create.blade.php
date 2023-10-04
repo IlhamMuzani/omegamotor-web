@@ -44,17 +44,16 @@
         <form action="{{ url('admin/user') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
             @csrf
             <div class="card-body">
-                {{-- <div class="form-group">
-                            <label for="">Pilih Kode Karyawan</label>
-                            <select class="custom-select form-control" id="kode_karyawan" name="karyawan_id"
-                                onchange="getData(0)">
-                                <option value="">- Pilih -</option>
-                                @foreach ($karyawans as $karyawan)
-                                    <option value="{{ $karyawan->id }}">{{ $karyawan->kode_karyawan }}</option>
-                                @endforeach
-                            </select>
-                        </div> --}}
-                <div class="form-group" style="flex: 8;"> <!-- Adjusted flex value -->
+                <div class="form-group">
+                    <label for="">Pilih Kode Karyawan</label>
+                    <select class="custom-select form-control" id="kode_karyawan" name="karyawan_id" onchange="getData(0)">
+                        <option value="">- Pilih -</option>
+                        @foreach ($karyawans as $karyawan)
+                            <option value="{{ $karyawan->id }}">{{ $karyawan->kode_karyawan }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                {{-- <div class="form-group" style="flex: 8;"> <!-- Adjusted flex value -->
                     <label for="karyawan_id">Pilih Kode Karyawan</label>
                     <select class="select2bs4 select2-hidden-accessible" name="karyawan_id"
                         data-placeholder="Cari Karyawan.." style="width: 100%;" data-select2-id="23" tabindex="-1"
@@ -66,7 +65,7 @@
                             </option>
                         @endforeach
                     </select>
-                </div>
+                </div> --}}
                 <div class="form-group">
                     <label for="nama_lengkap">Nama lengkap</label>
                     <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" readonly placeholder=""
@@ -92,24 +91,26 @@
         </form>
     </div>
 
-    <script>
-        function getData(id) {
-            var kode_karyawan = document.getElementById('kode_karyawan');
-            $.ajax({
-                url: "{{ url('admin/user/karyawan') }}" + "/" + kode_karyawan.value,
-                type: "GET",
-                dataType: "json",
-                success: function(kode_karyawan) {
-                    var nama_lengkap = document.getElementById('nama_lengkap');
-                    nama_lengkap.value = kode_karyawan.nama_lengkap;
 
-                    var no_ktp = document.getElementById('no_ktp');
-                    no_ktp.value = kode_karyawan.no_ktp;
-
-                    var alamat = document.getElementById('alamat');
-                    alamat.value = kode_karyawan.alamat;
-                },  
-            });
-        }
-    </script>
 @endsection
+
+<script>
+    function getData(id) {
+        var kode_karyawan = document.getElementById('kode_karyawan');
+        $.ajax({
+            url: "{{ url('admin/user/karyawan') }}" + "/" + kode_karyawan.value,
+            type: "GET",
+            dataType: "json",
+            success: function(kode_karyawan) {
+                var nama_lengkap = document.getElementById('nama_lengkap');
+                nama_lengkap.value = kode_karyawan.nama_lengkap;
+
+                var no_ktp = document.getElementById('no_ktp');
+                no_ktp.value = kode_karyawan.no_ktp;
+
+                var alamat = document.getElementById('alamat');
+                alamat.value = kode_karyawan.alamat;
+            },
+        });
+    }
+</script>

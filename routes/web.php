@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,4 +36,10 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::resource('modelken', \App\Http\Controllers\Admin\ModelkenController::class);
     Route::resource('tipe', \App\Http\Controllers\Admin\TipeController::class);
     Route::resource('pembelian', \App\Http\Controllers\Admin\PembelianController::class);
+    Route::resource('inquery_pembelian', \App\Http\Controllers\Admin\InqueryPembelianController::class);
+    Route::get('user/karyawan/{id}', [\App\Http\Controllers\Admin\KaryawanController::class, 'karyawan']);
+    Route::get('unpost/{id}', [\App\Http\Controllers\Admin\InqueryPembelianController::class, 'unpost'])->name('unpost');
+    Route::get('posting/{id}', [\App\Http\Controllers\Admin\InqueryPembelianController::class, 'posting'])->name('posting');
+    Route::get('pembelian/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PembelianController::class, 'cetakpdf']);
+
 });

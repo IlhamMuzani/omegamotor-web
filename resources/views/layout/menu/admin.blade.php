@@ -154,7 +154,16 @@
                             </a>
                             <!-- more inner pages-->
                         </li>
-                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('admin/inquery_pembelian') }}" aria-expanded="false">
+                                <div class="d-flex align-items-center">
+                                    <span class="nav-link-text ps-1">
+                                        <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                                        Inquery Pembelian</span>
+                                </div>
+                            </a>
+                            <!-- more inner pages-->
+                        </li>
                     </ul>
                 </li>
             </ul>

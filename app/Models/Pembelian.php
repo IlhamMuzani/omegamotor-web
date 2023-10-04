@@ -15,11 +15,22 @@ class Pembelian extends Model
         'pelanggan_id',
         'harga',
         'vi_marketing',
+        'status',
         'tanggal',
         'tanggal_awal',
         'tanggal_akhir',
     ];
 
+    public function pelanggan()
+    {
+        return $this->belongsTo(Pelanggan::class);
+    }
+
+    public function detail_kendaraan()
+    {
+        return $this->hasMany(Kendaraan::class);
+    }
+    
     public static function getId()
     {
         return $getId = DB::table('pembelians')->orderBy('id', 'DESC')->take(1)->get();
