@@ -68,9 +68,14 @@
                                             aria-label="Close"></button>
                                     </div>
                                 @endif
-                                <div class="card-header bg-circle-shape bg-shape text-center p-2"><a
-                                        class="font-sans-serif fw-bolder fs-4 z-index-1 position-relative link-light light"
-                                        href="">OMEGA MOTOR</a></div>
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <a class="font-sans-serif fw-bolder fs-4 z-index-1 position-relative link-light light mt-4"
+                                        href="">
+                                        <img src="{{ asset('storage/uploads/gambaricon/omega.png') }}"
+                                            alt="AdminLTELogo" height="40" width="200">
+                                    </a>
+                                </div>
+
                                 <div class="card-body p-4">
                                     <div class="row flex-between-center mb-3">
                                         <div class="col-auto">

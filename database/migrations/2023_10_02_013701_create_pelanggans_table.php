@@ -24,6 +24,9 @@ return new class extends Migration
             $table->string('umur')->nullable();
             $table->string('gambar_ktp')->nullable();
             $table->string('telp')->nullable();
+            $table->string('email')->nullable();
+            $table->string('ig')->nullable();
+            $table->string('fb')->nullable();
             $table->string('tanggal_awal')->nullable();
             $table->string('tanggal_akhir')->nullable();
             $table->timestamps();

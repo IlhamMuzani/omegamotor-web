@@ -9,7 +9,11 @@ use App\Models\Ukuran;
 use App\Models\Kendaraan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Modelken;
+use App\Models\Tipe;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
+use Mockery\Matcher\Type;
 
 class MerekController extends Controller
 {
@@ -22,7 +26,9 @@ class MerekController extends Controller
 
     public function create()
     {
-        return view('admin/merek.create');
+        $modelkens = Modelken::all();
+        $tipes = Tipe::all();
+        return view('admin/merek.create', compact('modelkens', 'tipes'));
     }
 
     public function store(Request $request)
@@ -31,9 +37,13 @@ class MerekController extends Controller
             $request->all(),
             [
                 'nama_merek' => 'required',
+                'modelken_id' => 'required',
+                'tipe_id' => 'required',
             ],
             [
                 'nama_merek.required' => 'Masukkan nama merek',
+                'modelken_id.required' => 'Pilih model',
+                'tipe_id.required' => 'Pilih tipe',
             ]
         );
 
@@ -77,18 +87,27 @@ class MerekController extends Controller
     public function edit($id)
     {
 
-            $merek = Merek::where('id', $id)->first();
-            return view('admin/merek.update', compact('merek'));
-      
+        $merek = Merek::where('id', $id)->first();
+        $modelkens = Modelken::all();
+        $tipes = Tipe::all();
+        return view('admin/merek.update', compact('merek', 'modelkens', 'tipes'));
     }
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'nama_merek' => 'required',
-        ], [
-            'nama_merek.required' => 'Nama Merek tidak boleh Kosong',
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'nama_merek' => 'required',
+                'modelken_id' => 'required',
+                'tipe_id' => 'required',
+            ],
+            [
+                'nama_merek.required' => 'Masukkan nama merek',
+                'modelken_id.required' => 'Pilih model',
+                'tipe_id.required' => 'Pilih tipe',
+            ]
+        );
 
         if ($validator->fails()) {
             $error = $validator->errors()->all();
@@ -97,6 +116,8 @@ class MerekController extends Controller
 
         Merek::where('id', $id)->update([
             'nama_merek' => $request->nama_merek,
+            'modelken_id' => $request->modelken_id,
+            'tipe_id' => $request->tipe_id,
         ]);
 
         return redirect('admin/merek')->with('success', 'Berhasil memperbarui Merek');

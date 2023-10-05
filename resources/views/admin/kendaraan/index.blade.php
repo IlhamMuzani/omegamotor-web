@@ -41,6 +41,7 @@
                             <th class="text-center">No</th>
                             <th>Kode</th>
                             <th>No Registrasi</th>
+                            <th>Merek</th>
                             <th class="text-center">Qr Code</th>
                             <th class="text-center" width="120">Opsi</th>
                         </tr>
@@ -51,6 +52,7 @@
                                 <td class="text-center">{{ $loop->iteration }}</td>
                                 <td>{{ $kendaraan->kode_kendaraan }}</td>
                                 <td>{{ $kendaraan->no_pol }}</td>
+                                <td>{{ $kendaraan->merek->nama_merek }}</td>
                                 <td data-bs-toggle="modal" data-bs-target="#modal-qrcode-{{ $kendaraan->id }}"
                                     style="text-align: center;">
                                     <div style="display: inline-block;">

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Faktur Pembelian</title>
+    <title>Faktur Penjualan</title>
     <style>
         .b {
             border: 1px solid black;
@@ -188,25 +188,25 @@
                 <div class="info-catatan" style="max-width: 230px;">
                     <table>
                         <tr>
-                            <td class="info-catatan2">Nama Supplier</td>
+                            <td class="info-catatan2">Nama Pembeli</td>
                             <td class="info-item">:</td>
-                            <td class="info-text info-left">{{ $pembelians->pelanggan->nama_pelanggan }}</td>
+                            <td class="info-text info-left">{{ $penjualans->pelanggan->nama_pelanggan }}</td>
                         </tr>
                         <tr>
                             <td class="info-catatan2">Alamat</td>
                             <td class="info-item">:</td>
-                            <td class="info-text info-left">{{ $pembelians->pelanggan->alamat }}</td>
+                            <td class="info-text info-left">{{ $penjualans->pelanggan->alamat }}</td>
                         </tr>
                         <tr>
                             <td class="info-catatan2">Telp / HP</td>
                             <td class="info-item">:</td>
-                            <td class="info-text info-left">{{ $pembelians->pelanggan->telp }}
+                            <td class="info-text info-left">{{ $penjualans->pelanggan->telp }}
                             </td>
                         </tr>
                         <tr>
-                            <td class="info-catatan2">ID Supplier</td>
+                            <td class="info-catatan2">ID Pembeli</td>
                             <td class="info-item">:</td>
-                            <td class="info-text info-left">{{ $pembelians->pelanggan->kode_pelanggan }}</td>
+                            <td class="info-text info-left">{{ $penjualans->pelanggan->kode_pelanggan }}</td>
                         </tr>
                     </table>
                 </div>
@@ -215,7 +215,7 @@
     </table>
 
     <div style="font-weight: bold; text-align: center;">
-        <span style="font-weight: bold; font-size: 20px;">FAKTUR PEMBELIAN</span>
+        <span style="font-weight: bold; font-size: 20px;">FAKTUR PENJUALAN</span>
         <br>
     </div>
 
@@ -263,11 +263,11 @@
         <tr>
             <td>
                 <span class="info-item" style="font-size: 13px; padding-left: 5px;">No. Faktur:
-                    {{ $pembelians->kode_pembelian }}</span>
+                    {{ $penjualans->kode_penjualan }}</span>
                 <br>
             </td>
             <td style="text-align: right; padding-right: 45px;">
-                <span class="info-item" style="font-size: 13px;">Tanggal:{{ $pembelians->tanggal_awal }}</span>
+                <span class="info-item" style="font-size: 13px;">Tanggal:{{ $penjualans->tanggal_awal }}</span>
                 <br>
             </td>
         </tr>
@@ -287,30 +287,30 @@
             <td colspan="7" style="padding: 0px;"></td>
         </tr>
         @php
-            $totalHarga = $pembelians->harga + $pembelians->vi_marketing;
+            $totalHarga = $penjualans->harga + $penjualans->vi_marketing;
         @endphp
-        @foreach ($kendaraans as $item)
+        {{-- @foreach ($kendaraans as $item) --}}
             <tr>
-                <td class="td" style="text-align: center;  font-size: 13px;">{{ $loop->iteration }}
+                <td class="td" style="text-align: center;  font-size: 13px;">1
                 </td>
-                <td class="td" style="text-align: center;  font-size: 13px;">{{ $item->kode_kendaraan }}</td>
+                <td class="td" style="text-align: center;  font-size: 13px;">{{ $penjualans->kendaraan->kode_kendaraan }}</td>
                 <td class="info-text info-left" style="font-size: 13px; text-align: center;">
-                    {{ $item->no_pol }}
+                    {{ $penjualans->kendaraan->no_pol }}
                 </td>
                  <td class="info-text info-left" style="font-size: 13px; text-align: center;">
-                    {{ $item->merek->nama_merek }}
+                    {{ $penjualans->kendaraan->merek->nama_merek }}
                 </td>
                 <td class="td" style="text-align: center; font-size: 13px;">
-                    {{ $pembelians->harga }}
+                    {{ $penjualans->harga }}
                 </td>
                 <td class="td" style="text-align: center;  font-size: 13px;">
-                    {{ $pembelians->vi_marketing }}
+                    {{ $penjualans->vi_marketing }}
                 </td>
                 <td class="td" style="text-align: center;  font-size: 13px;">Rp.
                     {{ number_format($totalHarga, 0, ',', '.') }}</td>
                 </td>
             </tr>
-        @endforeach
+        {{-- @endforeach --}}
         <tr style="border-bottom: 1px solid black;">
             <td colspan="6" style="padding: 0px;"></td>
         </tr>
@@ -348,7 +348,7 @@
                         <td class="separator" colspan="2"><span></span></td>
                     </tr>
                     <tr style="text-align: center;">
-                        <td class="label">Pembelian</td>
+                        <td class="label">Penjualan</td>
                     </tr>
                 </table>
             </td>

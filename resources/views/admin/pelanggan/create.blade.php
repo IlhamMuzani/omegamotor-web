@@ -44,26 +44,26 @@
         <form action="{{ url('admin/pelanggan') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
             @csrf
             <div class="card-body">
-                <div class="form-group">
+                <div class="form-group  mb-3">
                     <label for="nama_pelanggan">Nama Pelanggan</label>
                     <input type="text" class="form-control" id="nama_pelanggan" name="nama_pelanggan"
                         placeholder="Masukan nama pelanggan" value="{{ old('nama_pelanggan') }}">
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-3">
                     <label for="nama">Nama Alias</label>
                     <input type="text" class="form-control" id="nama_alias" name="nama_alias"
                         placeholder="Masukan nama alias" value="{{ old('nama_alias') }}">
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-3">
                     <label for="umur">Umur</label>
-                    <input type="text" class="form-control" id="umur" name="umur" placeholder="Masukan umur"
+                    <input type="number" class="form-control" id="umur" name="umur" placeholder="Masukan umur"
                         value="{{ old('umur') }}">
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-3">
                     <label for="alamat">Alamat</label>
                     <textarea type="text" class="form-control" id="alamat" name="alamat" placeholder="Masukan alamat">{{ old('alamat') }}</textarea>
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-3">
                     <label for="telp">No. Telepon</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -73,8 +73,23 @@
                             placeholder="Masukan nomor telepon" value="{{ old('telp') }}">
                     </div>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label" for="jk">Jenis Kelamin *</label>
+                <div class="form-group mb-3">
+                    <label for="email">Email</label>
+                    <input type="text" class="form-control" id="email" name="email" placeholder="Masukan email"
+                        value="{{ old('email') }}">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="ig">Instagram</label>
+                    <input type="text" class="form-control" id="ig" name="ig" placeholder="Masukan ig"
+                        value="{{ old('ig') }}">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="fb">Facebook</label>
+                    <input type="text" class="form-control" id="fb" name="fb" placeholder="Masukan fb"
+                        value="{{ old('fb') }}">
+                </div>
+                <div class="mb-3 mb-3">
+                    <label class="form-label" for="jk">Jenis Kelamin</label>
                     <select class="form-control" id="gender" name="gender">
                         <option value="">- Pilih -</option>
                         <option value="Laki-laki" {{ old('gender') == 'Laki-laki' ? 'selected' : null }}>
@@ -83,10 +98,10 @@
                             Perempuan</option>
                     </select>
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-3">
                     <label for="gambar_ktp">Foto KTP</label>
-                    <input class="form-control @error('gambar_ktp') is-invalid @enderror" id="gambar_ktp" name="gambar_ktp"
-                        type="file" accept="image/*" />
+                    <input class="form-control @error('gambar_ktp') is-invalid @enderror" id="gambar_ktp"
+                        name="gambar_ktp" type="file" accept="image/*" />
                     @error('gambar_ktp')
                         <span class="invalid-feedback" role="alert">{{ $message }}</span>
                     @enderror

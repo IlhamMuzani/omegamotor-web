@@ -15,7 +15,10 @@ return new class extends Migration
     {
         Schema::create('kendaraans', function (Blueprint $table) {
             $table->id();
-            $table->string('pembelian_id')->nullable();
+            $table->foreign('pembelian_id')->references('id')->on('pembelians')->onDelete('set null');
+            $table->unsignedBigInteger('pembelian_id')->nullable();
+            // $table->foreign('penjualan_id')->references('id')->on('penjualans')->onDelete('set null');
+            // $table->unsignedBigInteger('penjualan_id')->nullable();
             $table->string('kode_kendaraan')->nullable();
             $table->string('qrcode_kendaraan')->nullable();
             $table->string('no_pol')->nullable();
@@ -40,6 +43,7 @@ return new class extends Migration
             $table->string('gambar_kanan')->nullable();
             $table->string('gambar_kiri')->nullable();
             $table->string('gambar_dashboard')->nullable();
+            $table->string('gambar_interior')->nullable();
             $table->string('tanggal_awal')->nullable();
             $table->string('tanggal_akhir')->nullable();
             $table->timestamps();

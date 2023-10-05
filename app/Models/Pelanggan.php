@@ -21,10 +21,18 @@ class Pelanggan extends Model
         'Laki-laki',
         'umur',
         'nama_alias',
+        'email',
+        'ig',
+        'fb',
         'gambar_ktp',
         'tanggal_awal',
         'tanggal_akhir',
     ];
+
+    public function penjualan()
+    {
+        return $this->hasMany(Penjualan::class);
+    }
 
     public static function getId()
     {

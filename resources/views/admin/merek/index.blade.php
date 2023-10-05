@@ -40,7 +40,9 @@
                         <tr>
                             <th class="text-center">No</th>
                             <th>Kode Merek</th>
-                            <th>Nama</th>
+                            <th>Merek</th>
+                            <th>Model</th>
+                            <th>Type</th>
                             <th class="text-center">Qr Code</th>
                             <th class="text-center" width="120">Opsi</th>
                         </tr>
@@ -51,6 +53,8 @@
                                 <td class="text-center">{{ $loop->iteration }}</td>
                                 <td>{{ $merek->kode_merek }}</td>
                                 <td>{{ $merek->nama_merek }}</td>
+                                <td>{{ $merek->tipe->nama_tipe }}</td>
+                                <td>{{ $merek->modelken->nama_model }}</td>
                                 <td data-bs-toggle="modal" data-bs-target="#modal-qrcode-{{ $merek->id }}"
                                     style="text-align: center;">
                                     <div style="display: inline-block;">

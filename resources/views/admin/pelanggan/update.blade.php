@@ -47,7 +47,8 @@
                 <div class="form-group">
                     <label for="nama_pelanggan">Nama Pelanggan</label>
                     <input type="text" class="form-control" id="nama_pelanggan" name="nama_pelanggan"
-                        placeholder="Masukan nama pelanggan" value="{{ old('nama_pelanggan', $pelanggan->nama_pelanggan) }}">
+                        placeholder="Masukan nama pelanggan"
+                        value="{{ old('nama_pelanggan', $pelanggan->nama_pelanggan) }}">
                 </div>
                 <div class="form-group">
                     <label for="nama">Nama Alias</label>
@@ -73,21 +74,38 @@
                             placeholder="Masukan nomor telepon" value="{{ old('telp', $pelanggan->telp) }}">
                     </div>
                 </div>
+                <div class="form-group mb-3">
+                    <label for="email">Email</label>
+                    <input type="text" class="form-control" id="email" name="email" placeholder="Masukan email"
+                        value="{{ old('email', $pelanggan->email) }}">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="ig">Instagram</label>
+                    <input type="text" class="form-control" id="ig" name="ig" placeholder="Masukan ig"
+                        value="{{ old('ig', $pelanggan->ig) }}">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="fb">Facebook</label>
+                    <input type="text" class="form-control" id="fb" name="fb" placeholder="Masukan fb"
+                        value="{{ old('fb', $pelanggan->fb) }}">
+                </div>
                 <div class="mb-3">
                     <label class="form-label" for="jk">Jenis Kelamin *</label>
-                   <select class="form-control" id="gender" name="gender">
+                    <select class="form-control" id="gender" name="gender">
                         <option value="">- Pilih -</option>
-                        <option value="Laki-laki" {{ old('gender', $pelanggan->gender) == 'Laki-laki' ? 'selected' : null }}>
+                        <option value="Laki-laki"
+                            {{ old('gender', $pelanggan->gender) == 'Laki-laki' ? 'selected' : null }}>
                             Laki-laki</option>
-                        <option value="Perempuan" {{ old('gender', $pelanggan->gender) == 'Perempuan' ? 'selected' : null }}>
+                        <option value="Perempuan"
+                            {{ old('gender', $pelanggan->gender) == 'Perempuan' ? 'selected' : null }}>
                             Perempuan</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="gambar_ktp">Gambar <small>(Kosongkan saja jika tidak
                             ingin menambahkan)</small></label>
-                    <input class="form-control @error('gambar_ktp') is-invalid @enderror" id="gambar_ktp" name="gambar_ktp"
-                        type="file" accept="image/*" />
+                    <input class="form-control @error('gambar_ktp') is-invalid @enderror" id="gambar_ktp"
+                        name="gambar_ktp" type="file" accept="image/*" />
                     @error('gambar_ktp')
                         <span class="invalid-feedback" role="alert">{{ $message }}</span>
                     @enderror

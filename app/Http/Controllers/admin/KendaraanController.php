@@ -44,8 +44,6 @@ class KendaraanController extends Controller
                 'no_mesin' => 'required',
                 'warna' => 'required',
                 'merek_id' => 'required',
-                'modelken_id' => 'required',
-                'tipe_id' => 'required',
                 'transmisi' => 'required',
                 'km_berjalan' => 'required',
             ],
@@ -54,8 +52,6 @@ class KendaraanController extends Controller
                 'no_rangka.required' => 'Masukkan no rangka',
                 'no_mesin.required' => 'Masukkan no mesin',
                 'warna.required' => 'Masukkan warna',
-                'merek_id.required' => 'Pilih merek',
-                'modelken_id.required' => 'Pilih model',
                 'tipe_id.required' => 'Pilih tipe',
                 'transmisi.required' => 'Masukkan transmisi',
                 'km_berjalan.required' => 'Masukka km berjalan',
@@ -148,6 +144,15 @@ class KendaraanController extends Controller
             $namaGambar10 = null;
         }
 
+        if ($request->gambar_interior) {
+            $gambar = str_replace(' ', '', $request->gambar_interior->getClientOriginalName());
+            $namaGambar11 = 'gambar_interior/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
+            $request->gambar_interior->storeAs('public/uploads/', $namaGambar10);
+        } else {
+            $namaGambar11 = null;
+        }
+
+
         $kode = $this->kode();
 
         $tanggal = Carbon::now()->format('Y-m-d');
@@ -164,6 +169,7 @@ class KendaraanController extends Controller
                 'gambar_kanan' => $namaGambar8,
                 'gambar_kiri' => $namaGambar9,
                 'gambar_dashboard' => $namaGambar10,
+                'gambar_interior' => $namaGambar11,
                 'kode_kendaraan' => $this->kode(),
                 'qrcode_kendaraan' => 'https:///omega.id/kendaraan/' . $kode,
                 'tanggal_awal' => $tanggal,
@@ -381,5 +387,58 @@ class KendaraanController extends Controller
         $kendaraan->delete();
 
         return redirect('admin/kendaraan')->with('success', 'Berhasil menghapus Kendaraan');
+    }
+
+    public function merek(Request $request)
+    {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'nama_merek' => 'required',
+                'modelken_id' => 'required',
+                'tipe_id' => 'required',
+            ],
+            [
+                'nama_merek.required' => 'Masukkan nama merek',
+                'modelken_id.required' => 'Pilih model',
+                'tipe_id.required' => 'Pilih tipe',
+            ]
+        );
+
+        if ($validator->fails()) {
+            $error = $validator->errors()->all();
+            return back()->withInput()->with('error', $error);
+        }
+
+        $kode = $this->kodemerek();
+
+        Merek::create(array_merge(
+            $request->all(),
+            [
+                'kode_merek' => $this->kodemerek(),
+                'qrcode_merek' => 'https://omegamotor.id/merek/' . $kode,
+                'tanggal_awal' => Carbon::now('Asia/Jakarta'),
+            ],
+        ));
+
+        return back()->with('success', 'Berhasil menambahkan merek');
+    }
+
+    public function kodemerek()
+    {
+        $merek = Merek::all();
+        if ($merek->isEmpty()) {
+            $num = "000001";
+        } else {
+            $id = Merek::getId();
+            foreach ($id as $value);
+            $idlm = $value->id;
+            $idbr = $idlm + 1;
+            $num = sprintf("%06s", $idbr);
+        }
+
+        $data = 'AD';
+        $kode_merek = $data . $num;
+        return $kode_merek;
     }
 }

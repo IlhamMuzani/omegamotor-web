@@ -195,6 +195,7 @@
             <td class="td" style="text-align: center; padding: 0px;">No.</td>
             <td class="td" style="text-align: center; padding: 2px;">Kode Kendaraan</td>
             <td class="td" style="text-align: center; padding: 2px;">No. Registrasi</td>
+            <td class="td" style="text-align: center; padding: 2px;">Merek</td>
             <td class="td" style="text-align: center; padding: 2px;">Harga</td>
             <td class="td" style="text-align: center; padding: 2px;">Vi Marketing</td>
             <td class="td" style="text-align: center; padding: 2px;">Total</td>
@@ -211,6 +212,7 @@
                 <td class="td" style="text-align: center; padding: 0px;">{{ $loop->iteration }}</td>
                 <td class="td" style="text-align: center; padding: 2px;">{{ $item->kode_kendaraan }}</td>
                 <td class="td" style="text-align: center; padding: 2px;">{{ $item->no_pol }}</td>
+                <td class="td" style="text-align: center; padding: 2px;">{{ $item->merek->nama_merek }}</td>
                 <td class="td" style="text-align: center; padding: 2px;">{{ $pembelians->harga }}</td>
                 <td class="td" style="text-align: center; padding: 2px;">{{ $pembelians->vi_marketing }}</td>
                 <td class="td" style="text-align: center; padding: 2px;">Rp

@@ -51,7 +51,7 @@ class ModelkenController extends Controller
             ],
         ));
 
-        return redirect('admin/modelken')->with('success', 'Berhasil menambahkan model');
+        return back()->with('success', 'Berhasil menambahkan model');
     }
 
     public function kode()

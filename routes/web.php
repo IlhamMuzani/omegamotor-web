@@ -37,9 +37,16 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::resource('tipe', \App\Http\Controllers\Admin\TipeController::class);
     Route::resource('pembelian', \App\Http\Controllers\Admin\PembelianController::class);
     Route::resource('inquery_pembelian', \App\Http\Controllers\Admin\InqueryPembelianController::class);
+    Route::resource('penjualan', \App\Http\Controllers\Admin\PenjualanController::class);
+    Route::resource('inquery_penjualan', \App\Http\Controllers\Admin\InqueryPenjualanController::class);
     Route::get('user/karyawan/{id}', [\App\Http\Controllers\Admin\KaryawanController::class, 'karyawan']);
     Route::get('unpost/{id}', [\App\Http\Controllers\Admin\InqueryPembelianController::class, 'unpost'])->name('unpost');
     Route::get('posting/{id}', [\App\Http\Controllers\Admin\InqueryPembelianController::class, 'posting'])->name('posting');
     Route::get('pembelian/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PembelianController::class, 'cetakpdf']);
+    Route::get('penjualan/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PenjualanController::class, 'cetakpdf']);
+    Route::post('mereks', [\App\Http\Controllers\Admin\KendaraanController::class, 'merek']);
+    Route::post('pelanggans', [\App\Http\Controllers\Admin\PembelianController::class, 'pelanggan']);
+    Route::get('unpostpenjualan/{id}', [\App\Http\Controllers\Admin\InqueryPenjualanController::class, 'unpostpenjualan'])->name('unpostpenjualan');
+    Route::get('postingpenjualan/{id}', [\App\Http\Controllers\Admin\InqueryPenjualanController::class, 'postingpenjualan'])->name('postingpenjualan');
 
 });

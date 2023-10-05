@@ -7,8 +7,10 @@
                 aria-label="Toggle Navigation"><span class="navbar-toggle-icon"><span
                         class="toggle-line"></span></span></button>
         </div><a class="navbar-brand" href="index.html">
-            <div class="d-flex align-items-center py-3"><span class="font-sans-serif" style="font-size: 20px;">OMEGA
-                    MOTOR</span>
+            <div class="d-flex align-items-center py-3"><span class="font-sans-serif" style="font-size: 20px;">
+                    <img class="" src="{{ asset('storage/uploads/gambaricon/omegapolos.png') }}" alt="AdminLTELogo"
+                        height="37" width="160">
+                </span>
             </div>
         </a>
     </div>
@@ -94,7 +96,7 @@
                             </a>
                             <!-- more inner pages-->
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="{{ url('admin/modelken') }}"
+                        {{-- <li class="nav-item"><a class="nav-link" href="{{ url('admin/modelken') }}"
                                 aria-expanded="false">
                                 <div class="d-flex align-items-center"><span class="nav-link-text ps-1">
                                         <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
@@ -110,7 +112,7 @@
                                 </div>
                             </a>
                             <!-- more inner pages-->
-                        </li>
+                        </li> --}}
                         <li class="nav-item"><a class="nav-link" href="{{ url('admin/kendaraan') }}"
                                 aria-expanded="false">
                                 <div class="d-flex align-items-center"><span class="nav-link-text ps-1">
@@ -155,11 +157,31 @@
                             <!-- more inner pages-->
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="{{ url('admin/penjualan') }}" aria-expanded="false">
+                                <div class="d-flex align-items-center">
+                                    <span class="nav-link-text ps-1">
+                                        <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                                        Penjualan Kendaraan</span>
+                                </div>
+                            </a>
+                            <!-- more inner pages-->
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{{ url('admin/inquery_pembelian') }}" aria-expanded="false">
                                 <div class="d-flex align-items-center">
                                     <span class="nav-link-text ps-1">
                                         <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                                         Inquery Pembelian</span>
+                                </div>
+                            </a>
+                            <!-- more inner pages-->
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('admin/inquery_penjualan') }}" aria-expanded="false">
+                                <div class="d-flex align-items-center">
+                                    <span class="nav-link-text ps-1">
+                                        <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                                        Inquery Penjualan</span>
                                 </div>
                             </a>
                             <!-- more inner pages-->

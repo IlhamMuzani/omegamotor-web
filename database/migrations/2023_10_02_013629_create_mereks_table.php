@@ -17,6 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('kode_merek')->unique();
             $table->string('nama_merek')->nullable();
+            $table->unsignedBigInteger('modelken_id')->nullable();
+            $table->foreign('modelken_id')->references('id')->on('modelkens')->onDelete('set null');
+            $table->unsignedBigInteger('tipe_id')->nullable();
+            $table->foreign('tipe_id')->references('id')->on('tipes')->onDelete('set null');
             $table->string('qrcode_merek')->nullable();
             $table->string('tanggal_awal')->nullable();
             $table->string('tanggal_akhir')->nullable();

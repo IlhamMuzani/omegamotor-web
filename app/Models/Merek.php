@@ -12,11 +12,25 @@ class Merek extends Model
 
     protected $fillable = [
         'kode_merek',
+        'modelken_id',
+        'tipe_id',
         'nama_merek',
         'qrcode_merek',
         'tanggal_awal',
         'tanggal_akhir',
     ];
+
+    public function modelken()
+    {
+        return $this->belongsTo(Modelken::class);
+    }
+
+
+    public function tipe()
+    {
+        return $this->belongsTo(Tipe::class);
+    }
+
 
     public static function getId()
     {

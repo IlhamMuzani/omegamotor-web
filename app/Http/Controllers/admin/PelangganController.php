@@ -97,7 +97,7 @@ class PelangganController extends Controller
         $kode_pelanggan = $data . $num;
         return $kode_pelanggan;
     }
-    
+
     public function edit($id)
     {
 
@@ -105,13 +105,54 @@ class PelangganController extends Controller
         return view('admin/pelanggan.update', compact('pelanggan'));
     }
 
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(),
+            [
+                'nama_pelanggan' => 'required',
+                'nama_alias' => 'required',
+                'gender' => 'required',
+                'umur' => 'required',
+                'telp' => 'required',
+                'alamat' => 'required',
+                // 'gambar_ktp' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
+            ],
+            [
+                'nama_pelanggan.required' => 'Masukkan nama lengkap',
+                'nama_alias.required' => 'Masukkan nama alias',
+                'gender.required' => 'Pilih gender',
+                'umur.required' => 'Masukkan umur',
+                'telp.required' => 'Masukkan no telepon',
+                'alamat.required' => 'Masukkan alamat',
+                // 'gambar_ktp.image' => 'Gambar yang dimasukan salah!',
+            ]);
+
+        if ($validator->fails()) {
+            $error = $validator->errors()->all();
+            return back()->withInput()->with('error', $error);
+        }
+
+        Departemen::where('id', $id)->update([
+            'nama_pelanggan' => $request->nama_pelanggan,
+            'nama_alias' => $request->nama_alias,
+            'gender' => $request->gender,
+            'umur' => $request->umur,
+            'telp' => $request->telp,
+            'alamat' => $request->alamat,
+            'email' => $request->email,
+            'ig' => $request->ig,
+            'fb' => $request->fb,
+        ]);
+
+        return redirect('admin/departemen')->with('success', 'Berhasil memperbarui Departemen');
+    }
+
     public function show($id)
     {
-       
 
-            $pelanggan = Pelanggan::where('id', $id)->first();
-            return view('admin/pelanggan.show', compact('pelanggan'));
-       
+
+        $pelanggan = Pelanggan::where('id', $id)->first();
+        return view('admin/pelanggan.show', compact('pelanggan'));
     }
 
 

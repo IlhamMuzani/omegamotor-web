@@ -51,7 +51,7 @@ class TipeController extends Controller
             ],
         ));
 
-        return redirect('admin/tipe')->with('success', 'Berhasil menambahkan tipe');
+        return back()->with('success', 'Berhasil menambahkan tipe');
     }
 
     public function kode()

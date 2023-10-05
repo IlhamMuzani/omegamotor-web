@@ -17,6 +17,15 @@
             </div>
         </div>
     </div>
+    @if (session('success'))
+        <div class="alert alert-success border-2 d-flex align-items-center" role="alert">
+            <div class="bg-success me-3 icon-item">
+                <span class="fas fa-check-circle text-white fs-3"></span>
+            </div>
+            <p class="mb-0 flex-1">{{ session('success') }}</p>
+            <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     @if (session('error'))
         <div class="alert alert-danger border-2" role="alert">
             <div class="clearfix">
@@ -89,38 +98,30 @@
                             Putih</option>
                     </select>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label" for="merek_id">Merek *</label>
-                    <select class="form-control" id="merek_id" name="merek_id">
-                        <option value="">- Pilih -</option>
-                        @foreach ($mereks as $merek)
-                            <option value="{{ $merek->id }}" {{ old('merek_id') == $merek->id ? 'selected' : '' }}>
-                                {{ $merek->nama_merek }}
-                            </option>
-                        @endforeach
-                    </select>
+                <div class="mb-3 mt-4">
+                    <button class="btn btn-primary btn-sm" type="button" onclick="showCategoryModal(this.value)">
+                        Pilih Merek
+                    </button>
+                </div>
+                <div class="mb-3" hidden>
+                    <label class="form-label" for="merek_id">Merek_id *</label>
+                    <input class="form-control @error('merek_id') is-invalid @enderror" id="merek_id" name="merek_id"
+                        readonly type="text" placeholder="" value="{{ old('merek_id') }}" />
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="modelken_id">Model *</label>
-                    <select class="form-control" id="modelken_id" name="modelken_id">
-                        <option value="">- Pilih -</option>
-                        @foreach ($modelkens as $model)
-                            <option value="{{ $model->id }}" {{ old('modelken_id') == $model->id ? 'selected' : '' }}>
-                                {{ $model->nama_model }}
-                            </option>
-                        @endforeach
-                    </select>
+                    <label class="form-label" for="nama_merek">Merek *</label>
+                    <input class="form-control @error('nama_merek') is-invalid @enderror" id="nama_merek" name="nama_merek"
+                        readonly type="text" placeholder="" value="{{ old('nama_merek') }}" />
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="tipe_id">Tipe *</label>
-                    <select class="form-control" id="tipe_id" name="tipe_id">
-                        <option value="">- Pilih -</option>
-                        @foreach ($tipes as $tipe)
-                            <option value="{{ $tipe->id }}" {{ old('tipe_id') == $tipe->id ? 'selected' : '' }}>
-                                {{ $tipe->nama_tipe }}
-                            </option>
-                        @endforeach
-                    </select>
+                    <label class="form-label" for="model">Model *</label>
+                    <input class="form-control @error('model') is-invalid @enderror" id="model" name="model"
+                        readonly type="text" placeholder="" value="{{ old('model') }}" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="tipe">Tipe *</label>
+                    <input class="form-control @error('tipe') is-invalid @enderror" id="tipe" name="tipe"
+                        readonly type="text" placeholder="" value="{{ old('tipe') }}" />
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="transmisi">Transmisi *</label>
@@ -171,7 +172,7 @@
                         <span class="invalid-feedback" role="alert">{{ $message }}</span>
                     @enderror
                 </div>
-                 <div class="form-group mb-5">
+                <div class="form-group mb-5">
                     <label for="gambar_faktur">Foto Faktur</label>
                     <input class="form-control @error('gambar_faktur') is-invalid @enderror" id="gambar_faktur"
                         name="gambar_faktur" type="file" accept="image/*" />
@@ -216,9 +217,17 @@
                 </div>
                 <div class="form-group mb-3">
                     <label for="gambar_dashboard">Foto Dashboard</label>
-                    <input class="form-control @error('gambar_dashboard') is-invalid @enderror" id="gambar_dashboard" name="gambar_dashboard"
-                        type="file" accept="image/*" />
+                    <input class="form-control @error('gambar_dashboard') is-invalid @enderror" id="gambar_dashboard"
+                        name="gambar_dashboard" type="file" accept="image/*" />
                     @error('gambar_dashboard')
+                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group mb-3">
+                    <label for="gambar_interior">Foto Interiror</label>
+                    <input class="form-control @error('gambar_interior') is-invalid @enderror" id="gambar_interior"
+                        name="gambar_interior" type="file" accept="image/*" />
+                    @error('gambar_interior')
                         <span class="invalid-feedback" role="alert">{{ $message }}</span>
                     @enderror
                 </div>
@@ -233,4 +242,224 @@
             </div>
         </form>
     </div>
+
+
+    <div class="modal fade" id="tableKategori" data-backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Data Merek</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="float-right">
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#modal-merek"
+                            class="btn btn-primary btn-sm mb-3" data-bs-dismiss="modal">
+                            Tambah
+                        </button>
+                    </div>
+                    {{-- <button type="button" data-toggle="modal" data-target="#modal-part"
+                            class="btn btn-primary btn-sm mb-2" data-dismiss="modal">
+                            Tambah
+                        </button> --}}
+                    <table id="example" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-center">No</th>
+                                <th>Kode Merek</th>
+                                <th>Merek</th>
+                                <th>Model</th>
+                                <th>Type</th>
+                                <th>Opsi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($mereks as $merek)
+                                <tr>
+                                    <td class="text-center">{{ $loop->iteration }}</td>
+                                    <td>{{ $merek->kode_merek }}</td>
+                                    <td>{{ $merek->nama_merek }}</td>
+                                    <td>{{ $merek->modelken->nama_model }}</td>
+                                    <td>{{ $merek->tipe->nama_tipe }}</td>
+                                    <td class="text-center">
+                                        <button type="button" class="btn btn-primary btn-sm"
+                                            onclick="getSelectedData('{{ $merek->id }}', '{{ $merek->nama_merek }}', '{{ $merek->modelken->nama_model }}', '{{ $merek->tipe->nama_tipe }}')">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-merek"data-backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Tambah Merek</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ url('admin/mereks') }}" method="POST" enctype="multipart/form-data"
+                    autocomplete="off">
+                    @csrf
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="form-label" for="nama_merek">Nama Merek *</label>
+                            <input class="form-control @error('nama_merek') is-invalid @enderror" id="nama_merek"
+                                name="nama_merek" type="text" placeholder="masukan nama  merek"
+                                value="{{ old('nama_merek') }}" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="modelken_id">Nama Model *</label>
+                            <div class="mb-3 d-flex">
+                                <select class="form-control" id="modelken_id" name="modelken_id"
+                                    style="margin-right: 10px;">
+                                    <option value="">- Pilih -</option>
+                                    @foreach ($modelkens as $model)
+                                        <option value="{{ $model->id }}"
+                                            {{ old('modelken_id') == $model->id ? 'selected' : '' }}>
+                                            {{ $model->nama_model }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <button type="button" class="btn btn-primary btn-sm" id="btn-tambah-model">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="tipe_id">Nama Type *</label>
+                            <div class="mb-3 d-flex">
+                                <select class="form-control" id="tipe_id" name="tipe_id" style="margin-right: 10px;">
+                                    <option value="">- Pilih -</option>
+                                    @foreach ($tipes as $tipe)
+                                        <option value="{{ $tipe->id }}"
+                                            {{ old('tipe_id') == $tipe->id ? 'selected' : '' }}>
+                                            {{ $tipe->nama_tipe }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <!-- Tombol "Tambah Tipe" -->
+                                <button type="button" class="btn btn-primary btn-sm" id="btn-tambah-tipe">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-footer text-end">
+                            <button class="btn btn-secondary me-1" type="reset">
+                                <i class="fas fa-undo"></i> Reset
+                            </button>
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-save"></i> Simpan
+                            </button>
+                        </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-tipe">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Tambah Type</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ url('admin/tipe') }}" method="POST" enctype="multipart/form-data"
+                        autocomplete="off">
+                        @csrf
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label" for="nama_tipe">Nama Type *</label>
+                                <input class="form-control @error('nama_tipe') is-invalid @enderror" id="nama_tipe"
+                                    name="nama_tipe" type="text" placeholder="masukan nama tipe"
+                                    value="{{ old('nama_tipe') }}" />
+                            </div>
+                            <div class="card-footer text-end">
+                                <button class="btn btn-secondary me-1" type="reset">
+                                    <i class="fas fa-undo"></i> Reset
+                                </button>
+                                <button class="btn btn-primary" type="submit" id="simpanButton">
+                                    <i class="fas fa-save"></i> Simpan
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-model">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Tambah Model</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ url('admin/modelken') }}" method="POST" enctype="multipart/form-data"
+                    autocomplete="off">
+                    @csrf
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="form-label" for="nama_model">Nama Model *</label>
+                            <input class="form-control @error('nama_model') is-invalid @enderror" id="nama_model"
+                                name="nama_model" type="text" placeholder="masukan nama model"
+                                value="{{ old('nama_model') }}" />
+                        </div>
+                        <div class="card-footer text-end">
+                            <button class="btn btn-secondary me-1" type="reset">
+                                <i class="fas fa-undo"></i> Reset
+                            </button>
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-save"></i> Simpan
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showCategoryModal(selectedCategory) {
+            $('#tableKategori').modal('show');
+        }
+
+        function getSelectedData(merek_id, namaMerek, namaModel, namaTipe) {
+            // Set the values in the form fields
+            document.getElementById('merek_id').value = merek_id;
+            document.getElementById('nama_merek').value = namaMerek;
+            document.getElementById('model').value = namaModel;
+            document.getElementById('tipe').value = namaTipe;
+
+            // Close the modal (if needed)
+            $('#tableKategori').modal('hide');
+        }
+
+        document.getElementById('btn-tambah-tipe').addEventListener('click', function() {
+            var modalTipe = new bootstrap.Modal(document.getElementById('modal-tipe'));
+            modalTipe.show();
+        });
+
+        document.getElementById('btn-tambah-model').addEventListener('click', function() {
+            var modalTipe = new bootstrap.Modal(document.getElementById('modal-model'));
+            modalTipe.show();
+        });
+    </script>
+
 @endsection

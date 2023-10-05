@@ -1,6 +1,6 @@
 @extends('layout.main')
 
-@section('title', 'Tambah Pembelian')
+@section('title', 'Perbarui Kendaraan')
 
 @section('content')
     <div class="card mb-3">
@@ -11,7 +11,7 @@
         <div class="card-body position-relative">
             <div class="row">
                 <div class="col-lg-8">
-                    <h3>Pembelian Kendaraan</h3>
+                    <h3>Data Kendaraan</h3>
                     <p class="mb-0">Tambah</p>
                 </div>
             </div>
@@ -37,125 +37,108 @@
             </div>
         </div>
     @endif
-
-
     <div class="card">
         <div class="card-header">
-            <h5>Tambah Pembelian</h5>
+            <h5>Perbarui Kendaraan</h5>
         </div>
-        <form action="{{ url('admin/pembelian') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
+        <form action="{{ url('admin/kendaraan/' . $kendaraan->id) }}" method="POST" enctype="multipart/form-data"
+            autocomplete="off">
             @csrf
+            @method('put')
             <div class="card-body">
-                <div class="mb-3">
-                    <label class="form-label" for="pelanggan_id">Nama Pelanggan *</label>
-                    <select class="form-control" id="pelanggan_id" name="pelanggan_id">
-                        <option value="">- Pilih -</option>
-                        @foreach ($pelanggans as $pelanggan)
-                            <option value="{{ $pelanggan->id }}"
-                                {{ old('pelanggan_id') == $pelanggan->id ? 'selected' : '' }}>
-                                {{ $pelanggan->nama_pelanggan }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-                {{-- <div class="form-group mb-4">
-                    <label for="alamat">Alamat *</label>
-                    <textarea type="text" class="form-control" id="alamat" name="alamat" placeholder="Masukan alamat">{{ old('alamat') }}</textarea>
-                </div> --}}
-
-                <div class="col-lg-8 mb-3">
-                    <h5>Tambah Kendaraan</h5>
-                </div>
-
                 <div class="mb-3">
                     <label class="form-label" for="no_pol">No. Registrasi *</label>
                     <input class="form-control @error('no_pol') is-invalid @enderror" id="no_pol" name="no_pol"
-                        type="text" placeholder="masukan no registrasi" value="{{ old('no_pol') }}" />
+                        type="text" placeholder="masukan no registrasi"
+                        value="{{ old('no_pol', $kendaraan->no_pol) }}" />
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="no_rangka">No. Rangka *</label>
                     <input class="form-control @error('no_rangka') is-invalid @enderror" id="no_rangka" name="no_rangka"
-                        type="text" placeholder="masukan no rangka" value="{{ old('no_rangka') }}" />
+                        type="text" placeholder="masukan no rangka"
+                        value="{{ old('no_rangka', $kendaraan->no_rangka) }}" />
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="no_mesin">No. Mesin *</label>
                     <input class="form-control @error('no_mesin') is-invalid @enderror" id="no_mesin" name="no_mesin"
-                        type="text" placeholder="masukan no mesin" value="{{ old('no_mesin') }}" />
+                        type="text" placeholder="masukan no mesin" value="{{ old('no_mesin', $kendaraan->no_mesin) }}" />
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="warna">Warna *</label>
+                    <label class="form-label" for="warna">Warna</label>
                     <select class="form-control" id="warna" name="warna">
                         <option value="">- Pilih -</option>
-                        <option value="Hitam" {{ old('warna') == 'Hitam' ? 'selected' : null }}>
+                        <option value="Hitam" {{ old('warna', $kendaraan->warna) == 'Hitam' ? 'selected' : null }}>
                             Hitam</option>
-                        <option value="Putih" {{ old('warna') == 'Putih' ? 'selected' : null }}>
+                        <option value="Putih" {{ old('warna', $kendaraan->warna) == 'Putih' ? 'selected' : null }}>
                             Putih</option>
-                        <option value="Cokelat" {{ old('warna') == 'Cokelat' ? 'selected' : null }}>
+                        <option value="Cokelat" {{ old('warna', $kendaraan->warna) == 'Cokelat' ? 'selected' : null }}>
                             Cokelat</option>
-                        <option value="Hijau" {{ old('warna') == 'Hijau' ? 'selected' : null }}>
+                        <option value="Hijau" {{ old('warna', $kendaraan->warna) == 'Hijau' ? 'selected' : null }}>
                             Hijau</option>
-                        <option value="Orange" {{ old('warna') == 'Orange' ? 'selected' : null }}>
+                        <option value="Orange" {{ old('warna', $kendaraan->warna) == 'Orange' ? 'selected' : null }}>
                             Orange</option>
-                        <option value="Merah" {{ old('warna') == 'Merah' ? 'selected' : null }}>
+                        <option value="Merah" {{ old('warna', $kendaraan->warna) == 'Merah' ? 'selected' : null }}>
                             Merah</option>
-                        <option value="Ungu" {{ old('warna') == 'Ungu' ? 'selected' : null }}>
+                        <option value="Ungu" {{ old('warna', $kendaraan->warna) == 'Ungu' ? 'selected' : null }}>
                             Ungu</option>
-                        <option value="Kuning" {{ old('warna') == 'Kuning' ? 'selected' : null }}>
+                        <option value="Kuning" {{ old('warna', $kendaraan->warna) == 'Kuning' ? 'selected' : null }}>
                             Kuning</option>
-                        <option value="Biru" {{ old('warna') == 'Biru' ? 'selected' : null }}>
+                        <option value="Biru" {{ old('warna', $kendaraan->warna) == 'Biru' ? 'selected' : null }}>
                             Biru</option>
-                        <option value="Silver" {{ old('warna') == 'Silver' ? 'selected' : null }}>
+                        <option value="Silver" {{ old('warna', $kendaraan->warna) == 'Silver' ? 'selected' : null }}>
                             Silver</option>
-                        <option value="Hitam" {{ old('warna') == 'Hitam' ? 'selected' : null }}>
+                        <option value="Hitam" {{ old('warna', $kendaraan->warna) == 'Hitam' ? 'selected' : null }}>
                             Hitam</option>
-                        <option value="Putih" {{ old('warna') == 'Putih' ? 'selected' : null }}>
+                        <option value="Putih" {{ old('warna', $kendaraan->warna) == 'Putih' ? 'selected' : null }}>
                             Putih</option>
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="merek_id">Merek *</label>
+                    <label class="form-label" for="merek_id">Merek</label>
                     <select class="form-control" id="merek_id" name="merek_id">
                         <option value="">- Pilih -</option>
                         @foreach ($mereks as $merek)
-                            <option value="{{ $merek->id }}" {{ old('merek_id') == $merek->id ? 'selected' : '' }}>
-                                {{ $merek->nama_merek }}
-                            </option>
+                            <option value="{{ $merek->id }}"
+                                {{ old('merek_id', $kendaraan->merek_id) == $merek->id ? 'selected' : '' }}>
+                                {{ $merek->nama_merek }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="modelken_id">Model *</label>
+                    <label class="form-label" for="modelken_id">Merek</label>
                     <select class="form-control" id="modelken_id" name="modelken_id">
                         <option value="">- Pilih -</option>
                         @foreach ($modelkens as $model)
-                            <option value="{{ $model->id }}" {{ old('modelken_id') == $model->id ? 'selected' : '' }}>
-                                {{ $model->nama_model }}
-                            </option>
+                            <option value="{{ $model->id }}"
+                                {{ old('modelken_id', $kendaraan->modelken_id) == $model->id ? 'selected' : '' }}>
+                                {{ $model->nama_model }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="tipe_id">Tipe *</label>
+                    <label class="form-label" for="tipe_id">Tipe</label>
                     <select class="form-control" id="tipe_id" name="tipe_id">
                         <option value="">- Pilih -</option>
                         @foreach ($tipes as $tipe)
-                            <option value="{{ $tipe->id }}" {{ old('tipe_id') == $tipe->id ? 'selected' : '' }}>
-                                {{ $tipe->nama_tipe }}
-                            </option>
+                            <option value="{{ $tipe->id }}"
+                                {{ old('tipe_id', $kendaraan->tipe_id) == $tipe->id ? 'selected' : '' }}>
+                                {{ $tipe->nama_tipe }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="transmisi">Transmisi *</label>
                     <input class="form-control @error('transmisi') is-invalid @enderror" id="transmisi" name="transmisi"
-                        type="text" placeholder="masukan transmisi" value="{{ old('transmisi') }}" />
+                        type="text" placeholder="masukan transmisi"
+                        value="{{ old('transmisi', $kendaraan->transmisi) }}" />
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="km_berjalan">Km Berjalan *</label>
                     <input class="form-control @error('km_berjalan') is-invalid @enderror" id="km_berjalan"
                         name="km_berjalan" type="text" placeholder="masukan km berjalan"
-                        value="{{ old('km_berjalan') }}" />
+                        value="{{ old('km_berjalan', $kendaraan->km_berjalan) }}" />
                 </div>
+
             </div>
             <div class="card-body">
                 <div class="col-lg-8 mb-3">
@@ -244,19 +227,6 @@
                         <span class="invalid-feedback" role="alert">{{ $message }}</span>
                     @enderror
                 </div>
-
-                <div class="form-group">
-                    <label for="harga">Harga</label>
-                    <input type="text" class="form-control" id="harga" name="harga" placeholder="Masukan harga"
-                        value="{{ old('harga') }}">
-                </div>
-
-                <div class="form-group">
-                    <label for="vi_marketing">Vi Marketing</label>
-                    <input type="vi_marketing" class="form-control" id="vi_marketing" name="vi_marketing" placeholder="Masukan vi"
-                        value="{{ old('vi_marketing') }}">
-                </div>
-
                 <div class="card-footer text-end">
                     <button class="btn btn-secondary me-1" type="reset">
                         <i class="fas fa-undo"></i> Reset

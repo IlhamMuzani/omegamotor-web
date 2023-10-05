@@ -33,6 +33,7 @@ class Kendaraan extends Model
         'gambar_kanan',
         'gambar_kiri',
         'gambar_dashboard',
+        'gambar_interior',
         'tanggal_awal',
         'tanggal_akhir',
     ];
@@ -40,5 +41,10 @@ class Kendaraan extends Model
     public static function getId()
     {
         return $getId = DB::table('kendaraans')->orderBy('id', 'DESC')->take(1)->get();
+    }
+
+    public function merek()
+    {
+        return $this->belongsTo(Merek::class);
     }
 }
