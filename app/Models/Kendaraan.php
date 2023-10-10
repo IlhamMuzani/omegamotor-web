@@ -15,6 +15,7 @@ class Kendaraan extends Model
         'no_pol',
         'no_rangka',
         'no_mesin',
+        'tahun_kendaraan',
         'warna',
         'qrcode_kendaraan',
         'kode_kendaraan',
@@ -46,5 +47,16 @@ class Kendaraan extends Model
     public function merek()
     {
         return $this->belongsTo(Merek::class);
+    }
+
+    public function gambar()
+    {
+        return $this->hasMany(Gambar::class);
+    }
+
+
+    public function pembelian()
+    {
+        return $this->belongsTo(Pembelian::class);
     }
 }

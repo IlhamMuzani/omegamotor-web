@@ -96,6 +96,62 @@
                         type="text" placeholder="masukan no mesin" value="{{ old('no_mesin') }}" />
                 </div>
                 <div class="mb-3">
+                    <label class="form-label" for="tahun_kendaraan">Tahun Pembuatan *</label>
+                    <select class="form-control" id="tahun_kendaraan" name="tahun_kendaraan">
+                        <option value="">- Pilih -</option>
+                        <option value="2025" {{ old('tahun_kendaraan') == '2025' ? 'selected' : null }}>
+                            2025</option>
+                        <option value="2024" {{ old('tahun_kendaraan') == '2024' ? 'selected' : null }}>
+                            2024</option>
+                        <option value="2023" {{ old('tahun_kendaraan') == '2023' ? 'selected' : null }}>
+                            2023</option>
+                        <option value="2022" {{ old('tahun_kendaraan') == '2022' ? 'selected' : null }}>
+                            2022</option>
+                        <option value="2021" {{ old('tahun_kendaraan') == '2021' ? 'selected' : null }}>
+                            2021</option>
+                        <option value="2020" {{ old('tahun_kendaraan') == '2020' ? 'selected' : null }}>
+                            2020</option>
+                        <option value="2019" {{ old('tahun_kendaraan') == '2019' ? 'selected' : null }}>
+                            2019</option>
+                        <option value="2018" {{ old('tahun_kendaraan') == '2018' ? 'selected' : null }}>
+                            2018</option>
+                        <option value="2017" {{ old('tahun_kendaraan') == '2017' ? 'selected' : null }}>
+                            2017</option>
+                        <option value="2016" {{ old('tahun_kendaraan') == '2016' ? 'selected' : null }}>
+                            2016</option>
+                        <option value="2015" {{ old('tahun_kendaraan') == '2015' ? 'selected' : null }}>
+                            2015</option>
+                        <option value="2014" {{ old('tahun_kendaraan') == '2014' ? 'selected' : null }}>
+                            2014</option>
+                        <option value="2013" {{ old('tahun_kendaraan') == '2013' ? 'selected' : null }}>
+                            2013</option>
+                        <option value="2012" {{ old('tahun_kendaraan') == '2012' ? 'selected' : null }}>
+                            2012</option>
+                        <option value="2011" {{ old('tahun_kendaraan') == '2011' ? 'selected' : null }}>
+                            2011</option>
+                        <option value="2010" {{ old('tahun_kendaraan') == '2010' ? 'selected' : null }}>
+                            2010</option>
+                        <option value="2009" {{ old('tahun_kendaraan') == '2009' ? 'selected' : null }}>
+                            2009</option>
+                        <option value="2008" {{ old('tahun_kendaraan') == '2008' ? 'selected' : null }}>
+                            2008</option>
+                        <option value="2007" {{ old('tahun_kendaraan') == '2007' ? 'selected' : null }}>
+                            2007</option>
+                        <option value="2006" {{ old('tahun_kendaraan') == '2006' ? 'selected' : null }}>
+                            2006</option>
+                        <option value="2005" {{ old('tahun_kendaraan') == '2005' ? 'selected' : null }}>
+                            2005</option>
+                        <option value="2004" {{ old('tahun_kendaraan') == '2004' ? 'selected' : null }}>
+                            2004</option>
+                        <option value="2003" {{ old('tahun_kendaraan') == '2003' ? 'selected' : null }}>
+                            2003</option>
+                        <option value="2002" {{ old('tahun_kendaraan') == '2002' ? 'selected' : null }}>
+                            2002</option>
+                        <option value="2001" {{ old('tahun_kendaraan') == '2001' ? 'selected' : null }}>
+                            2001</option>
+                    </select>
+                </div>
+                <div class="mb-3">
                     <label class="form-label" for="warna">Warna *</label>
                     <select class="form-control" id="warna" name="warna">
                         <option value="">- Pilih -</option>
@@ -123,6 +179,8 @@
                             Hitam</option>
                         <option value="Putih" {{ old('warna') == 'Putih' ? 'selected' : null }}>
                             Putih</option>
+                        <option value="Abu-abu" {{ old('warna') == 'Abu-abu' ? 'selected' : null }}>
+                            Abu-abu</option>
                     </select>
                 </div>
                 <div class="mb-3 mt-4">
@@ -174,19 +232,19 @@
                         <span class="invalid-feedback" role="alert">{{ $message }}</span>
                     @enderror
                 </div>
-                <div class="form-group mb-3">
+                {{-- <div class="form-group mb-3">
                     <label for="gambar_notis">Foto Notis</label>
                     <input class="form-control @error('gambar_notis') is-invalid @enderror" id="gambar_notis"
                         name="gambar_notis" type="file" accept="image/*" />
                     @error('gambar_notis')
                         <span class="invalid-feedback" role="alert">{{ $message }}</span>
                     @enderror
-                </div>
+                </div> --}}
                 <div class="form-group mb-3">
-                    <label for="gambar_bpkb">Foto BPKB</label>
-                    <input class="form-control @error('gambar_bpkb') is-invalid @enderror" id="gambar_bpkb"
-                        name="gambar_bpkb" type="file" accept="image/*" />
-                    @error('gambar_bpkb')
+                    <label for="gambar">Foto BPKB</label>
+                    <input class="form-control @error('gambar') is-invalid @enderror" id="gambar" name="gambar[]"
+                        type="file" accept="image/*" multiple />
+                    @error('gambar')
                         <span class="invalid-feedback" role="alert">{{ $message }}</span>
                     @enderror
                 </div>
@@ -263,12 +321,6 @@
                     <label for="harga">Harga</label>
                     <input type="text" class="form-control" id="harga" name="harga"
                         placeholder="Masukan harga" value="{{ old('harga') }}">
-                </div>
-
-                <div class="form-group mb-3">
-                    <label for="vi_marketing">Vee Marketing</label>
-                    <input type="vi_marketing" class="form-control" id="vi_marketing" name="vi_marketing"
-                        placeholder="Masukan vee" value="{{ old('vi_marketing') }}">
                 </div>
 
                 <div class="card-footer text-end">
@@ -392,7 +444,7 @@
                             class="btn btn-primary btn-sm mb-2" data-dismiss="modal">
                             Tambah
                         </button> --}}
-                    <table id="example" class="table table-bordered table-striped">
+                    <table id="datatables" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>

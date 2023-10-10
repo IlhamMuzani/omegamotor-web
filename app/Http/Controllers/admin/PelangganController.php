@@ -17,7 +17,7 @@ class PelangganController extends Controller
 {
     public function index()
     {
-        $pelanggans = Pelanggan::paginate(4);
+        $pelanggans = Pelanggan::get();
         return view('admin/pelanggan.index', compact('pelanggans'));
     }
 
@@ -71,7 +71,7 @@ class PelangganController extends Controller
             [
                 'gambar' => $namaGambar,
                 'kode_pelanggan' => $this->kode(),
-                'qrcode_pelanggan' => 'https://javaline.id/pelanggan/' . $kode,
+                'qrcode_pelanggan' => 'https://omegamotor.id/pelanggan/' . $kode,
                 'tanggal_awal' => $tanggal,
 
             ]
@@ -132,7 +132,7 @@ class PelangganController extends Controller
             return back()->withInput()->with('error', $error);
         }
 
-        Departemen::where('id', $id)->update([
+        Pelanggan::where('id', $id)->update([
             'nama_pelanggan' => $request->nama_pelanggan,
             'nama_alias' => $request->nama_alias,
             'gender' => $request->gender,
@@ -144,9 +144,19 @@ class PelangganController extends Controller
             'fb' => $request->fb,
         ]);
 
-        return redirect('admin/departemen')->with('success', 'Berhasil memperbarui Departemen');
+        return redirect('admin/pelanggan')->with('success', 'Berhasil memperbarui Pelanggan');
     }
 
+
+    public function cetakqrcode($id)
+    {
+        $pelanggans = Pelanggan::find($id);
+        $pdf = app('dompdf.wrapper');
+        $pdf->loadView('admin.pelanggan.cetak_pdf', compact('pelanggans'));
+        $pdf->setPaper('letter', 'portrait');
+        return $pdf->stream('QrCodePelanggan.pdf');
+    }
+    
     public function show($id)
     {
 

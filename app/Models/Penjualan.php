@@ -17,6 +17,7 @@ class Penjualan extends Model
         'harga',
         'vi_marketing',
         'status',
+        'status_komisi',
         'tanggal',
         'tanggal_awal',
         'tanggal_akhir',

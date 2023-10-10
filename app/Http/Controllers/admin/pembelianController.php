@@ -12,6 +12,7 @@ use App\Models\Pelanggan;
 use App\Models\Pembelian;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Gambar;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -35,24 +36,24 @@ class PembelianController extends Controller
                 'no_pol' => 'required',
                 'no_rangka' => 'required',
                 'no_mesin' => 'required',
+                'tahun_kendaraan' => 'required',
                 'warna' => 'required',
                 'merek_id' => 'required',
                 'transmisi' => 'required',
                 'km_berjalan' => 'required',
                 'harga' => 'required',
-                'vi_marketing' => 'required',
             ],
             [
                 'pelanggan_id.required' => 'Pilih pelanggan',
                 'no_pol.required' => 'Masukkan no registrasi',
                 'no_rangka.required' => 'Masukkan no rangka',
                 'no_mesin.required' => 'Masukkan no mesin',
+                'tahun_kendaraan.required' => 'Masukkan tahun',
                 'warna.required' => 'Masukkan warna',
                 'merek_id.required' => 'Pilih merek',
                 'transmisi.required' => 'Masukkan transmisi',
                 'km_berjalan.required' => 'Masukka km berjalan',
                 'harga.required' => 'Masukkan harga',
-                'vi_marketing.required' => 'Masukkan vi marketing',
             ]
         );
 
@@ -70,21 +71,21 @@ class PembelianController extends Controller
             $namaGambar = null;
         }
 
-        if ($request->gambar_notis) {
-            $gambar = str_replace(' ', '', $request->gambar_notis->getClientOriginalName());
-            $namaGambar2 = 'gambar_notis/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
-            $request->gambar_notis->storeAs('public/uploads/', $namaGambar2);
-        } else {
-            $namaGambar2 = null;
-        }
+        // if ($request->gambar_notis) {
+        //     $gambar = str_replace(' ', '', $request->gambar_notis->getClientOriginalName());
+        //     $namaGambar2 = 'gambar_notis/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
+        //     $request->gambar_notis->storeAs('public/uploads/', $namaGambar2);
+        // } else {
+        //     $namaGambar2 = null;
+        // }
 
-        if ($request->gambar_bpkb) {
-            $gambar = str_replace(' ', '', $request->gambar_bpkb->getClientOriginalName());
-            $namaGambar3 = 'gambar_bpkb/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
-            $request->gambar_bpkb->storeAs('public/uploads/', $namaGambar3);
-        } else {
-            $namaGambar3 = null;
-        }
+        // if ($request->gambar_bpkb) {
+        //     $gambar = str_replace(' ', '', $request->gambar_bpkb->getClientOriginalName());
+        //     $namaGambar3 = 'gambar_bpkb/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
+        //     $request->gambar_bpkb->storeAs('public/uploads/', $namaGambar3);
+        // } else {
+        //     $namaGambar3 = null;
+        // }
 
         if ($request->gambar_dokumen) {
             $gambar = str_replace(' ', '', $request->gambar_dokumen->getClientOriginalName());
@@ -158,11 +159,11 @@ class PembelianController extends Controller
             [
                 'pelanggan_id' => $request->pelanggan_id,
                 'harga' => $request->harga,
-                'vi_marketing' => $request->vi_marketing,
                 'kode_pembelian' => $this->kode(),
-                'qrcode_pembelian' => 'https:///omega.id/pembelian/' . $kode,
+                'qrcode_pembelian' => 'https:///omegamotor.id/pembelian/' . $kode,
                 'tanggal_awal' => $tanggal,
                 'status' => 'posting',
+                'status_komisi' => 'tidak aktif',
             ]
         ));
 
@@ -170,13 +171,13 @@ class PembelianController extends Controller
         $pembelian_id = $pembelian->id;
 
         $tanggal = Carbon::now()->format('Y-m-d');
-        Kendaraan::create(array_merge(
+        $kendaraan = Kendaraan::create(array_merge(
             $request->all(),
             [
                 'pembelian_id' => $pembelian_id,
                 'gambar_stnk' => $namaGambar,
-                'gambar_notis' => $namaGambar2,
-                'gambar_bpkp' => $namaGambar3,
+                // 'gambar_notis' => $namaGambar2,
+                // 'gambar_bpkb' => $namaGambar3,
                 'gambar_dokumen' => $namaGambar4,
                 'gambar_faktur' => $namaGambar5,
                 'gambar_depan' => $namaGambar6,
@@ -188,15 +189,31 @@ class PembelianController extends Controller
                 'no_pol' => $request->no_pol,
                 'no_rangka' => $request->no_rangka,
                 'no_mesin' => $request->no_mesin,
+                'tahun_kendaraan' => $request->tahun_kendaraan,
                 'warna' => $request->warna,
                 'merek_id' => $request->merek_id,
                 'transmisi' => $request->transmisi,
                 'km_berjalan' => $request->km_berjalan,
                 'kode_kendaraan' => $this->kodekendaraan(),
-                'qrcode_kendaraan' => 'https:///omega.id/kendaraan/' . $kode,
+                'qrcode_kendaraan' => 'https:///omegamotor.id/kendaraan/' . $kode,
                 'tanggal_awal' => $tanggal,
             ]
         ));
+
+        if ($request->has('gambar')) {
+            $gambars = $request->file('gambar');
+
+            foreach ($gambars as $gambar) {
+                $name = str_replace(' ', '', $gambar->getClientOriginalName());
+                $namagambar = 'gambar/' . date('mYdHs') . random_int(1, 10) . '_' . $name;
+                $gambar->storeAs('public/uploads', $namagambar);
+
+                Gambar::create([
+                    'kendaraan_id' => $kendaraan->id,
+                    'gambar' => $namagambar
+                ]);
+            }
+        }
 
         $pembelians = Pembelian::find($pembelian_id);
 
@@ -313,7 +330,7 @@ class PembelianController extends Controller
             [
                 'gambar' => $namaGambar,
                 'kode_pelanggan' => $this->kodepelanggan(),
-                'qrcode_pelanggan' => 'https://javaline.id/pelanggan/' . $kode,
+                'qrcode_pelanggan' => 'https://omegamotor.id/pelanggan/' . $kode,
                 'tanggal_awal' => $tanggal,
 
             ]

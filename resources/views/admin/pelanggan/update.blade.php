@@ -102,8 +102,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="gambar_ktp">Gambar <small>(Kosongkan saja jika tidak
-                            ingin menambahkan)</small></label>
+                    <label for="gambar_ktp">Foto KTP</label>
                     <input class="form-control @error('gambar_ktp') is-invalid @enderror" id="gambar_ktp"
                         name="gambar_ktp" type="file" accept="image/*" />
                     @error('gambar_ktp')

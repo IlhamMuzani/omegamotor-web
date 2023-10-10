@@ -44,45 +44,40 @@
         <form action="{{ url('admin/user') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
             @csrf
             <div class="card-body">
-                <div class="form-group">
-                    <label for="">Pilih Kode Karyawan</label>
-                    <select class="custom-select form-control" id="kode_karyawan" name="karyawan_id" onchange="getData(0)">
-                        <option value="">- Pilih -</option>
-                        @foreach ($karyawans as $karyawan)
-                            <option value="{{ $karyawan->id }}">{{ $karyawan->kode_karyawan }}</option>
-                        @endforeach
-                    </select>
+                <div class="mb-3">
+                    <button class="btn btn-primary btn-sm" type="button" onclick="showCategoryModal(this.value)">
+                        Pilih Karyawan
+                    </button>
                 </div>
-                {{-- <div class="form-group" style="flex: 8;"> <!-- Adjusted flex value -->
-                    <label for="karyawan_id">Pilih Kode Karyawan</label>
-                    <select class="select2bs4 select2-hidden-accessible" name="karyawan_id"
-                        data-placeholder="Cari Karyawan.." style="width: 100%;" data-select2-id="23" tabindex="-1"
-                        aria-hidden="true" id="kode_karyawan" onchange="getData(0)">
-                        <option value="">- Pilih -</option>
-                        @foreach ($karyawans as $karyawan)
-                            <option value="{{ $karyawan->id }}" {{ old('karyawan_id') == $karyawan->id ? 'selected' : '' }}>
-                                {{ $karyawan->kode_karyawan }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div> --}}
+                <div class="form-group" hidden>
+                    <label for="karyawan_id">Karyawan Id</label>
+                    <input type="text" class="form-control" id="karyawan_id" name="karyawan_id" readonly placeholder=""
+                        value="{{ old('karyawan_id') }}">
+                </div>
                 <div class="form-group">
-                    <label for="nama_lengkap">Nama lengkap</label>
-                    <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" readonly placeholder=""
+                    <label for="kode_karyawan">Kode Karyawan</label>
+                    <input type="text" class="form-control" id="kode_karyawan" name="kode_karyawan" readonly
+                        placeholder="" value="{{ old('kode_karyawan') }}">
+                </div>
+                <div class="form-group">
+                    <label for="nama_lengkap">Nama Karyawan</label>
+                    <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" placeholder="" readonly
                         value="{{ old('nama_lengkap') }}">
                 </div>
                 <div class="form-group">
-                    <label for="nama">No KTP</label>
-                    <input type="text" class="form-control" id="no_ktp" name="no_ktp" readonly placeholder=""
-                        value="{{ old('no_ktp') }}">
+                    <label for="telp">No. Telepon</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">+62</span>
+                        </div>
+                        <input type="text" id="telp" name="telp" class="form-control" readonly placeholder=""
+                            value="{{ old('telp') }}">
+                    </div>
                 </div>
-
                 <div class="form-group">
-                    <label for="nama">Alamat</label>
-                    <input type="text" class="form-control" id="alamat" name="alamat" readonly placeholder=""
-                        value="{{ old('alamat') }}">
+                    <label for="alamat">Alamat</label>
+                    <textarea type="text" class="form-control" id="alamat" name="alamat" readonly placeholder="">{{ old('alamat') }}</textarea>
                 </div>
-
             </div>
             <div class="card-footer text-right">
                 <button type="reset" class="btn btn-secondary">Reset</button>
@@ -91,26 +86,68 @@
         </form>
     </div>
 
+    <div class="modal fade" id="tableKategori" data-backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Data Karyawan</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive scrollbar m-2">
+                        <table id="datatables2" class="table table-bordered table-striped">
+                            <thead class="bg-200 text-900">
+                                <tr>
+                                    <th class="text-center">No</th>
+                                    <th>Kode Karyawan</th>
+                                    <th>Nama Karyawan</th>
+                                    <th>Alamat</th>
+                                    <th>Telepon</th>
+                                    <th>Opsi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($karyawans as $karyawan)
+                                    <tr>
+                                        <td class="text-center">{{ $loop->iteration }}</td>
+                                        <td>{{ $karyawan->kode_karyawan }}</td>
+                                        <td>{{ $karyawan->nama_lengkap }}</td>
+                                        <td>{{ $karyawan->telp }}</td>
+                                        <td>{{ $karyawan->alamat }}</td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-primary btn-sm"
+                                                onclick="getSelectedDataKaryawan('{{ $karyawan->id }}','{{ $karyawan->kode_karyawan }}', '{{ $karyawan->nama_lengkap }}', '{{ $karyawan->telp }}', '{{ $karyawan->alamat }}')">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+
+    <script>
+        function showCategoryModal(selectedCategory) {
+            $('#tableKategori').modal('show');
+        }
+
+        function getSelectedDataKaryawan(Karyawan_id, KodeKaryawan, namaKaryawan, Telp, Alamat) {
+            // Set the values in the form fields
+            document.getElementById('karyawan_id').value = Karyawan_id;
+            document.getElementById('kode_karyawan').value = KodeKaryawan;
+            document.getElementById('nama_lengkap').value = namaKaryawan;
+            document.getElementById('telp').value = Telp;
+            document.getElementById('alamat').value = Alamat;
+
+            // Close the modal (if needed)
+            $('#tableKategori').modal('hide');
+        }
+    </script>
 @endsection
-
-<script>
-    function getData(id) {
-        var kode_karyawan = document.getElementById('kode_karyawan');
-        $.ajax({
-            url: "{{ url('admin/user/karyawan') }}" + "/" + kode_karyawan.value,
-            type: "GET",
-            dataType: "json",
-            success: function(kode_karyawan) {
-                var nama_lengkap = document.getElementById('nama_lengkap');
-                nama_lengkap.value = kode_karyawan.nama_lengkap;
-
-                var no_ktp = document.getElementById('no_ktp');
-                no_ktp.value = kode_karyawan.no_ktp;
-
-                var alamat = document.getElementById('alamat');
-                alamat.value = kode_karyawan.alamat;
-            },
-        });
-    }
-</script>

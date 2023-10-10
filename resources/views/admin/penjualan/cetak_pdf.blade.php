@@ -174,6 +174,19 @@
             /* Sesuaikan posisi vertikal garis tengah */
         }
 
+        #logo-container {
+            text-align: right;
+            /* Posisi teks dan gambar ke kanan */
+        }
+
+        #logo-container img {
+            max-width: 170px;
+            /* Ubah sesuai kebutuhan */
+            vertical-align: top;
+            /* Mengatur gambar lebih tinggi ke atas */
+        }
+
+
         @page {
             /* size: A4; */
             margin: 1cm;
@@ -190,76 +203,64 @@
                         <tr>
                             <td class="info-catatan2">Nama Pembeli</td>
                             <td class="info-item">:</td>
-                            <td class="info-text info-left">{{ $penjualans->pelanggan->nama_pelanggan }}</td>
+                            <td class="info-text info-left">
+                                @if ($penjualans->pelanggan)
+                                    {{ $penjualans->pelanggan->nama_pelanggan }}
+                                @else
+                                    data tidak ada
+                                @endif
+                            </td>
                         </tr>
                         <tr>
                             <td class="info-catatan2">Alamat</td>
                             <td class="info-item">:</td>
-                            <td class="info-text info-left">{{ $penjualans->pelanggan->alamat }}</td>
+                            <td class="info-text info-left">
+                                @if ($penjualans->pelanggan)
+                                    {{ $penjualans->pelanggan->alamat }}
+                                @else
+                                    data tidak ada
+                                @endif
+                            </td>
                         </tr>
                         <tr>
                             <td class="info-catatan2">Telp / HP</td>
                             <td class="info-item">:</td>
-                            <td class="info-text info-left">{{ $penjualans->pelanggan->telp }}
+                            <td class="info-text info-left">
+                                @if ($penjualans->pelanggan)
+                                    {{ $penjualans->pelanggan->telp }}
+                                @else
+                                    data tidak ada
+                                @endif
                             </td>
                         </tr>
                         <tr>
                             <td class="info-catatan2">ID Pembeli</td>
                             <td class="info-item">:</td>
-                            <td class="info-text info-left">{{ $penjualans->pelanggan->kode_pelanggan }}</td>
+                            <td class="info-text info-left">
+                                @if ($penjualans->pelanggan)
+                                    {{ $penjualans->pelanggan->kode_pelanggan }}
+                                @else
+                                    data tidak ada
+                                @endif
+                            </td>
                         </tr>
                     </table>
                 </div>
             </td>
+            <td>
+                <div id="logo-container">
+                    <!-- Tambahkan gambar logo di sini -->
+                    <img src="{{ asset('storage/uploads/gambaricon/omega.png') }}" alt="Logo Omega">
+                </div>
+            </td>
         </tr>
     </table>
-
     <div style="font-weight: bold; text-align: center;">
         <span style="font-weight: bold; font-size: 20px;">FAKTUR PENJUALAN</span>
         <br>
     </div>
 
-    {{-- <table width="100%">
-        <tr>
-            <td>
-                <div class="info-catatan" style="max-width: 230px;">
-                    <table>
-                        <tr>
-                            <td class="info-catatan2" style="font-size: 13px;">Nama Supplier</td>
-                            <td class="info-item" style="font-size: 13px;">:</td>
-                            <td class="info-text info-left" style="font-size: 13px;">
-                                {{ $pembelians->supplier->nama_supp }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="info-catatan2" style="font-size: 13px;">Alamat</td>
-                            <td class="info-item" style="font-size: 13px;">:</td>
-                            <td class="info-text info-left" style="font-size: 13px;">
-                                {{ $pembelians->supplier->alamat }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="info-catatan2" style="font-size: 13px;">Telp / HP</td>
-                            <td class="info-item" style="font-size: 13px;">:</td>
-                            <td class="info-text info-left" style="font-size: 13px;">{{ $pembelians->supplier->telp }} /
-                                {{ $pembelians->supplier->hp }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="info-catatan2" style="font-size: 13px;">ID Supplier</td>
-                            <td class="info-item" style="font-size: 13px;">:</td>
-                            <td class="info-text info-left" style="font-size: 13px;">
-                                {{ $pembelians->supplier->kode_supplier }}
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </td>
-        </tr>
-    </table> --}}
-    {{-- <hr style="border-top: 0.5px solid black; margin: 3px 0;"> --}}
-    <table style="width: 100%;
-                    border-top: 1px solid black; margin-bottom:5px">
+    <table style="width: 100%;border-top: 1px solid black; margin-bottom:5px">
         <tr>
             <td>
                 <span class="info-item" style="font-size: 13px; padding-left: 5px;">No. Faktur:
@@ -279,50 +280,103 @@
             <td class="td" style="text-align: center; padding: 5px; font-size: 13px;">Kode Kendaraan</td>
             <td class="td" style="text-align: center; padding: 5px; font-size: 13px;">No. Registrasi</td>
             <td class="td" style="text-align: center; padding: 5px; font-size: 13px;">Merek</td>
+            <td class="td" style="text-align: center; padding: 5px; font-size: 13px;">Type</td>
+            {{-- <td class="td" style="text-align: center; padding: 5px; font-size: 13px;">Vi Marketing</td> --}}
             <td class="td" style="text-align: center; padding: 5px; font-size: 13px;">Harga</td>
-            <td class="td" style="text-align: center; padding: 5px; font-size: 13px;">Vi Marketing</td>
-            <td class="td" style="text-align: center; padding: 5px; font-size: 13px;">Total</td>
         </tr>
-        <tr style="border-bottom: 1px solid black;">
-            <td colspan="7" style="padding: 0px;"></td>
-        </tr>
-        @php
-            $totalHarga = $penjualans->harga + $penjualans->vi_marketing;
-        @endphp
-        {{-- @foreach ($kendaraans as $item) --}}
-            <tr>
-                <td class="td" style="text-align: center;  font-size: 13px;">1
-                </td>
-                <td class="td" style="text-align: center;  font-size: 13px;">{{ $penjualans->kendaraan->kode_kendaraan }}</td>
-                <td class="info-text info-left" style="font-size: 13px; text-align: center;">
-                    {{ $penjualans->kendaraan->no_pol }}
-                </td>
-                 <td class="info-text info-left" style="font-size: 13px; text-align: center;">
-                    {{ $penjualans->kendaraan->merek->nama_merek }}
-                </td>
-                <td class="td" style="text-align: center; font-size: 13px;">
-                    {{ $penjualans->harga }}
-                </td>
-                <td class="td" style="text-align: center;  font-size: 13px;">
-                    {{ $penjualans->vi_marketing }}
-                </td>
-                <td class="td" style="text-align: center;  font-size: 13px;">Rp.
-                    {{ number_format($totalHarga, 0, ',', '.') }}</td>
-                </td>
-            </tr>
-        {{-- @endforeach --}}
         <tr style="border-bottom: 1px solid black;">
             <td colspan="6" style="padding: 0px;"></td>
         </tr>
+        {{-- @php
+            $totalHarga = $penjualans->harga + $penjualans->vi_marketing;
+        @endphp --}}
+        {{-- @foreach ($kendaraans as $item) --}}
         <tr>
-            <td colspan="6" style="text-align: right; font-weight: bold; padding: 5px; font-size: 13px;">Sub Total
+            <td class="td" style="text-align: center;  font-size: 13px;">1
             </td>
-            <td class="td" style="text-align: center; font-weight: bold; padding: 5px; font-size: 13px;">Rp.
-                {{ number_format($totalHarga, 0, ',', '.') }}
+            <td class="td" style="text-align: center;  font-size: 13px;">
+                @if ($penjualans->kendaraan)
+                    {{ $penjualans->kendaraan->kode_kendaraan }}
+                @else
+                    data tidak ada
+                @endif
+            </td>
+            <td class="info-text info-left" style="font-size: 13px; text-align: center;">
+                @if ($penjualans->kendaraan)
+                    {{ $penjualans->kendaraan->no_pol }}
+                @else
+                    data tidak ada
+                @endif
+            </td>
+            <td class="info-text info-left" style="font-size: 13px; text-align: center;">
+                @if ($penjualans->kendaraan)
+                    {{ $penjualans->kendaraan->merek->nama_merek }}
+                @else
+                    data tidak ada
+                @endif
+            </td>
+            <td class="td" style="text-align: center; font-size: 13px;">
+                @if ($penjualans->kendaraan)
+                    {{ $penjualans->kendaraan->merek->tipe->nama_tipe }}
+                @else
+                    data tidak ada
+                @endif
+            </td>
+            {{-- <td class="td" style="text-align: center;  font-size: 13px;">
+                    {{ $penjualans->vi_marketing }}
+                </td> --}}
+            <td class="td" style="text-align: center;  font-size: 13px;">Rp.
+                {{ number_format($penjualans->harga, 0, ',', '.') }}</td>
+            </td>
+        </tr>
+        {{-- @endforeach --}}
+        <tr style="border-bottom: 1px solid black;">
+            <td colspan="5" style="padding: 0px;"></td>
+        </tr>
+        <tr>
+            <td colspan="5" style="text-align: right; font-weight: bold; padding: 5px; font-size: 13px;">
+            </td>
+            <td class="td" style="text-align: center; font-weight: bold; padding: 5px; font-size: 13px;">
+                {{-- {{ number_format($penjualans->harga, 0, ',', '.') }} --}}
             </td>
         </tr>
     </table>
-
+    <?php
+    function terbilang($angka)
+    {
+        $angka = abs($angka); // Pastikan angka selalu positif
+        $bilangan = ['', 'Satu', 'Dua', 'Tiga', 'Empat', 'Lima', 'Enam', 'Tujuh', 'Delapan', 'Sembilan', 'Sepuluh', 'Sebelas'];
+        $hasil = '';
+        if ($angka < 12) {
+            $hasil = $bilangan[$angka];
+        } elseif ($angka < 20) {
+            $hasil = terbilang($angka - 10) . ' Belas';
+        } elseif ($angka < 100) {
+            $hasil = terbilang($angka / 10) . ' Puluh ' . terbilang($angka % 10);
+        } elseif ($angka < 200) {
+            $hasil = 'Seratus ' . terbilang($angka - 100);
+        } elseif ($angka < 1000) {
+            $hasil = terbilang($angka / 100) . ' Ratus ' . terbilang($angka % 100);
+        } elseif ($angka < 2000) {
+            $hasil = 'Seribu ' . terbilang($angka - 1000);
+        } elseif ($angka < 1000000) {
+            $hasil = terbilang($angka / 1000) . ' Ribu ' . terbilang($angka % 1000);
+        } elseif ($angka < 1000000000) {
+            $hasil = terbilang($angka / 1000000) . ' Juta ' . terbilang($angka % 1000000);
+        } elseif ($angka < 1000000000000) {
+            $hasil = terbilang($angka / 1000000000) . ' Miliar ' . terbilang($angka % 1000000000);
+        } elseif ($angka < 1000000000000000) {
+            $hasil = terbilang($angka / 1000000000000) . ' Triliun ' . terbilang($angka % 1000000000000);
+        }
+        return $hasil;
+    }
+    ?>
+    <span
+        style="font-weight: bold; font-size: 14px; margin-left: 30px; font-style: italic;">({{ terbilang($penjualans->harga) }}
+        Rupiah)</span>
+    <br>
+    <br>
+    <br>
     <br>
     <table class="tdd" cellpadding="10" cellspacing="0" style="margin: 0 auto;">
         <tr>
@@ -342,7 +396,7 @@
             <td style="text-align: center;">
                 <table style="margin: 0 auto;">
                     <tr style="text-align: center;">
-                        <td class="label">{{ auth()->user()->karyawan->nama_lengkap }}</td>
+                        <td class="label" style="min-height: 16px;">&nbsp;</td>
                     </tr>
                     <tr>
                         <td class="separator" colspan="2"><span></span></td>
@@ -355,7 +409,7 @@
             <td style="text-align: center;">
                 <table style="margin: 0 auto;">
                     <tr style="text-align: center;">
-                        <td class="label" style="min-height: 16px;">&nbsp;</td>
+                        <td class="label">{{ auth()->user()->karyawan->nama_lengkap }}</td>
                     </tr>
                     <tr>
                         <td class="separator" colspan="2"><span></span></td>

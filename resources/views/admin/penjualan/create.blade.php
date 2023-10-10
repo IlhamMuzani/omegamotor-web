@@ -168,15 +168,10 @@
                 <div class="col-lg-8 mb-3 mt-5">
                     <h5>Tambah Harga</h5>
                 </div>
-                <div class="form-group mb-3" >
-                    <label for="harga">Harga Jual</label>
-                    <input type="number" class="form-control" id="harga" name="harga" placeholder="Masukkan harga"
-                        value="{{ old('harga') }}">
-                </div>
                 <div class="form-group mb-3">
-                    <label for="vi_marketing">Vee marketing</label>
-                    <input type="number" class="form-control" id="vi_marketing" name="vi_marketing"
-                        placeholder="Masukkan vee" value="{{ old('vi_marketing') }}">
+                    <label for="harga">Harga Jual</label>
+                    <input type="number" class="form-control" id="harga" name="harga"
+                        placeholder="Masukkan harga" value="{{ old('harga') }}">
                 </div>
                 <div class="card-footer text-end">
                     <button class="btn btn-secondary me-1" type="reset">
@@ -280,54 +275,6 @@
         </div>
     </div>
 
-    <div class="modal fade" id="tableKategori" data-backdrop="static">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Data Kendaraan</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="float-right">
-                    </div>
-                    {{-- <button type="button" data-toggle="modal" data-target="#modal-part"
-                            class="btn btn-primary btn-sm mb-2" data-dismiss="modal">
-                            Tambah
-                        </button> --}}
-                    <table id="example" class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th class="text-center">No</th>
-                                <th>Kode Kendaraan</th>
-                                <th>No Registrasi</th>
-                                <th>Merek</th>
-                                <th>Opsi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($kendaraans as $kendaraan)
-                                <tr>
-                                    <td class="text-center">{{ $loop->iteration }}</td>
-                                    <td>{{ $kendaraan->kode_kendaraan }}</td>
-                                    <td>{{ $kendaraan->no_pol }}</td>
-                                    <td>{{ $kendaraan->merek->nama_merek }}</td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-primary btn-sm"
-                                            onclick="getSelectedData('{{ $kendaraan->id }}', '{{ $kendaraan->kode_kendaraan }}', '{{ $kendaraan->no_pol }}', '{{ $kendaraan->no_rangka }}', '{{ $kendaraan->no_mesin }}', '{{ $kendaraan->warna }}', '{{ $kendaraan->merek->nama_merek }}', '{{ $kendaraan->merek->modelken->nama_model }}', '{{ $kendaraan->merek->tipe->nama_tipe }}', '{{ $kendaraan->transmisi }}', '{{ $kendaraan->km_berjalan }}')">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="modal fade" id="tablePelanggan" data-backdrop="static">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -338,43 +285,95 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="float-right">
-                    </div>
-                    {{-- <button type="button" data-toggle="modal" data-target="#modal-part"
-                            class="btn btn-primary btn-sm mb-2" data-dismiss="modal">
-                            Tambah
-                        </button> --}}
-                    <table id="example" class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th class="text-center">No</th>
-                                <th>Kode Pelanggan</th>
-                                <th>Nama Pelanggan</th>
-                                <th>Telepon</th>
-                                <th>Opsi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($pelanggans as $pelanggan)
+                    <div class="table-responsive scrollbar m-2">
+                        <table id="datatables2" class="table table-bordered table-striped">
+                            <thead class="bg-200 text-900">
                                 <tr>
-                                    <td class="text-center">{{ $loop->iteration }}</td>
-                                    <td>{{ $pelanggan->kode_pelanggan }}</td>
-                                    <td>{{ $pelanggan->nama_pelanggan }}</td>
-                                    <td>{{ $pelanggan->telp }}</td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-primary btn-sm"
-                                            onclick="getSelectedDatapelanggan('{{ $pelanggan->id }}', '{{ $pelanggan->kode_pelanggan }}', '{{ $pelanggan->nama_pelanggan }}', '{{ $pelanggan->telp }}', '{{ $pelanggan->umur }}', '{{ $pelanggan->alamat }}')">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
-                                    </td>
+                                    <th class="text-center">No</th>
+                                    <th>Kode Pelanggan</th>
+                                    <th>Nama Pelanggan</th>
+                                    <th>Alamat</th>
+                                    <th>Telepon</th>
+                                    <th>Opsi</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach ($pelanggans as $pelanggan)
+                                    <tr>
+                                        <td class="text-center">{{ $loop->iteration }}</td>
+                                        <td>{{ $pelanggan->kode_pelanggan }}</td>
+                                        <td>{{ $pelanggan->nama_pelanggan }}</td>
+                                        <td>{{ $pelanggan->alamat }}</td>
+                                        <td>{{ $pelanggan->telp }}</td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-primary btn-sm"
+                                                onclick="getSelectedDatapelanggan('{{ $pelanggan->id }}', '{{ $pelanggan->kode_pelanggan }}', '{{ $pelanggan->nama_pelanggan }}', '{{ $pelanggan->telp }}', '{{ $pelanggan->umur }}', '{{ $pelanggan->alamat }}')">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="tableKategori" data-backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Data Kendaraan</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card-body p-0">
+                        <div class="table-responsive scrollbar m-2">
+                            <table id="datatables" class="table table-bordered table-striped">
+                                <thead class="bg-200 text-900">
+                                    <tr>
+                                        <th class="text-center">No</th>
+                                        <th>Kode Kendaraan</th>
+                                        <th>No Registrasi</th>
+                                        <th>Merek</th>
+                                        <th>Opsi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($kendaraans as $kendaraan)
+                                        <tr>
+                                            <td class="text-center">{{ $loop->iteration }}</td>
+                                            <td>{{ $kendaraan->kode_kendaraan }}</td>
+                                            <td>{{ $kendaraan->no_pol }}</td>
+                                            <td>
+                                                @if ($kendaraan->merek)
+                                                    {{ $kendaraan->merek->nama_merek }}
+                                                @else
+                                                    data tidak ada
+                                                @endif
+                                            </td>
+                                            <td class="text-center">
+                                                <button type="button" class="btn btn-primary btn-sm"
+                                                    onclick="getSelectedData('{{ $kendaraan->id ?? '' }}', '{{ $kendaraan->kode_kendaraan ?? '' }}', '{{ $kendaraan->no_pol ?? '' }}', '{{ $kendaraan->no_rangka ?? '' }}', '{{ $kendaraan->no_mesin ?? '' }}', '{{ $kendaraan->warna ?? '' }}', '{{ $kendaraan->merek->nama_merek ?? '' }}', '{{ $kendaraan->merek->modelken->nama_model ?? '' }}', '{{ $kendaraan->merek->tipe->nama_tipe ?? '' }}', '{{ $kendaraan->transmisi ?? '' }}', '{{ $kendaraan->km_berjalan ?? '' }}')">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
     <script>
         function showCategoryModal(selectedCategory) {
@@ -416,6 +415,26 @@
             // Close the modal (if needed)
             $('#tablePelanggan').modal('hide');
         }
+
+        // $(document).ready(function() {
+        //     // Ketika input pencarian berubah
+        //     $('#searchInput').on('keyup', function() {
+        //         var keyword = $(this).val(); // Mendapatkan nilai input pencarian
+
+        //         // Kirim permintaan AJAX
+        //         $.ajax({
+        //             url: "{{ url('admin/penjualan') }}", // Ganti dengan URL yang sesuai untuk pencarian
+        //             type: 'GET',
+        //             data: {
+        //                 keyword: keyword
+        //             }, // Kirim keyword pencarian sebagai parameter
+        //             success: function(data) {
+        //                 // Perbarui tabel dengan hasil pencarian
+        //                 $('#example tbody').html(data);
+        //             }
+        //         });
+        //     });
+        // });
     </script>
 
 

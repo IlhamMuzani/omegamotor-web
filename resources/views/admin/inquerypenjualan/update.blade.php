@@ -175,11 +175,6 @@
                     <input type="number" class="form-control" id="harga" name="harga" placeholder="Masukkan harga"
                         value="{{ old('harga', $penjualan->harga) }}">
                 </div>
-                <div class="form-group mb-3">
-                    <label for="vi_marketing">Vee marketing</label>
-                    <input type="number" class="form-control" id="vi_marketing" name="vi_marketing"
-                        placeholder="Masukkan vee" value="{{ old('vi_marketing', $penjualan->vi_marketing) }}">
-                </div>
                 <div class="card-footer text-end">
                     <button class="btn btn-secondary me-1" type="reset">
                         <i class="fas fa-undo"></i> Reset
@@ -298,7 +293,7 @@
                             class="btn btn-primary btn-sm mb-2" data-dismiss="modal">
                             Tambah
                         </button> --}}
-                    <table id="example" class="table table-bordered table-striped">
+                    <table id="datatables" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
@@ -346,12 +341,13 @@
                             class="btn btn-primary btn-sm mb-2" data-dismiss="modal">
                             Tambah
                         </button> --}}
-                    <table id="example" class="table table-bordered table-striped">
+                    <table id="datatables2" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
                                 <th>Kode Pelanggan</th>
                                 <th>Nama Pelanggan</th>
+                                <th>Nama Alamat</th>
                                 <th>Telepon</th>
                                 <th>Opsi</th>
                             </tr>
@@ -362,6 +358,7 @@
                                     <td class="text-center">{{ $loop->iteration }}</td>
                                     <td>{{ $pelanggan->kode_pelanggan }}</td>
                                     <td>{{ $pelanggan->nama_pelanggan }}</td>
+                                    <td>{{ $pelanggan->alamat }}</td>
                                     <td>{{ $pelanggan->telp }}</td>
                                     <td class="text-center">
                                         <button type="button" class="btn btn-primary btn-sm"

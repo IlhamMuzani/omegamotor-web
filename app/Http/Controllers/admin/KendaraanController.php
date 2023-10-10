@@ -10,6 +10,7 @@ use App\Models\Kendaraan;
 use Illuminate\Http\Request;
 use App\Models\Jenis_kendaraan;
 use App\Http\Controllers\Controller;
+use App\Models\Gambar;
 use App\Models\Merek;
 use App\Models\Modelken;
 use App\Models\Tipe;
@@ -20,11 +21,12 @@ use Illuminate\Support\Facades\Storage;
 
 class KendaraanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $kendaraans = Kendaraan::paginate(4);
+        $kendaraans = Kendaraan::all();
         return view('admin/kendaraan.index', compact('kendaraans'));
     }
+
 
     public function create()
     {
@@ -42,6 +44,7 @@ class KendaraanController extends Controller
                 'no_pol' => 'required',
                 'no_rangka' => 'required',
                 'no_mesin' => 'required',
+                'tahun_kendaraan' => 'required',
                 'warna' => 'required',
                 'merek_id' => 'required',
                 'transmisi' => 'required',
@@ -51,8 +54,9 @@ class KendaraanController extends Controller
                 'no_pol.required' => 'Masukkan no registrasi',
                 'no_rangka.required' => 'Masukkan no rangka',
                 'no_mesin.required' => 'Masukkan no mesin',
-                'warna.required' => 'Masukkan warna',
-                'tipe_id.required' => 'Pilih tipe',
+                'tahun_kendaraan.required' => 'Pilih Tahun',
+                'warna.required' => 'Pilih warna',
+                'merek_id.required' => 'Pilih merek',
                 'transmisi.required' => 'Masukkan transmisi',
                 'km_berjalan.required' => 'Masukka km berjalan',
             ]
@@ -72,21 +76,21 @@ class KendaraanController extends Controller
             $namaGambar = null;
         }
 
-        if ($request->gambar_notis) {
-            $gambar = str_replace(' ', '', $request->gambar_notis->getClientOriginalName());
-            $namaGambar2 = 'gambar_notis/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
-            $request->gambar_notis->storeAs('public/uploads/', $namaGambar2);
-        } else {
-            $namaGambar2 = null;
-        }
+        // if ($request->gambar_notis) {
+        //     $gambar = str_replace(' ', '', $request->gambar_notis->getClientOriginalName());
+        //     $namaGambar2 = 'gambar_notis/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
+        //     $request->gambar_notis->storeAs('public/uploads/', $namaGambar2);
+        // } else {
+        //     $namaGambar2 = null;
+        // }
 
-        if ($request->gambar_bpkb) {
-            $gambar = str_replace(' ', '', $request->gambar_bpkb->getClientOriginalName());
-            $namaGambar3 = 'gambar_bpkb/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
-            $request->gambar_bpkb->storeAs('public/uploads/', $namaGambar3);
-        } else {
-            $namaGambar3 = null;
-        }
+        // if ($request->gambar_bpkb) {
+        //     $gambar = str_replace(' ', '', $request->gambar_bpkb->getClientOriginalName());
+        //     $namaGambar3 = 'gambar_bpkb/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
+        //     $request->gambar_bpkb->storeAs('public/uploads/', $namaGambar3);
+        // } else {
+        //     $namaGambar3 = null;
+        // }
 
         if ($request->gambar_dokumen) {
             $gambar = str_replace(' ', '', $request->gambar_dokumen->getClientOriginalName());
@@ -147,21 +151,20 @@ class KendaraanController extends Controller
         if ($request->gambar_interior) {
             $gambar = str_replace(' ', '', $request->gambar_interior->getClientOriginalName());
             $namaGambar11 = 'gambar_interior/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
-            $request->gambar_interior->storeAs('public/uploads/', $namaGambar10);
+            $request->gambar_interior->storeAs('public/uploads/', $namaGambar11);
         } else {
             $namaGambar11 = null;
         }
 
-
         $kode = $this->kode();
 
         $tanggal = Carbon::now()->format('Y-m-d');
-        Kendaraan::create(array_merge(
+        $kendaraan = Kendaraan::create(array_merge(
             $request->all(),
             [
                 'gambar_stnk' => $namaGambar,
-                'gambar_notis' => $namaGambar2,
-                'gambar_bpkp' => $namaGambar3,
+                // 'gambar_notis' => $namaGambar2,
+                // 'gambar_bpkb' => $namaGambar3,
                 'gambar_dokumen' => $namaGambar4,
                 'gambar_faktur' => $namaGambar5,
                 'gambar_depan' => $namaGambar6,
@@ -171,27 +174,39 @@ class KendaraanController extends Controller
                 'gambar_dashboard' => $namaGambar10,
                 'gambar_interior' => $namaGambar11,
                 'kode_kendaraan' => $this->kode(),
-                'qrcode_kendaraan' => 'https:///omega.id/kendaraan/' . $kode,
+                'qrcode_kendaraan' => 'https:///omegamotor.id/kendaraan/' . $kode,
                 'tanggal_awal' => $tanggal,
             ]
         ));
+
+        if ($request->has('gambar')) {
+            $gambars = $request->file('gambar');
+
+            foreach ($gambars as $gambar) {
+                $name = str_replace(' ', '', $gambar->getClientOriginalName());
+                $namagambar = 'gambar/' . date('mYdHs') . random_int(1, 10) . '_' . $name;
+                $gambar->storeAs('public/uploads', $namagambar);
+
+                Gambar::create([
+                    'kendaraan_id' => $kendaraan->id,
+                    'gambar' => $namagambar
+                ]);
+            }
+        }
         return redirect('admin/kendaraan')->with('success', 'Berhasil menambahkan kendaraan');
     }
 
-    public function cetakpdf($id)
+    public function cetakqrcode($id)
     {
-        $cetakpdf = Kendaraan::where('id', $id)->first();
-        $html = view('admin/kendaraan.cetak_pdf', compact('cetakpdf'));
+        $kendaraans = Kendaraan::find($id);
+        $pdf = app('dompdf.wrapper');
+        $pdf->loadView('admin.kendaraan.cetak_pdf', compact('kendaraans'));
 
-        $dompdf = new Dompdf();
-        $dompdf->loadHtml($html);
-        $dompdf->setPaper('A4', 'landscape');
+        // Mengatur jenis kertas dan orientasi menjadi lanscape
+        $pdf->setPaper('landscape');
 
-        $dompdf->render();
-
-        $dompdf->stream();
+        return $pdf->stream('QrCodeKendaraan.pdf');
     }
-
 
     public function kode()
     {
@@ -224,8 +239,9 @@ class KendaraanController extends Controller
         $mereks = Merek::all();
         $tipes = Tipe::all();
         $modelkens = Modelken::all();
-       
-        return view('admin/kendaraan.update', compact('modelkens', 'kendaraan', 'mereks', 'tipes'));
+        $gambars = Gambar::where('kendaraan_id', $kendaraan->id)->get();
+
+        return view('admin/kendaraan.update', compact('gambars', 'modelkens', 'kendaraan', 'mereks', 'tipes'));
     }
 
     public function update(Request $request, $id)
@@ -236,10 +252,9 @@ class KendaraanController extends Controller
                 'no_pol' => 'required',
                 'no_rangka' => 'required',
                 'no_mesin' => 'required',
+                'tahun_kendaraan' => 'required',
                 'warna' => 'required',
                 'merek_id' => 'required',
-                'modelken_id' => 'required',
-                'tipe_id' => 'required',
                 'transmisi' => 'required',
                 'km_berjalan' => 'required',
             ],
@@ -247,10 +262,9 @@ class KendaraanController extends Controller
                 'no_pol.required' => 'Masukkan no registrasi',
                 'no_rangka.required' => 'Masukkan no rangka',
                 'no_mesin.required' => 'Masukkan no mesin',
+                'tahun_kendaraan.required' => 'Masukkan tahun',
                 'warna.required' => 'Masukkan warna',
                 'merek_id.required' => 'Pilih merek',
-                'modelken_id.required' => 'Pilih model',
-                'tipe_id.required' => 'Pilih tipe',
                 'transmisi.required' => 'Masukkan transmisi',
                 'km_berjalan.required' => 'Masukka km berjalan',
             ]
@@ -272,23 +286,23 @@ class KendaraanController extends Controller
             $namaGambar = $kendaraan->gambar_stnk;
         }
 
-        if ($request->gambar_notis) {
-            Storage::disk('local')->delete('public/uploads/' . $kendaraan->gambar_notis);
-            $gambar = str_replace(' ', '', $request->gambar_notis->getClientOriginalName());
-            $namaGambar2 = 'gambar_notis/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
-            $request->gambar_notis->storeAs('public/uploads/', $namaGambar2);
-        } else {
-            $namaGambar2 = $kendaraan->gambar_notis;
-        }
+        // if ($request->gambar_notis) {
+        //     Storage::disk('local')->delete('public/uploads/' . $kendaraan->gambar_notis);
+        //     $gambar = str_replace(' ', '', $request->gambar_notis->getClientOriginalName());
+        //     $namaGambar2 = 'gambar_notis/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
+        //     $request->gambar_notis->storeAs('public/uploads/', $namaGambar2);
+        // } else {
+        //     $namaGambar2 = $kendaraan->gambar_notis;
+        // }
 
-        if ($request->gambar_bpkb) {
-            Storage::disk('local')->delete('public/uploads/' . $kendaraan->gambar_bpkb);
-            $gambar = str_replace(' ', '', $request->gambar_bpkb->getClientOriginalName());
-            $namaGambar3 = 'gambar_bpkb/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
-            $request->gambar_bpkb->storeAs('public/uploads/', $namaGambar3);
-        } else {
-            $namaGambar3 = $kendaraan->gambar_bpkb;
-        }
+        // if ($request->gambar_bpkb) {
+        //     Storage::disk('local')->delete('public/uploads/' . $kendaraan->gambar_bpkb);
+        //     $gambar = str_replace(' ', '', $request->gambar_bpkb->getClientOriginalName());
+        //     $namaGambar3 = 'gambar_bpkb/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
+        //     $request->gambar_bpkb->storeAs('public/uploads/', $namaGambar3);
+        // } else {
+        //     $namaGambar3 = $kendaraan->gambar_bpkb;
+        // }
 
         if ($request->gambar_dokumen) {
             Storage::disk('local')->delete('public/uploads/' . $kendaraan->gambar_dokumen);
@@ -337,7 +351,7 @@ class KendaraanController extends Controller
 
         if ($request->gambar_kiri) {
             Storage::disk('local')->delete('public/uploads/' . $kendaraan->gambar_kiri);
-            $gambar = str_replace(' ', '', $request->gambar_bpkb->getClientOriginalName());
+            $gambar = str_replace(' ', '', $request->gambar_kiri->getClientOriginalName());
             $namaGambar9 = 'gambar_kiri/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
             $request->gambar_kiri->storeAs('public/uploads/', $namaGambar9);
         } else {
@@ -353,21 +367,28 @@ class KendaraanController extends Controller
             $namaGambar10 = $kendaraan->gambar_dashboard;
         }
 
+        if ($request->gambar_interior) {
+            Storage::disk('local')->delete('public/uploads/' . $kendaraan->gambar_interior);
+            $gambar = str_replace(' ', '', $request->gambar_interior->getClientOriginalName());
+            $namaGambar11 = 'gambar_interior/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
+            $request->gambar_interior->storeAs('public/uploads/', $namaGambar11);
+        } else {
+            $namaGambar11 = $kendaraan->gambar_interior;
+        }
 
         Kendaraan::where('id', $id)->update(
             [
                 'no_pol' => $request->no_pol,
-                'no_rangka' => $request->no_pol,
+                'no_rangka' => $request->no_rangka,
                 'no_mesin' => $request->no_mesin,
+                'tahun_kendaraan' => $request->tahun_kendaraan,
                 'warna' => $request->warna,
                 'merek_id' => $request->merek_id,
-                'modelken_id' => $request->modelken_id,
-                'tipe_id' => $request->tipe_id,
                 'transmisi' => $request->transmisi,
                 'km_berjalan' => $request->km_berjalan,
                 'gambar_stnk' => $namaGambar,
-                'gambar_notis' => $namaGambar2,
-                'gambar_bpkb' => $namaGambar3,
+                // 'gambar_notis' => $namaGambar2,
+                // 'gambar_bpkb' => $namaGambar3,
                 'gambar_dokumen' => $namaGambar4,
                 'gambar_faktur' => $namaGambar5,
                 'gambar_depan' => $namaGambar6,
@@ -375,15 +396,30 @@ class KendaraanController extends Controller
                 'gambar_kanan' => $namaGambar8,
                 'gambar_kiri' => $namaGambar9,
                 'gambar_dashboard' => $namaGambar10,
+                'gambar_interior' => $namaGambar11,
             ]
         );
+
+        if ($request->has('gambars')) {
+            $gambars = $request->file('gambars');
+
+            foreach ($gambars as $gambar) {
+                $name = str_replace(' ', '', $gambar->getClientOriginalName());
+                $namagambar = 'gambar/' . date('mYdHs') . random_int(1, 10) . '_' . $name;
+                $gambar->storeAs('public/uploads', $namagambar);
+
+                Gambar::create([
+                    'kendaraan_id' => $kendaraan->id,
+                    'gambar' => $namagambar
+                ]);
+            }
+        }
         return redirect('admin/kendaraan')->with('success', 'Berhasil memperbarui kendaraan');
     }
 
     public function destroy($id)
     {
         $kendaraan = Kendaraan::find($id);
-        $kendaraan->merek()->delete();
         $kendaraan->delete();
 
         return redirect('admin/kendaraan')->with('success', 'Berhasil menghapus Kendaraan');

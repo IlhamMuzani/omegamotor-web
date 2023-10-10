@@ -34,8 +34,8 @@
             </a>
         </div>
         <div class="card-body p-0">
-            <div class="table-responsive scrollbar">
-                <table class="table table-bordered table-striped">
+            <div class="table-responsive scrollbar m-2">
+                <table id="datatables" class="table table-bordered table-striped">
                     <thead class="bg-200 text-900">
                         <tr>
                             <th class="text-center">No</th>
@@ -53,8 +53,20 @@
                                 <td class="text-center">{{ $loop->iteration }}</td>
                                 <td>{{ $merek->kode_merek }}</td>
                                 <td>{{ $merek->nama_merek }}</td>
-                                <td>{{ $merek->tipe->nama_tipe }}</td>
-                                <td>{{ $merek->modelken->nama_model }}</td>
+                                <td>
+                                    @if ($merek->modelken)
+                                        {{ $merek->modelken->nama_model }}
+                                    @else
+                                        data tidak ada
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($merek->tipe)
+                                        {{ $merek->tipe->nama_tipe }}
+                                    @else
+                                        data tidak ada
+                                    @endif
+                                </td>
                                 <td data-bs-toggle="modal" data-bs-target="#modal-qrcode-{{ $merek->id }}"
                                     style="text-align: center;">
                                     <div style="display: inline-block;">
@@ -77,7 +89,8 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h4 class="modal-title">Hapus Merek</h4>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
@@ -102,7 +115,8 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h4 class="modal-title">Gambar QR Code</h4>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
@@ -115,7 +129,7 @@
                                             <div class="modal-footer justify-content-between">
                                                 <button type="button" class="btn btn-default"
                                                     data-bs-dismiss="modal">Batal</button>
-                                                <a href="{{ url('admin/merek/cetak-pdf/' . $merek->id) }}"
+                                                <a href="{{ url('admin/merek/cetak-qrcode/' . $merek->id) }}"
                                                     class="btn btn-primary btn-sm">
                                                     <i class=""></i> Cetak
                                                 </a>
@@ -129,10 +143,10 @@
                 </table>
             </div>
         </div>
-        <div class="card-footer py-0">
+        {{-- <div class="card-footer py-0">
             <div class="pagination float-end">
                 {{ $mereks->appends(Request::all())->links('pagination::bootstrap-4') }}
             </div>
-        </div>
+        </div> --}}
     </div>
 @endsection

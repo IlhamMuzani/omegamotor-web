@@ -34,8 +34,8 @@
             </a>
         </div>
         <div class="card-body p-0">
-            <div class="table-responsive scrollbar">
-                <table class="table table-bordered table-striped">
+            <div class="table-responsive scrollbar m-2">
+                <table id="datatables" class="table table-bordered table-striped">
                     <thead class="bg-200 text-900">
                         <tr>
                             <th class="text-center">No</th>
@@ -43,7 +43,7 @@
                             <th>Nama</th>
                             <th>Telepon</th>
                             <th>Departemen</th>
-                            <th class="text-center">Qr Code</th>
+                            {{-- <th class="text-center">Qr Code</th> --}}
                             <th class="text-center" width="20">Opsi</th>
                         </tr>
                     </thead>
@@ -52,18 +52,30 @@
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
                                 <td>{{ $user->kode_user }}</td>
-                                <td>{{ $user->karyawan->nama_lengkap }}</td>
+                                <td>
+                                    @if ($user->karyawan)
+                                        {{ $user->karyawan->nama_lengkap }}
+                                    @else
+                                        data tidak ada
+                                    @endif
+                                </td>
                                 <td>{{ $user->karyawan->telp }}</td>
-                                <td>{{ $user->karyawan->departemen->nama }}</td>
-                                <td data-toggle="modal" data-target="#modal-qrcode-{{ $user->id }}"
+                                <td>
+                                    @if ($user->karyawan->departemen)
+                                        {{ $user->karyawan->departemen->nama }}
+                                    @else
+                                        data tidak ada
+                                    @endif
+                                </td>
+                                {{-- <td data-toggle="modal" data-target="#modal-qrcode-{{ $user->id }}"
                                     style="text-align: center;">
                                     <div style="display: inline-block;">
                                         {!! DNS2D::getBarcodeHTML("$user->qrcode_user", 'QRCODE', 2, 2) !!}
                                     </div>
-                                </td>
+                                </td> --}}
                                 <td class="text-center">
-                                    <button type="submit" class="btn btn-danger btn-sm" data-toggle="modal"
-                                        data-target="#modal-hapus-{{ $user->id }}">
+                                    <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#modal-hapus-{{ $user->id }}">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </td>
@@ -73,7 +85,8 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h4 class="modal-title">Hapus User</h4>
-                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
@@ -125,10 +138,10 @@
                 </table>
             </div>
         </div>
-        <div class="card-footer py-0">
+        {{-- <div class="card-footer py-0">
             <div class="pagination float-end">
                 {{ $users->appends(Request::all())->links('pagination::bootstrap-4') }}
             </div>
-        </div>
+        </div> --}}
     </div>
 @endsection

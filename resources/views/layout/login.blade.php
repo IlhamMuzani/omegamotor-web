@@ -103,8 +103,8 @@
                                                     placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                                     aria-describedby="password"
                                                     value="{{ Session::get('password') }}" />
-                                                <span class="input-group-text cursor-pointer"><i
-                                                        class="far fa-eye-slash" id="togglePassword"></i></span>
+                                                <span class="input-group-text cursor-pointer" id="togglePasswordIcon"><i
+                                                        class="far fa-eye-slash"></i></span>
                                                 @error('password')
                                                     <span class="invalid-feedback"
                                                         role="alert">{{ $message }}</span>
@@ -305,6 +305,25 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
     <script src="{{ asset('falcon/public/vendors/list.js/list.min.js') }}"></script>
     <script src="{{ asset('falcon/public/assets/js/theme.js') }}"></script>
+
+
+    <script>
+        // Dapatkan elemen-elemen yang dibutuhkan
+        const passwordInput = document.getElementById('password');
+        const togglePasswordIcon = document.getElementById('togglePasswordIcon');
+
+        // Tambahkan event listener untuk mengubah tipe input dari password ke text dan sebaliknya
+        togglePasswordIcon.addEventListener('click', function() {
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                togglePasswordIcon.innerHTML = '<i class="far fa-eye"></i>';
+            } else {
+                passwordInput.type = 'password';
+                togglePasswordIcon.innerHTML = '<i class="far fa-eye-slash"></i>';
+            }
+        });
+    </script>
+
 
 </body>
 

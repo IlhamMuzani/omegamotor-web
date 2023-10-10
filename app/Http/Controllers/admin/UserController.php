@@ -18,7 +18,7 @@ class UserController extends Controller
     {
         if (auth()->check() && auth()->user()->menu['user']) {
 
-            $users = User::where(['cek_hapus' => 'tidak'])->paginate(4);
+            $users = User::where(['cek_hapus' => 'tidak'])->get();
             return view('admin/user.index', compact('users'));
         } else {
             // tidak memiliki akses
@@ -106,47 +106,21 @@ class UserController extends Controller
                     'karyawan' => false,
                     'user' => false,
                     'departemen' => false,
-                    'supplier' => false,
+                    'marketing' => false,
                     'pelanggan' => false,
+                    'merek' => false,
                     'kendaraan' => false,
-                    'ban' => false,
-                    'golongan' => false,
-                    'divisi mobil' => false,
-                    'jenis kendaraan' => false,
-                    'ukuran ban' => false,
-                    'merek ban' => false,
-                    'type ban' => false,
-                    'nokir' => false,
-                    'stnk' => false,
-                    'part' => false,
-                    //opersional //
-                    'update km' => false,
-                    'perpanjangan stnk' => false,
-                    'perpanjangan kir' => false,
-                    'pemasangan ban' => false,
-                    'pelepasan ban' => false,
-                    'pemasangan part' => false,
-                    'penggantian oli' => false,
-                    'status perjalanan kendaraan' => false,
                     //transaksi//
-                    'pembelian ban' => false,
-                    'pembelian part' => false,
-                    'inquery pembelian ban' => false,
-                    'inquery pembelian part' => false,
-                    'inquery pemasangan ban' => false,
-                    'inquery pelepasan ban' => false,
-                    'inquery pemasangan part' => false,
-                    'inquery penggantian oli' => false,
-                    'inquery update km' => false,
+                    'pembelian kendaraan' => false,
+                    'penjualan kendaraan' => false,
+                    'komisi marketing' => false,
+                    'inquery pembelian' => false,
+                    'inquery penjualan' => false,
+                    'inquery komisi' => false,
                     //laporan//
-                    'laporan pembelian ban' => false,
-                    'laporan pembelian part' => false,
-                    'laporan pemasangan ban' => false,
-                    'laporan pelepasan ban' => false,
-                    'laporan pemasangan part' => false,
-                    'laporan penggantian oli' => false,
-                    'laporan update km' => false,
-                    'laporan status perjalanan kendaraaan' => false,
+                    'laporan pembelian' => false,
+                    'laporan penjualan' => false,
+                    'laporan komisi' => false,
                 ]
             ]
         ));
@@ -227,7 +201,7 @@ class UserController extends Controller
         ]);
         $user->delete();
 
-        LogAktivitas::where('user_id', $id)->update(['user_id' => null]);
+        // LogAktivitas::where('user_id', $id)->update(['user_id' => null]);
 
 
         return redirect('admin/user')->with('success', 'Berhasil menghapus user');

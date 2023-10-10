@@ -32,16 +32,16 @@
 
         </div>
         <div class="card-body p-0">
-            <div class="table-responsive scrollbar">
-                <table class="table table-bordered table-striped">
+            <div class="table-responsive scrollbar m-2">
+                <table id="datatables" class="table table-bordered table-striped">
                     <thead class="bg-200 text-900">
                         <tr>
                             <th class="text-center">No</th>
                             <th>Faktur Penjualan</th>
                             <th>Tanggal</th>
-                            <th class="text-center">Supplier</th>
-                            <th class="text-center">Total</th>
-                            <th class="text-center" width="220">Opsi</th>
+                            <th class="text-center">Pelanggan</th>
+                            <th class="text-center">Harga</th>
+                            <th class="text-center" width="170">Opsi</th>
                         </tr>
                     </thead>
                     <tbody class="list">
@@ -50,10 +50,16 @@
                                 <td class="text-center">{{ $loop->iteration }}</td>
                                 <td>{{ $penjualan->kode_penjualan }}</td>
                                 <td>{{ $penjualan->tanggal_awal }}</td>
-                                <td>{{ $penjualan->pelanggan->nama_pelanggan }}</td>
+                                <td>
+                                    @if ($penjualan->pelanggan)
+                                        {{ $penjualan->pelanggan->nama_pelanggan }}
+                                    @else
+                                        data tidak ada
+                                    @endif
+                                </td>
                                 {{-- <td>{{ $pembelian->harga }}</td>
                                 <td>{{ $pembelian->vi_marketing }}</td> --}}
-                                <td>Rp {{ number_format($penjualan->harga + $penjualan->vi_marketing, 0, ',', '.') }}</td>
+                                <td>Rp {{ number_format($penjualan->harga, 0, ',', '.') }}</td>
                                 {{-- <td class="text-center">
                                     <a href="{{ url('admin/pembelian/' . $pembelian->id . '/edit') }}"
                                         class="btn btn-warning btn-sm">
@@ -202,10 +208,10 @@
                 </table>
             </div>
         </div>
-        <div class="card-footer py-0">
+        {{-- <div class="card-footer py-0">
             <div class="pagination float-end">
                 {{ $penjualans->appends(Request::all())->links('pagination::bootstrap-4') }}
             </div>
-        </div>
+        </div> --}}
     </div>
 @endsection

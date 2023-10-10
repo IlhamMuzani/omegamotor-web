@@ -21,12 +21,12 @@ return new class extends Migration
             $table->foreign('pelanggan_id')->references('id')->on('pelanggans')->onDelete('set null');
             $table->unsignedBigInteger('kendaraan_id')->nullable();
             $table->foreign('kendaraan_id')->references('id')->on('kendaraans')->onDelete('set null');
-            $table->string('vi_marketing')->nullable();
             $table->string('harga')->nullable();
             $table->string('tanggal')->nullable();
             $table->string('tanggal_awal')->nullable();
             $table->string('tanggal_akhir')->nullable();
             $table->string('status')->nullable();
+            $table->string('status_komisi')->nullable();
             $table->timestamps();
         });
     }

@@ -15,24 +15,19 @@ class KaryawanController extends Controller
 {
     public function index()
     {
-        if (auth()->check() && auth()->user()->menu['karyawan']) {
-            $karyawans = Karyawan::paginate(4);
-            return view('admin.karyawan.index', compact('karyawans'));
-        } else {
-            // tidak memiliki akses
-            return back()->with('error', array('Anda tidak memiliki akses'));
-        }
+        $karyawans = Karyawan::all();
+        return view('admin.karyawan.index', compact('karyawans'));
     }
 
     public function create()
     {
-        if (auth()->check() && auth()->user()->menu['karyawan']) {
-            $departemens = Departemen::all();
-            return view('admin/karyawan.create', compact('departemens'));
-        } else {
-            // tidak memiliki akses
-            return back()->with('error', array('Anda tidak memiliki akses'));
-        }
+        // if (auth()->check() && auth()->user()->menu['karyawan']) {
+        $departemens = Departemen::all();
+        return view('admin/karyawan.create', compact('departemens'));
+        // } else {
+        //     // tidak memiliki akses
+        //     return back()->with('error', array('Anda tidak memiliki akses'));
+        // }
     }
 
     public function store(Request $request)
@@ -93,8 +88,8 @@ class KaryawanController extends Controller
                 'pembayaran' => '-',
                 'status' => 'null',
                 'kode_karyawan' => $this->kode(),
-                'qrcode_karyawan' => 'https://javaline.id/karyawan/' . $kode,
-                // 'qrcode_karyawan' => 'http://192.168.1.46/javaline/karyawan/' . $kode
+                'qrcode_karyawan' => 'https://omegamotor.id/karyawan/' . $kode,
+                // 'qrcode_karyawan' => 'http://192.168.1.46/omegamotor.id/karyawan/' . $kode
                 'tanggal' => Carbon::now('Asia/Jakarta'),
 
             ]
@@ -123,30 +118,25 @@ class KaryawanController extends Controller
         return $kode_karyawan;
     }
 
-    public function cetakpdf($id)
+    public function cetakqrcode($id)
     {
-        $cetakpdf = Karyawan::where('id', $id)->first();
-        $html = view('admin/karyawan.cetak_pdf', compact('cetakpdf'));
-
-        $dompdf = new Dompdf();
-        $dompdf->loadHtml($html);
-        $dompdf->setPaper('A4', 'landscape');
-
-        $dompdf->render();
-
-        $dompdf->stream();
+        $karyawans = Karyawan::find($id);
+        $pdf = app('dompdf.wrapper');
+        $pdf->loadView('admin.karyawan.cetak_pdf', compact('karyawans'));
+        $pdf->setPaper('letter', 'portrait');
+        return $pdf->stream('QrCodeKaryawan.pdf');
     }
 
     public function show($id)
     {
-        if (auth()->check() && auth()->user()->menu['karyawan']) {
+        // if (auth()->check() && auth()->user()->menu['karyawan']) {
 
-            $karyawan = Karyawan::where('id', $id)->first();
-            return view('admin/karyawan.show', compact('karyawan'));
-        } else {
-            // tidak memiliki akses
-            return back()->with('error', array('Anda tidak memiliki akses'));
-        }
+        $karyawan = Karyawan::where('id', $id)->first();
+        return view('admin/karyawan.show', compact('karyawan'));
+        // } else {
+        //     // tidak memiliki akses
+        //     return back()->with('error', array('Anda tidak memiliki akses'));
+        // }
     }
 
     public function edit($id)
@@ -226,7 +216,7 @@ class KaryawanController extends Controller
                 'telp' => $request->telp,
                 'alamat' => $request->alamat,
                 'gambar' => $namaGambar,
-            'tanggal_awal' => Carbon::now('Asia/Jakarta'),
+                'tanggal_awal' => Carbon::now('Asia/Jakarta'),
             ]);
 
         return redirect('admin/karyawan')->with('success', 'Berhasil mengubah karyawan');

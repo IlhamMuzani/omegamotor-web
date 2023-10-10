@@ -127,7 +127,7 @@
                     <textarea type="text" class="form-control" id="alamat" name="alamat" placeholder="Masukan alamat">{{ old('alamat') }}</textarea>
                 </div>
                 <div class="form-group">
-                    <label for="gambar">Gambar <small>(Kosongkan saja jika tidak
+                    <label for="gambar">Foto Profil <small>(Kosongkan saja jika tidak
                             ingin menambahkan)</small></label>
                     <input class="form-control @error('gambar') is-invalid @enderror" id="gambar" name="gambar"
                         type="file" accept="image/*" />

@@ -42,8 +42,8 @@
                         <img src="{{ asset('storage/uploads/' . $karyawan->gambar) }}" alt="{{ $karyawan->nama_lengkap }}"
                             class="w-100 rounded border">
                     @else
-                        <img src="{{ asset('adminlte/dist/img/img-placeholder.jpg') }}" alt="{{ $karyawan->nama_lengkap }}"
-                            class="w-100 rounded border">
+                        <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
+                            alt="AdminLTELogo" height="400" width="400">
                     @endif
                 </div>
                 <div class="col-md-6">
@@ -172,7 +172,7 @@
                                 @csrf
                                 <button type="submit" class="btn btn-primary">Cetak</button>
                                 </form> --}}
-                            <a href="{{ url('admin/karyawan/cetak-pdf/' . $karyawan->id) }}"
+                            <a href="{{ url('admin/karyawan/cetak-qrcode/' . $karyawan->id) }}"
                                 class="btn btn-primary btn-sm">
                                 <i class=""></i> Cetak
                             </a>

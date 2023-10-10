@@ -7,10 +7,10 @@
     </span>
   </button>
   <a class="navbar-brand me-1 me-sm-3" href="index.html">
-    <div class="d-flex align-items-center">
-      <img class="me-2" src="{{ asset('falcon/public/assets/img/icons/spot-illustrations/falcon.png') }}" alt=""
-        width="40" />
-      <span class="font-sans-serif">OMEGA MOTOR</span>
+    <div class="d-flex align-items-center mt-2">
+      <img class="" src="{{ asset('storage/uploads/gambaricon/omegapolos.png') }}" alt="AdminLTELogo"
+                        height="25" width="130">
+      {{-- <span class="font-sans-serif">OMEGA MOTOR</span> --}}
     </div>
   </a>
   <ul class="navbar-nav align-items-center d-none d-lg-block">

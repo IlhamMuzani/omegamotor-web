@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('no_pol')->nullable();
             $table->string('no_rangka')->nullable();
             $table->string('no_mesin')->nullable();
+            $table->string('tahun_kendaraan')->nullable();
             $table->string('warna')->nullable();
             $table->unsignedBigInteger('merek_id')->nullable();
             $table->foreign('merek_id')->references('id')->on('mereks')->onDelete('set null');

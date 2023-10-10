@@ -34,8 +34,8 @@
             </a>
         </div>
         <div class="card-body p-0">
-            <div class="table-responsive scrollbar">
-                <table class="table table-bordered table-striped">
+            <div class="table-responsive scrollbar m-2">
+                <table id="datatables" class="table table-bordered table-striped">
                     <thead class="bg-200 text-900">
                         <tr>
                             <th class="text-center">No</th>
@@ -43,7 +43,7 @@
                             <th>Nama Pelanggan</th>
                             <th>Telepon</th>
                             <th class="text-center">Qr Code</th>
-                            <th class="text-center" width="170">Opsi</th>
+                            <th class="text-center" width="125">Opsi</th>
                         </tr>
                     </thead>
                     <tbody class="list">
@@ -110,14 +110,17 @@
                                         </div>
                                         <div class="modal-body">
                                             <div style="text-align: center;">
+                                                <p style="font-size:20px; font-weight: bold;">{{ $pelanggan->kode_pelanggan }}</p>
                                                 <div style="display: inline-block;">
                                                     {!! DNS2D::getBarcodeHTML("$pelanggan->qrcode_pelanggan", 'QRCODE', 15, 15) !!}
                                                 </div>
+                                                <p style="font-size:20px; font-weight: bold;">{{ $pelanggan->nama_pelanggan }}</p>
+
                                             </div>
                                             <div class="modal-footer justify-content-between">
                                                 <button type="button" class="btn btn-default"
                                                     data-bs-dismiss="modal">Batal</button>
-                                                <a href="{{ url('admin/pelanggan/cetak-pdf/' . $pelanggan->id) }}"
+                                                <a href="{{ url('admin/pelanggan/cetak-qrcode/' . $pelanggan->id) }}"
                                                     class="btn btn-primary btn-sm">
                                                     <i class=""></i> Cetak
                                                 </a>
@@ -131,10 +134,10 @@
                 </table>
             </div>
         </div>
-        <div class="card-footer py-0">
+        {{-- <div class="card-footer py-0">
             <div class="pagination float-end">
                 {{ $pelanggans->appends(Request::all())->links('pagination::bootstrap-4') }}
             </div>
-        </div>
+        </div> --}}
     </div>
 @endsection

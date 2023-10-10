@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Validator;
 
 class PenjualanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $pelanggans = Pelanggan::all();
         $kendaraans = Kendaraan::all();
@@ -32,13 +32,11 @@ class PenjualanController extends Controller
                 'pelanggan_id' => 'required',
                 'kendaraan_id' => 'required',
                 'harga' => 'required',
-                'vi_marketing' => 'required',
             ],
             [
                 'pelanggan_id.required' => 'Pilih pelanggan',
                 'kendaraan_id.required' => 'Pilih Kendaraan',
                 'harga.required' => 'Masukkan harga',
-                'vi_marketing.required' => 'Masukkan vi marketing',
             ]
         );
 
@@ -56,11 +54,11 @@ class PenjualanController extends Controller
                 'pelanggan_id' => $request->pelanggan_id,
                 'kendaraan_id' => $request->kendaraan_id,
                 'harga' => $request->harga,
-                'vi_marketing' => $request->vi_marketing,
                 'kode_penjualan' => $this->kode(),
-                'qrcode_penjualan' => 'https:///omega.id/penjualan/' . $kode,
+                'qrcode_penjualan' => 'https:///omegamotor.id/penjualan/' . $kode,
                 'tanggal_awal' => $tanggal,
                 'status' => 'posting',
+                'status_komisi' => 'tidak aktif',
             ]
         ));
         return view('admin.penjualan.show', compact('penjualans'));
@@ -96,7 +94,7 @@ class PenjualanController extends Controller
         $penjualans = Penjualan::find($id);
         $pdf = app('dompdf.wrapper');
         $pdf->loadView('admin.penjualan.cetak_pdf', compact('penjualans'));
-        $pdf->setPaper('letter', 'portrait'); 
+        $pdf->setPaper('letter', 'portrait');
 
         // Return the PDF as a response
         return $pdf->stream('Faktur_Penjualan.pdf');
@@ -147,9 +145,8 @@ class PenjualanController extends Controller
             [
                 'gambar' => $namaGambar,
                 'kode_pelanggan' => $this->kodepelanggan(),
-                'qrcode_pelanggan' => 'https://javaline.id/pelanggan/' . $kode,
+                'qrcode_pelanggan' => 'https://omegamotor.id/pelanggan/' . $kode,
                 'tanggal_awal' => $tanggal,
-
             ]
         ));
 

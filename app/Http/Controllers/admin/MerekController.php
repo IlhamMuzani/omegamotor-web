@@ -20,7 +20,7 @@ class MerekController extends Controller
     public function index()
     {
 
-        $mereks = Merek::paginate(4);
+        $mereks = Merek::get();
         return view('admin/merek.index', compact('mereks'));
     }
 
@@ -121,6 +121,15 @@ class MerekController extends Controller
         ]);
 
         return redirect('admin/merek')->with('success', 'Berhasil memperbarui Merek');
+    }
+
+    public function cetakqrcode($id)
+    {
+        $mereks = Merek::find($id);
+        $pdf = app('dompdf.wrapper');
+        $pdf->loadView('admin.merek.cetak_pdf', compact('mereks'));
+        $pdf->setPaper('letter', 'portrait');
+        return $pdf->stream('QrCodeMerek.pdf');
     }
 
     public function destroy($id)

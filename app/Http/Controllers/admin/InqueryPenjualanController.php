@@ -25,7 +25,7 @@ class InqueryPenjualanController extends Controller
 {
     public function index()
     {
-        $penjualans = Penjualan::paginate(4);
+        $penjualans = Penjualan::get();
         return view('admin/inquerypenjualan.index', compact('penjualans'));
     }
 
@@ -55,13 +55,11 @@ class InqueryPenjualanController extends Controller
                 'pelanggan_id' => 'required',
                 'kendaraan_id' => 'required',
                 'harga' => 'required',
-                'vi_marketing' => 'required',
             ],
             [
                 'pelanggan_id.required' => 'Pilih pelanggan',
                 'kendaraan_id.required' => 'Pilih Kendaraan',
                 'harga.required' => 'Masukkan harga',
-                'vi_marketing.required' => 'Masukkan vi marketing',
             ]
         );
 
@@ -75,7 +73,6 @@ class InqueryPenjualanController extends Controller
                 'pelanggan_id' => $request->pelanggan_id,
                 'kendaraan_id' => $request->kendaraan_id,
                 'harga' => $request->harga,
-                'vi_marketing' => $request->vi_marketing,
                 'status' => 'posting',
             ]
         );

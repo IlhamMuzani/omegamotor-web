@@ -10,6 +10,7 @@ use App\Models\Kendaraan;
 use Illuminate\Http\Request;
 use App\Models\Jenis_kendaraan;
 use App\Http\Controllers\Controller;
+use App\Models\Gambar;
 use App\Models\Merek;
 use App\Models\Modelken;
 use App\Models\Pelanggan;
@@ -24,11 +25,11 @@ class InqueryPembelianController extends Controller
 {
     public function index()
     {
-        $pembelians = Pembelian::paginate(4);
+        $pembelians = Pembelian::get();
         return view('admin/inquerypembelian.index', compact('pembelians'));
     }
 
-    
+
     public function show($id)
     {
         $pembelians = Pembelian::where('id', $id)->first();
@@ -47,8 +48,9 @@ class InqueryPembelianController extends Controller
         $tipes = Tipe::all();
         $modelkens = Modelken::all();
         $pelanggans = Pelanggan::all();
+        $gambars = Gambar::where('kendaraan_id', $kendaraan->id)->get();
 
-        return view('admin/inquerypembelian.update', compact('modelkens', 'kendaraan', 'pembelian', 'mereks', 'tipes', 'pelanggans'));
+        return view('admin/inquerypembelian.update', compact('gambars', 'modelkens', 'kendaraan', 'pembelian', 'mereks', 'tipes', 'pelanggans'));
     }
 
     public function update(Request $request, $id)
@@ -60,24 +62,24 @@ class InqueryPembelianController extends Controller
                 'no_pol' => 'required',
                 'no_rangka' => 'required',
                 'no_mesin' => 'required',
+                'tahun_kendaraan' => 'required',
                 'warna' => 'required',
                 'merek_id' => 'required',
                 'transmisi' => 'required',
                 'km_berjalan' => 'required',
                 'harga' => 'required',
-                'vi_marketing' => 'required',
             ],
             [
                 'pelanggan_id.required' => 'Pilih pelanggan',
                 'no_pol.required' => 'Masukkan no registrasi',
                 'no_rangka.required' => 'Masukkan no rangka',
                 'no_mesin.required' => 'Masukkan no mesin',
+                'tahun_kendaraan.required' => 'Masukkan tahun',
                 'warna.required' => 'Masukkan warna',
                 'merek_id.required' => 'Pilih merek',
                 'transmisi.required' => 'Masukkan transmisi',
                 'km_berjalan.required' => 'Masukka km berjalan',
                 'harga.required' => 'Masukkan harga',
-                'vi_marketing.required' => 'Masukkan vi marketing',
             ]
         );
 
@@ -86,7 +88,16 @@ class InqueryPembelianController extends Controller
             return back()->withInput()->with('error', $errors);
         }
 
-        $kendaraan = Kendaraan::findOrFail($id);
+
+        $pembelian = Pembelian::where('id', $id)->update(
+            [
+                'pelanggan_id' => $request->pelanggan_id,
+                'harga' => $request->harga,
+                'status' => 'posting',
+            ]
+        );
+
+        $kendaraan = Kendaraan::where('pembelian_id', $id)->first();
 
         if ($request->gambar_stnk) {
             Storage::disk('local')->delete('public/uploads/' . $kendaraan->gambar_stnk);
@@ -97,23 +108,23 @@ class InqueryPembelianController extends Controller
             $namaGambar = $kendaraan->gambar_stnk;
         }
 
-        if ($request->gambar_notis) {
-            Storage::disk('local')->delete('public/uploads/' . $kendaraan->gambar_notis);
-            $gambar = str_replace(' ', '', $request->gambar_notis->getClientOriginalName());
-            $namaGambar2 = 'gambar_notis/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
-            $request->gambar_notis->storeAs('public/uploads/', $namaGambar2);
-        } else {
-            $namaGambar2 = $kendaraan->gambar_notis;
-        }
+        // if ($request->gambar_notis) {
+        //     Storage::disk('local')->delete('public/uploads/' . $kendaraan->gambar_notis);
+        //     $gambar = str_replace(' ', '', $request->gambar_notis->getClientOriginalName());
+        //     $namaGambar2 = 'gambar_notis/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
+        //     $request->gambar_notis->storeAs('public/uploads/', $namaGambar2);
+        // } else {
+        //     $namaGambar2 = $kendaraan->gambar_notis;
+        // }
 
-        if ($request->gambar_bpkb) {
-            Storage::disk('local')->delete('public/uploads/' . $kendaraan->gambar_bpkb);
-            $gambar = str_replace(' ', '', $request->gambar_bpkb->getClientOriginalName());
-            $namaGambar3 = 'gambar_bpkb/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
-            $request->gambar_bpkb->storeAs('public/uploads/', $namaGambar3);
-        } else {
-            $namaGambar3 = $kendaraan->gambar_bpkb;
-        }
+        // if ($request->gambar_bpkb) {
+        //     Storage::disk('local')->delete('public/uploads/' . $kendaraan->gambar_bpkb);
+        //     $gambar = str_replace(' ', '', $request->gambar_bpkb->getClientOriginalName());
+        //     $namaGambar3 = 'gambar_bpkb/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
+        //     $request->gambar_bpkb->storeAs('public/uploads/', $namaGambar3);
+        // } else {
+        //     $namaGambar3 = $kendaraan->gambar_bpkb;
+        // }
 
         if ($request->gambar_dokumen) {
             Storage::disk('local')->delete('public/uploads/' . $kendaraan->gambar_dokumen);
@@ -162,7 +173,7 @@ class InqueryPembelianController extends Controller
 
         if ($request->gambar_kiri) {
             Storage::disk('local')->delete('public/uploads/' . $kendaraan->gambar_kiri);
-            $gambar = str_replace(' ', '', $request->gambar_bpkb->getClientOriginalName());
+            $gambar = str_replace(' ', '', $request->gambar_kiri->getClientOriginalName());
             $namaGambar9 = 'gambar_kiri/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
             $request->gambar_kiri->storeAs('public/uploads/', $namaGambar9);
         } else {
@@ -187,27 +198,19 @@ class InqueryPembelianController extends Controller
             $namaGambar11 = $kendaraan->gambar_interior;
         }
 
-        $pembelian = Pembelian::where('id', $id)->update(
-            [
-                'pelanggan_id' => $request->pelanggan_id,
-                'harga' => $request->harga,
-                'vi_marketing' => $request->vi_marketing,
-                'status' => 'posting',
-            ]
-        );
-
-        Kendaraan::where('pembelian_id', $pembelian)->update(
+        Kendaraan::where('pembelian_id', $id)->update(
             [
                 'no_pol' => $request->no_pol,
-                'no_rangka' => $request->no_pol,
+                'no_rangka' => $request->no_rangka,
                 'no_mesin' => $request->no_mesin,
+                'tahun_kendaraan' => $request->tahun_kendaraan,
                 'warna' => $request->warna,
                 'merek_id' => $request->merek_id,
                 'transmisi' => $request->transmisi,
                 'km_berjalan' => $request->km_berjalan,
                 'gambar_stnk' => $namaGambar,
-                'gambar_notis' => $namaGambar2,
-                'gambar_bpkb' => $namaGambar3,
+                // 'gambar_notis' => $namaGambar2,
+                // 'gambar_bpkb' => $namaGambar3,
                 'gambar_dokumen' => $namaGambar4,
                 'gambar_faktur' => $namaGambar5,
                 'gambar_depan' => $namaGambar6,
@@ -216,11 +219,28 @@ class InqueryPembelianController extends Controller
                 'gambar_kiri' => $namaGambar9,
                 'gambar_dashboard' => $namaGambar10,
                 'gambar_interior' => $namaGambar11,
+
             ]
         );
+
+        if ($request->has('gambars')) {
+            $gambars = $request->file('gambars');
+
+            foreach ($gambars as $gambar) {
+                $name = str_replace(' ', '', $gambar->getClientOriginalName());
+                $namagambar = 'gambar/' . date('mYdHs') . random_int(1, 10) . '_' . $name;
+                $gambar->storeAs('public/uploads', $namagambar);
+
+                Gambar::create([
+                    'kendaraan_id' => $kendaraan->id,
+                    'gambar' => $namagambar
+                ]);
+            }
+        }
+
         return redirect('admin/inquery_pembelian')->with('success', 'Berhasil memperbarui pembelian');
     }
-    
+
 
     public function unpost($id)
     {
@@ -252,5 +272,4 @@ class InqueryPembelianController extends Controller
 
         return redirect('admin/inquery_pembelian')->with('success', 'Berhasil menghapus Pembelian');
     }
-
 }

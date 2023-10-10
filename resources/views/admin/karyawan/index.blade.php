@@ -34,8 +34,8 @@
             </a>
         </div>
         <div class="card-body p-0">
-            <div class="table-responsive scrollbar">
-                <table class="table table-bordered table-striped">
+            <div class="table-responsive scrollbar m-2">
+                <table id="datatables" class="table table-bordered table-striped">
                     <thead class="bg-200 text-900">
                         <tr>
                             <th class="text-center">No</th>
@@ -44,7 +44,7 @@
                             <th>Telepon</th>
                             <th>Departemen</th>
                             <th class="text-center">Qr Code</th>
-                            <th class="text-center" width="170">Opsi</th>
+                            <th class="text-center" width="130">Opsi</th>
                         </tr>
                     </thead>
                     <tbody class="list">
@@ -57,8 +57,9 @@
                                 <td>
                                     @if ($karyawan->departemen)
                                         {{ $karyawan->departemen->nama }}
+                                    @else
+                                        tidak ada
                                     @endif
-                                    tidak ada
                                 </td>
                                 <td data-bs-toggle="modal" data-bs-target="#modal-qrcode-{{ $karyawan->id }}"
                                     style="text-align: center;">
@@ -123,14 +124,17 @@
                                         </div>
                                         <div class="modal-body">
                                             <div style="text-align: center;">
+                                                <p style="font-size:20px; font-weight: bold;">
+                                                    {{ $karyawan->kode_karyawan }}</p>
                                                 <div style="display: inline-block;">
                                                     {!! DNS2D::getBarcodeHTML("$karyawan->qrcode_karyawan", 'QRCODE', 15, 15) !!}
                                                 </div>
+                                                <p style="font-size:20px; font-weight: bold;">{{ $karyawan->nama_lengkap }}</p>
                                             </div>
                                             <div class="modal-footer justify-content-between">
                                                 <button class="btn btn-secondary" type="button"
                                                     data-bs-dismiss="modal">Batal</button>
-                                                <a href="{{ url('admin/karyawan/cetak-pdf/' . $karyawan->id) }}"
+                                                <a href="{{ url('admin/karyawan/cetak-qrcode/' . $karyawan->id) }}"
                                                     class="btn btn-primary">
                                                     <i class=""></i> Cetak
                                                 </a>
@@ -144,10 +148,10 @@
                 </table>
             </div>
         </div>
-        <div class="card-footer py-0">
+        {{-- <div class="card-footer py-0">
             <div class="pagination float-end">
                 {{ $karyawans->appends(Request::all())->links('pagination::bootstrap-4') }}
             </div>
-        </div>
+        </div> --}}
     </div>
 @endsection

@@ -34,13 +34,13 @@
             </a>
         </div>
         <div class="card-body p-0">
-            <div class="table-responsive scrollbar">
-                <table class="table table-bordered table-striped">
+            <div class="table-responsive scrollbar m-2">
+                <table id="datatables" class="table table-bordered table-striped">
                     <thead class="bg-200 text-900">
                         <tr>
-                            <th class="text-center">No</th>
+                            <th class="text-center" width="20">No</th>
                             <th>Nama</th>
-                            <th class="text-center">Qr Code</th>
+                            {{-- <th class="text-center">Qr Code</th> --}}
                             <th class="text-center" width="20">Opsi</th>
                         </tr>
                     </thead>
@@ -49,12 +49,12 @@
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
                                 <td>{{ $departemen->nama }}</td>
-                                <td data-toggle="modal" data-target="#modal-qrcode-{{ $departemen->id }}"
+                                {{-- <td data-toggle="modal" data-target="#modal-qrcode-{{ $departemen->id }}"
                                     style="text-align: center;">
                                     <div style="display: inline-block;">
                                         {!! DNS2D::getBarcodeHTML("$departemen->qrcode_departemen", 'QRCODE', 2, 2) !!}
                                     </div>
-                                </td>
+                                </td> --}}
                                 <td class="text-center">
                                     <a href="{{ url('admin/departemen/' . $departemen->id . '/edit') }}"
                                         class="btn btn-warning btn-sm">
@@ -123,10 +123,10 @@
                 </table>
             </div>
         </div>
-        <div class="card-footer py-0">
+        {{-- <div class="card-footer py-0">
             <div class="pagination float-end">
                 {{ $departemens->appends(Request::all())->links('pagination::bootstrap-4') }}
             </div>
-        </div>
+        </div> --}}
     </div>
 @endsection

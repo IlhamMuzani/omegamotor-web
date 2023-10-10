@@ -8,7 +8,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Registrasi</title>
+    <title>Login</title>
     <!-- ===============================================-->
     <!--    Favicons-->
     <!-- ===============================================-->
@@ -68,16 +68,21 @@
                                             aria-label="Close"></button>
                                     </div>
                                 @endif
-                                <div class="card-header bg-circle-shape bg-shape text-center p-2"><a
-                                        class="font-sans-serif fw-bolder fs-4 z-index-1 position-relative link-light light"
-                                        href="">OMEGA MOTOR</a></div>
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <a class="font-sans-serif fw-bolder fs-4 z-index-1 position-relative link-light light mt-4"
+                                        href="">
+                                        <img src="{{ asset('storage/uploads/gambaricon/omega.png') }}"
+                                            alt="AdminLTELogo" height="40" width="200">
+                                    </a>
+                                </div>
+
                                 <div class="card-body p-4">
                                     <div class="row flex-between-center mb-3">
                                         <div class="col-auto">
-                                            <h3>Registrasi</h3>
+                                            <h3>Login</h3>
                                         </div>
                                     </div>
-                                    <form method="POST" action="{{ url('login') }}">
+                                    <form method="POST" action="{{ url('register') }}">
                                         @csrf
                                         <div class="mb-3">
                                             <label class="form-label" for="kode_user">Kode User</label>
@@ -98,23 +103,41 @@
                                                     placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                                     aria-describedby="password"
                                                     value="{{ Session::get('password') }}" />
-                                                <span class="input-group-text cursor-pointer"><i
-                                                        class="far fa-eye-slash" id="togglePassword"></i></span>
+                                                <span class="input-group-text cursor-pointer" id="password-toggle"><i
+                                                        class="far fa-eye-slash"></i></span>
                                                 @error('password')
                                                     <span class="invalid-feedback"
                                                         role="alert">{{ $message }}</span>
                                                 @enderror
                                             </div>
                                         </div>
-                                       
+
+                                        <div class="mb-3 form-password-toggle">
+                                            <div class="d-flex justify-content-between">
+                                                <label class="form-label" for="password">Password Konfirmasi</label>
+                                            </div>
+                                            <div class="input-group input-group-merge">
+                                                <input type="password" id="password_confirmation"
+                                                    class="form-control" name="password_confirmation"
+                                                    placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                                    aria-describedby="password"
+                                                    value="{{ Session::get('password') }}" />
+                                                 <span class="input-group-text cursor-pointer" id="password-confirm-toggle"><i
+                                                        class="far fa-eye-slash"></i></span>
+                                                @error('password')
+                                                    <span class="invalid-feedback"
+                                                        role="alert">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
                                         <div class="mt-5">
                                             <button class="btn btn-primary d-block w-100 mt-3" type="submit"
                                                 name="submit">Masuk</button>
                                         </div>
                                     </form>
-                                    <div class="social-auth-links text-center mt-3">sudah punya akun ?
+                                    <div class="social-auth-links text-center mt-3">belum punya akun ?
                                         <a href="{{ url('login') }}"
-                                            class="social-auth-links text-center">Login</a>
+                                            class="social-auth-links text-center">Daftar</a>
                                     </div>
                                 </div>
                             </div>
@@ -301,6 +324,38 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
     <script src="{{ asset('falcon/public/vendors/list.js/list.min.js') }}"></script>
     <script src="{{ asset('falcon/public/assets/js/theme.js') }}"></script>
+
+
+    <script>
+        const passwordInput = document.getElementById('password');
+        const togglePasswordIcon = document.getElementById('password-toggle');
+
+        togglePasswordIcon.addEventListener('click', function() {
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                togglePasswordIcon.innerHTML = '<span id="password-icon" class="fas fa-eye-slash"></span>';
+            } else {
+                passwordInput.type = 'password';
+                togglePasswordIcon.innerHTML = '<span id="password-icon" class="fas fa-eye"></span>';
+            }
+        });
+
+        // Password Confirmation Toggle
+        const passwordConfirmationInput = document.getElementById('password_confirmation');
+        const togglePasswordConfirmIcon = document.getElementById('password-confirm-toggle');
+        const passwordConfirmIcon = document.getElementById('password-confirm-icon');
+
+        togglePasswordConfirmIcon.addEventListener('click', function() {
+            if (passwordConfirmationInput.type === 'password') {
+                passwordConfirmationInput.type = 'text';
+                passwordConfirmIcon.className = 'fas fa-eye';
+            } else {
+                passwordConfirmationInput.type = 'password';
+                passwordConfirmIcon.className = 'fas fa-eye-slash';
+            }
+        });
+    </script>
+
 
 </body>
 
