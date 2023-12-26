@@ -14,6 +14,7 @@ class Penjualan extends Model
         'qrcode_penjualan',
         'pelanggan_id',
         'kendaraan_id',
+        'marketing_id',
         'harga',
         'vi_marketing',
         'status',
@@ -31,6 +32,11 @@ class Penjualan extends Model
     public function kendaraan()
     {
         return $this->belongsTo(Kendaraan::class);
+    }
+
+    public function marketing()
+    {
+        return $this->belongsTo(Marketing::class);
     }
 
     public static function getId()

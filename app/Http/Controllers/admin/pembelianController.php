@@ -13,6 +13,7 @@ use App\Models\Pembelian;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Gambar;
+use App\Models\Marketing;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -24,7 +25,8 @@ class PembelianController extends Controller
         $mereks = Merek::all();
         $modelkens = Modelken::all();
         $tipes = Tipe::all();
-        return view('admin/pembelian.create', compact('pelanggans', 'mereks', 'modelkens', 'tipes'));
+        $marketings = Marketing::all();
+        return view('admin/pembelian.create', compact('marketings', 'pelanggans', 'mereks', 'modelkens', 'tipes'));
     }
 
     public function store(Request $request)
@@ -33,6 +35,7 @@ class PembelianController extends Controller
             $request->all(),
             [
                 'pelanggan_id' => 'required',
+                'marketing_id' => 'required',
                 'no_pol' => 'required',
                 'no_rangka' => 'required',
                 'no_mesin' => 'required',
@@ -45,6 +48,7 @@ class PembelianController extends Controller
             ],
             [
                 'pelanggan_id.required' => 'Pilih pelanggan',
+                'marketing_id.required' => 'Pilih marketing',
                 'no_pol.required' => 'Masukkan no registrasi',
                 'no_rangka.required' => 'Masukkan no rangka',
                 'no_mesin.required' => 'Masukkan no mesin',
@@ -152,15 +156,18 @@ class PembelianController extends Controller
         }
 
         $kode = $this->kode();
-
+        $tanggal1 = Carbon::now('Asia/Jakarta');
+        $format_tanggal = $tanggal1->format('d F Y');
         $tanggal = Carbon::now()->format('Y-m-d');
         $pembelian = Pembelian::create(array_merge(
             $request->all(),
             [
                 'pelanggan_id' => $request->pelanggan_id,
+                'marketing_id' => $request->marketing_id,
                 'harga' => $request->harga,
                 'kode_pembelian' => $this->kode(),
                 'qrcode_pembelian' => 'https:///omegamotor.id/pembelian/' . $kode,
+                'tanggal' => $format_tanggal,
                 'tanggal_awal' => $tanggal,
                 'status' => 'posting',
                 'status_komisi' => 'tidak aktif',
@@ -197,6 +204,7 @@ class PembelianController extends Controller
                 'kode_kendaraan' => $this->kodekendaraan(),
                 'qrcode_kendaraan' => 'https:///omegamotor.id/kendaraan/' . $kode,
                 'tanggal_awal' => $tanggal,
+                'status' => 'stok',
             ]
         ));
 

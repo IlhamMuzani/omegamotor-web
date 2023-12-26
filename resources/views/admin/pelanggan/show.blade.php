@@ -38,12 +38,12 @@
                         @endif --}}
                     {{-- <img src="{{ asset('storage/uploads/' . $pelanggan->gambar) }}"
                         alt="{{ $pelanggan->nama_lengkap }}" class="w-100 rounded"> --}}
-                    @if ($pelanggan->gambar)
-                        <img src="{{ asset('storage/uploads/' . $pelanggan->gambar) }}" alt="{{ $pelanggan->nama_lengkap }}"
+                      @if ($pelanggan->gambar_ktp)
+                        <img src="{{ asset('storage/uploads/' . $pelanggan->gambar_ktp) }}" alt="{{ $pelanggan->nama_pelanggan }}"
                             class="w-100 rounded border">
                     @else
-                        <img src="{{ asset('adminlte/dist/img/img-placeholder.jpg') }}" alt="{{ $pelanggan->nama_lengkap }}"
-                            class="w-100 rounded border">
+                        <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
+                            alt="AdminLTELogo" height="400" width="400">
                     @endif
                 </div>
                 <div class="col-md-6">

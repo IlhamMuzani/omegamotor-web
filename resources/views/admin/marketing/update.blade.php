@@ -41,8 +41,10 @@
         <div class="card-header">
             <h5>Perbarui Marketing</h5>
         </div>
-        <form action="{{ url('admin/marketing') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
+        <form action="{{ url('admin/marketing/' . $marketing->id) }}" method="POST" enctype="multipart/form-data"
+            autocomplete="off">
             @csrf
+            @method('put')
             <div class="card-body">
                 <div class="form-group">
                     <label for="nama_marketing">Nama Marketing</label>

@@ -35,6 +35,34 @@
         </div>
         <div class="card-body p-0">
             <div class="table-responsive scrollbar m-2">
+                <form method="GET" id="form-action">
+                    <div class="form-row">
+                        <div class="col-md-4 col-sm-12">
+                            <div class="input-group mb-2">
+                                <select class="custom-select form-control mr-2" id="status" name="status">
+                                    <option value="">- Semua Status -</option>
+                                    <option value="stok" {{ Request::get('status') == 'stok' ? 'selected' : '' }}>
+                                        stok</option>
+                                    <option value="terjual" {{ Request::get('status') == 'terjual' ? 'selected' : '' }}>
+                                        terjual
+                                    </option>
+                                </select>
+                                <div class="input-group-append">
+                                    <button style="margin-left: 10px" type="button" class="btn btn-outline-primary"
+                                        onclick="cari()">
+                                        <i class="fas fa-search"></i> Cari
+                                    </button>
+                                </div>
+                                <div class="input-group-append">
+                                    <button style="margin-left: 10px" type="button" class="btn btn-primary btn-block" onclick="printReport()"
+                                        target="_blank">
+                                        <i class="fas fa-print"></i> Cetak
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
                 <table id="datatables" class="table table-bordered table-striped">
                     <thead class="bg-200 text-900">
                         <tr>
@@ -43,8 +71,10 @@
                             <th>No Registrasi</th>
                             <th>Merek</th>
                             <th>Model</th>
+                            <th>Tahun</th>
+                            <th>Warna</th>
                             <th class="text-center">Qr Code</th>
-                            <th class="text-center" width="135">Opsi</th>
+                            <th class="text-center" width="178">Opsi</th>
                         </tr>
                     </thead>
                     <tbody class="list">
@@ -67,6 +97,8 @@
                                         data tidak ada
                                     @endif
                                 </td>
+                                <td>{{ $kendaraan->tahun_kendaraan }}</td>
+                                <td>{{ $kendaraan->warna }}</td>
                                 {{-- <td>{{ $kendaraan->merek->nama_merek }}</td> --}}
                                 <td data-bs-toggle="modal" data-bs-target="#modal-qrcode-{{ $kendaraan->id }}"
                                     style="text-align: center;">
@@ -75,6 +107,19 @@
                                     </div>
                                 </td>
                                 <td class="text-center">
+                                    @if ($kendaraan->status == 'stok')
+                                        <button type="submit" class="btn btn-success btn-sm mr-3" data-toggle="modal"
+                                            data-target="#modal-detail-{{ $kendaraan->id }}">
+                                            <img src="{{ asset('storage/uploads/gambaricon/car.png') }}" height="17"
+                                                width="17" alt="Mobil">
+                                        </button>
+                                    @elseif($kendaraan->status == 'terjual')
+                                        <button type="submit" class="btn btn-primary btn-sm mr-3">
+                                            <img src="{{ asset('storage/uploads/gambaricon/car.png') }}" height="17"
+                                                width="17" alt="Mobil">
+                                        </button>
+                                    @endif
+
                                     <a href="{{ url('admin/kendaraan/' . $kendaraan->id) }}" class="btn btn-info btn-sm">
                                         <i class="fas fa-eye"></i>
                                     </a>
@@ -155,4 +200,19 @@
             </div>
         </div> --}}
     </div>
+
+    <script>
+        var form = document.getElementById('form-action');
+
+        function cari() {
+            form.action = "{{ url('admin/kendaraan') }}";
+            form.submit();
+        }
+
+        function printReport() {
+
+            form.action = "{{ url('admin/print_kendaraan') }}";
+            form.submit();
+        }
+    </script>
 @endsection

@@ -28,32 +28,38 @@
                         </div>
                     </a>
                 </li>
-
                 <li class="nav-item">
                     <!-- label-->
                     <div class="row navbar-vertical-label-wrapper mt-3 mb-2">
-                        <div class="col-auto navbar-vertical-label">App
+                        <div class="col-auto navbar-vertical-label">Menu
                         </div>
                         <div class="col ps-0">
                             <hr class="mb-0 navbar-vertical-divider">
                         </div>
                     </div>
+                </li>
 
-                    {{-- master  --}}
-                    <a class="nav-link dropdown-indicator" href="#email" role="button" data-bs-toggle="collapse"
-                        aria-expanded="true" aria-controls="email">
-                        <div class="d-flex align-items-center">
-                            <span class="nav-link-icon">
+                <li class="nav-item">
+                    <a class="nav-link dropdown-indicator" href="#" role="button" data-bs-toggle="collapse"
+                        data-bs-target="#masterSubMenu" aria-expanded="true" aria-controls="e-commerce">
+                        <div class="d-flex align-items-center"> <span class="nav-link-icon">
                                 <span class="fas fa-grip-horizontal"></span>
                             </span>
-                            <span class="nav-link-text ps-1">MASTER</span>
+                            <span class="nav-link-text ps-1" style="color:white">MASTER</span>
                         </div>
                     </a>
-
-                    <ul class="nav false collapse show" id="email" style="">
+                    <ul class="nav collapse {{ request()->is('admin/karyawan*') || request()->is('admin/user*') || request()->is('admin/akses*') || request()->is('admin/departemen*') || request()->is('admin/marketing*') || request()->is('admin/merek*') || request()->is('admin/kendaraan*') || request()->is('admin/pelanggan*') ? 'show' : '' }}"
+                        id="masterSubMenu">
                         @if (auth()->check() && auth()->user()->menu['karyawan'])
-                            <li class="nav-item"><a class="nav-link"href="{{ url('admin/karyawan') }}"
-                                    aria-expanded="false">
+                            @php
+                                $isActive = request()->is('admin/karyawan*');
+                                $backgroundColor = $isActive ? 'background-color: black;' : '';
+                                $textColor = $isActive ? 'color: white;' : '';
+                            @endphp
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('admin/karyawan') }}" aria-expanded="false"
+                                    style="{{ $backgroundColor }} {{ $textColor }}">
                                     <span class="nav-link-text ps-1">
                                         <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                                         Data Karyawan</span>
@@ -62,8 +68,15 @@
                             </li>
                         @endif
                         @if (auth()->check() && auth()->user()->menu['user'])
-                            <li class="nav-item"><a class="nav-link" href="{{ url('admin/user') }}"
-                                    aria-expanded="false">
+                            @php
+                                $isActive = request()->is('admin/user*');
+                                $backgroundColor = $isActive ? 'background-color: black;' : '';
+                                $textColor = $isActive ? 'color: white;' : '';
+                            @endphp
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('admin/user') }}" aria-expanded="false"
+                                    style="{{ $backgroundColor }} {{ $textColor }}">
                                     <div class="d-flex align-items-center"><span class="nav-link-text ps-1">
                                             <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                                             Data User</span>
@@ -73,8 +86,15 @@
                             </li>
                         @endif
                         @if (auth()->check() && auth()->user()->menu['akses'])
-                            <li class="nav-item"><a class="nav-link" href="{{ url('admin/akses') }}"
-                                    aria-expanded="false">
+                            @php
+                                $isActive = request()->is('admin/akses*');
+                                $backgroundColor = $isActive ? 'background-color: black;' : '';
+                                $textColor = $isActive ? 'color: white;' : '';
+                            @endphp
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('admin/akses') }}" aria-expanded="false"
+                                    style="{{ $backgroundColor }} {{ $textColor }}">
                                     <div class="d-flex align-items-center"><span class="nav-link-text ps-1">
                                             <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                                             Hak Akses</span>
@@ -84,8 +104,15 @@
                             </li>
                         @endif
                         @if (auth()->check() && auth()->user()->menu['departemen'])
-                            <li class="nav-item"><a class="nav-link" href="{{ url('admin/departemen') }}"
-                                    aria-expanded="false">
+                            @php
+                                $isActive = request()->is('admin/departemen*');
+                                $backgroundColor = $isActive ? 'background-color: black;' : '';
+                                $textColor = $isActive ? 'color: white;' : '';
+                            @endphp
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('admin/departemen') }}" aria-expanded="false"
+                                    style="{{ $backgroundColor }} {{ $textColor }}">
                                     <div class="d-flex align-items-center"><span class="nav-link-text ps-1">
                                             <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                                             Data Departemen</span>
@@ -95,8 +122,15 @@
                             </li>
                         @endif
                         @if (auth()->check() && auth()->user()->menu['marketing'])
-                            <li class="nav-item"><a class="nav-link" href="{{ url('admin/marketing') }}"
-                                    aria-expanded="false">
+                            @php
+                                $isActive = request()->is('admin/marketing*');
+                                $backgroundColor = $isActive ? 'background-color: black;' : '';
+                                $textColor = $isActive ? 'color: white;' : '';
+                            @endphp
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('admin/marketing') }}" aria-expanded="false"
+                                    style="{{ $backgroundColor }} {{ $textColor }}">
                                     <div class="d-flex align-items-center"><span class="nav-link-text ps-1">
                                             <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                                             Data Marketing</span>
@@ -106,8 +140,15 @@
                             </li>
                         @endif
                         @if (auth()->check() && auth()->user()->menu['merek'])
-                            <li class="nav-item"><a class="nav-link" href="{{ url('admin/merek') }}"
-                                    aria-expanded="false">
+                            @php
+                                $isActive = request()->is('admin/merek*');
+                                $backgroundColor = $isActive ? 'background-color: black;' : '';
+                                $textColor = $isActive ? 'color: white;' : '';
+                            @endphp
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('admin/merek') }}" aria-expanded="false"
+                                    style="{{ $backgroundColor }} {{ $textColor }}">
                                     <div class="d-flex align-items-center"><span class="nav-link-text ps-1">
                                             <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                                             Data Merek</span>
@@ -117,8 +158,15 @@
                             </li>
                         @endif
                         @if (auth()->check() && auth()->user()->menu['kendaraan'])
-                            <li class="nav-item"><a class="nav-link" href="{{ url('admin/kendaraan') }}"
-                                    aria-expanded="false">
+                            @php
+                                $isActive = request()->is('admin/kendaraan*');
+                                $backgroundColor = $isActive ? 'background-color: black;' : '';
+                                $textColor = $isActive ? 'color: white;' : '';
+                            @endphp
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('admin/kendaraan') }}" aria-expanded="false"
+                                    style="{{ $backgroundColor }} {{ $textColor }}">
                                     <div class="d-flex align-items-center"><span class="nav-link-text ps-1">
                                             <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                                             Data Kendaraan</span>
@@ -128,8 +176,15 @@
                             </li>
                         @endif
                         @if (auth()->check() && auth()->user()->menu['pelanggan'])
-                            <li class="nav-item"><a class="nav-link" href="{{ url('admin/pelanggan') }}"
-                                    aria-expanded="false">
+                            @php
+                                $isActive = request()->is('admin/pelanggan*');
+                                $backgroundColor = $isActive ? 'background-color: black;' : '';
+                                $textColor = $isActive ? 'color: white;' : '';
+                            @endphp
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('admin/pelanggan') }}" aria-expanded="false"
+                                    style="{{ $backgroundColor }} {{ $textColor }}">
                                     <div class="d-flex align-items-center"><span class="nav-link-text ps-1">
                                             <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                                             Data Pelanggan</span>
@@ -140,22 +195,29 @@
                         @endif
                     </ul>
 
-                    {{-- Transaksi  --}}
+                </li>
 
-                    <a class="nav-link dropdown-indicator" href="#transaksi" role="button"
-                        data-bs-toggle="collapse" aria-expanded="true" aria-controls="email">
-                        <div class="d-flex align-items-center">
-                            <span class="nav-link-icon">
+                <li class="nav-item">
+                    <a class="nav-link dropdown-indicator" href="#" role="button" data-bs-toggle="collapse"
+                        data-bs-target="#transaksi" aria-expanded="true" aria-controls="e-commerce">
+                        <div class="d-flex align-items-center"> <span class="nav-link-icon">
                                 <span class="fas fa-exchange-alt"></span>
                             </span>
-                            <span class="nav-link-text ps-1">TRANSAKSI</span>
+                            <span class="nav-link-text ps-1" style="color:white">TRANSAKSI</span>
                         </div>
                     </a>
-
-                    <ul class="nav false collapse show" id="transaksi" style="">
+                    <ul class="nav collapse {{ request()->is('admin/pembelian*') || request()->is('admin/penjualan*') || request()->is('admin/komisi*') || request()->is('admin/inquery_pembelian*') || request()->is('admin/inquery_penjualan*') || request()->is('admin/inquery_komisi*') ? 'show' : '' }}"
+                        id="transaksi">
                         @if (auth()->check() && auth()->user()->menu['pembelian kendaraan'])
+                            @php
+                                $isActive = request()->is('admin/pembelian*');
+                                $backgroundColor = $isActive ? 'background-color: black;' : '';
+                                $textColor = $isActive ? 'color: white;' : '';
+                            @endphp
+
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url('admin/pembelian') }}" aria-expanded="false">
+                                <a class="nav-link" href="{{ url('admin/pembelian') }}" aria-expanded="false"
+                                    style="{{ $backgroundColor }} {{ $textColor }}">
                                     <div class="d-flex align-items-center">
                                         <span class="nav-link-text ps-1">
                                             <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
@@ -166,8 +228,15 @@
                             </li>
                         @endif
                         @if (auth()->check() && auth()->user()->menu['penjualan kendaraan'])
+                            @php
+                                $isActive = request()->is('admin/penjualan*');
+                                $backgroundColor = $isActive ? 'background-color: black;' : '';
+                                $textColor = $isActive ? 'color: white;' : '';
+                            @endphp
+
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url('admin/penjualan') }}" aria-expanded="false">
+                                <a class="nav-link" href="{{ url('admin/penjualan') }}" aria-expanded="false"
+                                    style="{{ $backgroundColor }} {{ $textColor }}">
                                     <div class="d-flex align-items-center">
                                         <span class="nav-link-text ps-1">
                                             <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
@@ -178,8 +247,15 @@
                             </li>
                         @endif
                         @if (auth()->check() && auth()->user()->menu['komisi marketing'])
+                            @php
+                                $isActive = request()->is('admin/komisi*');
+                                $backgroundColor = $isActive ? 'background-color: black;' : '';
+                                $textColor = $isActive ? 'color: white;' : '';
+                            @endphp
+
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url('admin/komisi') }}" aria-expanded="false">
+                                <a class="nav-link" href="{{ url('admin/komisi') }}" aria-expanded="false"
+                                    style="{{ $backgroundColor }} {{ $textColor }}">
                                     <div class="d-flex align-items-center">
                                         <span class="nav-link-text ps-1">
                                             <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
@@ -190,9 +266,15 @@
                             </li>
                         @endif
                         @if (auth()->check() && auth()->user()->menu['inquery pembelian'])
+                            @php
+                                $isActive = request()->is('admin/inquery_pembelian*');
+                                $backgroundColor = $isActive ? 'background-color: black;' : '';
+                                $textColor = $isActive ? 'color: white;' : '';
+                            @endphp
+
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url('admin/inquery_pembelian') }}"
-                                    aria-expanded="false">
+                                    aria-expanded="false" style="{{ $backgroundColor }} {{ $textColor }}">
                                     <div class="d-flex align-items-center">
                                         <span class="nav-link-text ps-1">
                                             <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
@@ -203,9 +285,15 @@
                             </li>
                         @endif
                         @if (auth()->check() && auth()->user()->menu['inquery penjualan'])
+                            @php
+                                $isActive = request()->is('admin/inquery_penjualan*');
+                                $backgroundColor = $isActive ? 'background-color: black;' : '';
+                                $textColor = $isActive ? 'color: white;' : '';
+                            @endphp
+
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url('admin/inquery_penjualan') }}"
-                                    aria-expanded="false">
+                                    aria-expanded="false" style="{{ $backgroundColor }} {{ $textColor }}">
                                     <div class="d-flex align-items-center">
                                         <span class="nav-link-text ps-1">
                                             <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
@@ -216,8 +304,15 @@
                             </li>
                         @endif
                         @if (auth()->check() && auth()->user()->menu['inquery komisi'])
+                            @php
+                                $isActive = request()->is('admin/inquery_komisi*');
+                                $backgroundColor = $isActive ? 'background-color: black;' : '';
+                                $textColor = $isActive ? 'color: white;' : '';
+                            @endphp
+
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url('admin/inquery_komisi') }}" aria-expanded="false">
+                                <a class="nav-link" href="{{ url('admin/inquery_komisi') }}" aria-expanded="false"
+                                    style="{{ $backgroundColor }} {{ $textColor }}">
                                     <div class="d-flex align-items-center">
                                         <span class="nav-link-text ps-1">
                                             <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
@@ -229,45 +324,66 @@
                         @endif
                     </ul>
 
-                    {{-- Laporan  --}}
-                    <a class="nav-link dropdown-indicator" href="#laporan" role="button" data-bs-toggle="collapse"
-                        aria-expanded="true" aria-controls="email">
-                        <div class="d-flex align-items-center">
-                            <span class="nav-link-icon">
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link dropdown-indicator" href="#" role="button" data-bs-toggle="collapse"
+                        data-bs-target="#laporan" aria-expanded="true" aria-controls="e-commerce">
+                        <div class="d-flex align-items-center"> <span class="nav-link-icon">
                                 <span class="fas fas fa-clipboard-list"></span>
                             </span>
-                            <span class="nav-link-text ps-1">LAPORAN</span>
+                            <span class="nav-link-text ps-1" style="color:white">LAPORAN</span>
                         </div>
                     </a>
-
-                    <ul class="nav false collapse show" id="laporan" style="">
+                    <ul class="nav collapse{{ request()->is('admin/laporan_pembelian*') || request()->is('admin/laporan_penjualan*') || request()->is('admin/laporan_komisi*') ? 'show' : '' }}"
+                        id="laporan">
                         @if (auth()->check() && auth()->user()->menu['laporan pembelian'])
+                            @php
+                                $isActive = request()->is('admin/laporan_pembelian*');
+                                $backgroundColor = $isActive ? 'background-color: black;' : '';
+                                $textColor = $isActive ? 'color: white;' : '';
+                            @endphp
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url('admin/laporan_pembelian') }}"
-                                    aria-expanded="false">
+                                    aria-expanded="false" style="{{ $backgroundColor }} {{ $textColor }}">
                                     <div class="d-flex align-items-center">
                                         <span class="nav-link-text ps-1">
                                             <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
-                                            Laporan Pembelian</span>
+                                            Laporan Pembelian
+                                        </span>
                                     </div>
                                 </a>
                             </li>
                         @endif
+
                         @if (auth()->check() && auth()->user()->menu['laporan penjualan'])
+                            @php
+                                $isActive = request()->is('admin/laporan_penjualan*');
+                                $backgroundColor = $isActive ? 'background-color: black;' : '';
+                                $textColor = $isActive ? 'color: white;' : '';
+                            @endphp
+
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url('admin/laporan_penjualan') }}"
-                                    aria-expanded="false">
+                                    aria-expanded="false" style="{{ $backgroundColor }} {{ $textColor }}">
                                     <div class="d-flex align-items-center">
                                         <span class="nav-link-text ps-1">
                                             <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
-                                            Laporan Penjualan</span>
+                                            Laporan Penjualan
+                                        </span>
                                     </div>
                                 </a>
                             </li>
                         @endif
                         @if (auth()->check() && auth()->user()->menu['laporan komisi'])
+                            @php
+                                $isActive = request()->is('admin/laporan_komisi*');
+                                $backgroundColor = $isActive ? 'background-color: black;' : '';
+                                $textColor = $isActive ? 'color: white;' : '';
+                            @endphp
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url('admin/laporan_komisi') }}" aria-expanded="false">
+                                <a class="nav-link" href="{{ url('admin/laporan_komisi') }}" aria-expanded="false"
+                                    style="{{ $backgroundColor }} {{ $textColor }}">
                                     <div class="d-flex align-items-center">
                                         <span class="nav-link-text ps-1">
                                             <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
@@ -275,17 +391,49 @@
                                     </div>
                                 </a>
                             </li>
+                        @endif
                     </ul>
-                    @endif
+                </li>
+
+                <li class="nav-item">
+                    <div class="row navbar-vertical-label-wrapper mt-3 mb-2">
+                        <div class="col-auto navbar-vertical-label">Profil
+                        </div>
+                        <div class="col ps-0">
+                            <hr class="mb-0 navbar-vertical-divider">
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                        @php
+                            $isActive = request()->is('admin/profile*');
+                            $backgroundColor = $isActive ? 'background-color: black;' : '';
+                            $textColor = $isActive ? 'color: white;' : '';
+                        @endphp
+                        <a class="nav-link" href="{{ url('admin/profile') }}" aria-expanded="false"
+                            style="{{ $backgroundColor }} {{ $textColor }}">
+                            <div class="d-flex align-items-center"> <span class="nav-link-icon">
+                                    <span class="fas fas fa-user-edit"></span>
+                                </span>
+                                <span class="nav-link-text ps-1" style="color:white">Update Profil</span>
+                            </div>
+                        </a>
                     <a class="nav-link" data-bs-toggle="modal" data-bs-target="#modalLogout" href="#">
                         <div class="d-flex align-items-center">
                             <span class="nav-link-icon">
                                 <span class="fas fa-sign-out-alt"></span>
                             </span>
-                            <span class="nav-link-text ps-1">LOG OUT</span>
+                            <span class="nav-link-text ps-1" style="color:white">Logout</span>
                         </div>
                     </a>
-            </ul>
+                </li>
+
+
+
+
+                {{-- Transaksi  --}}
+
         </div>
     </div>
 

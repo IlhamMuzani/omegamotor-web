@@ -31,14 +31,12 @@ class KomisiController extends Controller
                 'kategori' => 'required',
                 'kode_faktur' => 'required',
                 'harga' => 'required',
-                'marketing_id' => 'required',
                 'fee' => 'required',
             ],
             [
                 'kategori.required' => 'Pilih kategori',
                 'kode_faktur.required' => 'Masukan kode faktur',
                 'harga.required' => 'Masukkan harga',
-                'marketing_id.required' => 'Pilih marketing',
                 'fee.required' => 'Masukkan fee',
             ]
         );
@@ -50,27 +48,42 @@ class KomisiController extends Controller
 
         $kode = $this->kode();
 
+        $kategori = $request->kategori;
+
+        $penjualan_id = null;
+        $pembelian_id = null;
+
+        if ($kategori === 'Pembelian') {
+            $pembelian_id = $request->pembelian_id;
+        } elseif ($kategori === 'Penjualan') {
+            $penjualan_id = $request->penjualan_id;
+        }
+        $tanggal1 = Carbon::now('Asia/Jakarta');
+        $format_tanggal = $tanggal1->format('d F Y');
         $tanggal = Carbon::now()->format('Y-m-d');
         $komisis = Komisi::create(array_merge(
             $request->all(),
             [
+                'kategori' => $kategori,
+                'kode_faktur' => $request->kode_faktur,
+                'pelanggan_id' => $request->pelanggan_id,
+                'kendaraan_id' => $request->kendaraan_id,
+                'marketing_id' => $request->marketing_id,
                 'kode_komisi' => $this->kode(),
                 'qrcode_komisi' => 'https:///omegamotor.id/komisi/' . $kode,
+                'tanggal' => $format_tanggal,
                 'tanggal_awal' => $tanggal,
                 'status' => 'posting',
+                'penjualan_id' => $penjualan_id, // Set penjualan_id based on the condition
+                'pembelian_id' => $pembelian_id, // Set pembelian_id based on the condition
             ]
         ));
 
-        $kode_faktur = $request->kode_faktur;
-        $pembelian_id = $request->pembelian_id;
-
-        if (strpos($kode_faktur, 'FP') !== false) {
-            // Jika kode faktur mengandung 'FB', lakukan update pada tabel Pembelian
-            $faktur = Penjualan::where('id', $pembelian_id)->update([
+        if ($kategori == 'Penjualan') {
+            $faktur = Penjualan::where('id', $penjualan_id)->update([
                 'status_komisi' => 'aktif',
             ]);
-        } elseif (strpos($kode_faktur, 'FM') !== false) {
-            // Jika kode faktur mengandung 'FM', lakukan update pada tabel Penjualan
+        } elseif ($kategori == 'Pembelian') {
             $faktur = Pembelian::where('id', $pembelian_id)->update([
                 'status_komisi' => 'aktif',
             ]);
@@ -145,7 +158,7 @@ class KomisiController extends Controller
 
         if ($request->gambar_ktp) {
             $gambar = str_replace(' ', '', $request->gambar_ktp->getClientOriginalName());
-            $namaGambar = 'gambar_ktp/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
+            $namaGambar = 'marketing/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
             $request->gambar_ktp->storeAs('public/uploads/', $namaGambar);
         } else {
             $namaGambar = null;
@@ -157,7 +170,7 @@ class KomisiController extends Controller
         Marketing::create(array_merge(
             $request->all(),
             [
-                'gambar' => $namaGambar,
+                'gambar_ktp' => $namaGambar,
                 'kode_marketing' => $this->kodemarketing(),
                 'qrcode_marketing' => 'https://omegamotor.id/marketing/' . $kodemarketing,
                 'tanggal_awal' => $tanggal,

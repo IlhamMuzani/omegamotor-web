@@ -12,6 +12,7 @@ class Pembelian extends Model
     [
         'kode_pembelian',
         'qrcode_pembelian',
+        'marketing_id',
         'pelanggan_id',
         'harga',
         'vi_marketing',
@@ -30,6 +31,11 @@ class Pembelian extends Model
     public function detail_kendaraan()
     {
         return $this->hasMany(Kendaraan::class);
+    }
+
+    public function marketing()
+    {
+        return $this->belongsTo(Marketing::class);
     }
     
     public static function getId()

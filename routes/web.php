@@ -28,7 +28,7 @@ Route::get('check-user', [HomeController::class, 'check_user']);
 Route::get('kendaraan/{kode}', [\App\Http\Controllers\KendaraanController::class, 'detail']);
 Route::get('karyawan/{kode}', [\App\Http\Controllers\KaryawanController::class, 'detail']);
 Route::get('merek/{kode}', [\App\Http\Controllers\MerekController::class, 'detail']);
-
+Route::get('pelanggan/{kode}', [\App\Http\Controllers\PelangganController::class, 'detail']);
 
 Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index']);
@@ -50,13 +50,22 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::resource('akses', \App\Http\Controllers\Admin\AksesController::class);
     Route::resource('marketing', \App\Http\Controllers\Admin\MarketingController::class);
 
+    Route::get('profile', [\App\Http\Controllers\Admin\ProfileController::class, 'index']);
+    Route::post('profile/update', [\App\Http\Controllers\Admin\ProfileController::class, 'update']);
+
     Route::get('akses/access/{id}', [\App\Http\Controllers\Admin\AksesController::class, 'access']);
     Route::post('akses-access/{id}', [\App\Http\Controllers\Admin\AksesController::class, 'access_user']);
     
+    Route::get('inquery_pembelian', [\App\Http\Controllers\Admin\InqueryPembelianController::class, 'index']);
+    Route::get('inquery_penjualan', [\App\Http\Controllers\Admin\InqueryPenjualanController::class, 'index']);
+    Route::get('inquery_komisi', [\App\Http\Controllers\Admin\InqueryKomisiController::class, 'index']);
+    Route::get('kendaraan', [\App\Http\Controllers\Admin\KendaraanController::class, 'index']);
+
     Route::get('user/karyawan/{id}', [\App\Http\Controllers\Admin\KaryawanController::class, 'karyawan']);
     Route::get('unpost/{id}', [\App\Http\Controllers\Admin\InqueryPembelianController::class, 'unpost'])->name('unpost');
     Route::get('posting/{id}', [\App\Http\Controllers\Admin\InqueryPembelianController::class, 'posting'])->name('posting');
     Route::get('pembelian/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PembelianController::class, 'cetakpdf']);
+    Route::get('print_kendaraan', [\App\Http\Controllers\Admin\KendaraanController::class, 'print_kendaraan']);
 
     Route::get('kendaraan/cetak-qrcode/{id}', [\App\Http\Controllers\Admin\KendaraanController::class, 'cetakqrcode']);
     Route::get('karyawan/cetak-qrcode/{id}', [\App\Http\Controllers\Admin\KaryawanController::class, 'cetakqrcode']);

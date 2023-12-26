@@ -37,6 +37,7 @@ class Kendaraan extends Model
         'gambar_interior',
         'tanggal_awal',
         'tanggal_akhir',
+        'status',
     ];
 
     public static function getId()

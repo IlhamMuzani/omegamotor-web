@@ -69,7 +69,7 @@ class PelangganController extends Controller
         Pelanggan::create(array_merge(
             $request->all(),
             [
-                'gambar' => $namaGambar,
+                'gambar_ktp' => $namaGambar,
                 'kode_pelanggan' => $this->kode(),
                 'qrcode_pelanggan' => 'https://omegamotor.id/pelanggan/' . $kode,
                 'tanggal_awal' => $tanggal,
@@ -107,7 +107,8 @@ class PelangganController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(),
+        $validator = Validator::make(
+            $request->all(),
             [
                 'nama_pelanggan' => 'required',
                 'nama_alias' => 'required',
@@ -125,14 +126,27 @@ class PelangganController extends Controller
                 'telp.required' => 'Masukkan no telepon',
                 'alamat.required' => 'Masukkan alamat',
                 // 'gambar_ktp.image' => 'Gambar yang dimasukan salah!',
-            ]);
+            ]
+        );
 
         if ($validator->fails()) {
             $error = $validator->errors()->all();
             return back()->withInput()->with('error', $error);
         }
 
+        $pelanggan = Pelanggan::findOrFail($id);
+
+        if ($request->gambar_ktp) {
+            Storage::disk('local')->delete('public/uploads/' . $pelanggan->gambar_ktp);
+            $gambar = str_replace(' ', '', $request->gambar_ktp->getClientOriginalName());
+            $namaGambar = 'gambar_ktp/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
+            $request->gambar_ktp->storeAs('public/uploads/', $namaGambar);
+        } else {
+            $namaGambar = $pelanggan->gambar_ktp;
+        }
+
         Pelanggan::where('id', $id)->update([
+            'gambar_ktp'=> $namaGambar,
             'nama_pelanggan' => $request->nama_pelanggan,
             'nama_alias' => $request->nama_alias,
             'gender' => $request->gender,
@@ -156,7 +170,7 @@ class PelangganController extends Controller
         $pdf->setPaper('letter', 'portrait');
         return $pdf->stream('QrCodePelanggan.pdf');
     }
-    
+
     public function show($id)
     {
 

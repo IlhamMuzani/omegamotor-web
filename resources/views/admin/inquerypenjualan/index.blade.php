@@ -33,11 +33,42 @@
         </div>
         <div class="card-body p-0">
             <div class="table-responsive scrollbar m-2">
+                <form method="GET" id="form-action">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <select class="custom-select form-control" id="status" name="status">
+                                <option value="">- Semua Status -</option>
+                                <option value="posting" {{ Request::get('status') == 'posting' ? 'selected' : '' }}>
+                                    Posting
+                                </option>
+                                <option value="unpost" {{ Request::get('status') == 'unpost' ? 'selected' : '' }}>
+                                    Unpost</option>
+                            </select>
+                            <label for="status">(Pilih Status)</label>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <input class="form-control" id="tanggal_awal" name="tanggal_awal" type="date"
+                                value="{{ Request::get('tanggal_awal') }}" max="{{ date('Y-m-d') }}" />
+                            <label for="tanggal_awal">(Tanggal Awal)</label>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <input class="form-control" id="tanggal_akhir" name="tanggal_akhir" type="date"
+                                value="{{ Request::get('tanggal_akhir') }}" max="{{ date('Y-m-d') }}" />
+                            <label for="tanggal_awal">(Tanggal Akhir)</label>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <button type="button" class="btn btn-outline-primary mr-2" onclick="cari()">
+                                <i class="fas fa-search"></i> Cari
+                            </button>
+                        </div>
+                    </div>
+                </form>
                 <table id="datatables" class="table table-bordered table-striped">
                     <thead class="bg-200 text-900">
                         <tr>
                             <th class="text-center">No</th>
                             <th>Faktur Penjualan</th>
+                            <th>Model</th>
                             <th>Tanggal</th>
                             <th class="text-center">Pelanggan</th>
                             <th class="text-center">Harga</th>
@@ -45,10 +76,11 @@
                         </tr>
                     </thead>
                     <tbody class="list">
-                        @foreach ($penjualans as $penjualan)
+                        @foreach ($inquery as $penjualan)
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
                                 <td>{{ $penjualan->kode_penjualan }}</td>
+                                <td>{{ $penjualan->kendaraan->merek->modelken->nama_model }}</td>
                                 <td>{{ $penjualan->tanggal_awal }}</td>
                                 <td>
                                     @if ($penjualan->pelanggan)
@@ -214,4 +246,33 @@
             </div>
         </div> --}}
     </div>
+
+    <script>
+        var tanggalAwal = document.getElementById('tanggal_awal');
+        var tanggalAkhir = document.getElementById('tanggal_akhir');
+
+        if (tanggalAwal.value == "") {
+            tanggalAkhir.readOnly = true;
+        }
+
+        tanggalAwal.addEventListener('change', function() {
+            if (this.value == "") {
+                tanggalAkhir.readOnly = true;
+            } else {
+                tanggalAkhir.readOnly = false;
+            }
+
+            tanggalAkhir.value = "";
+            var today = new Date().toISOString().split('T')[0];
+            tanggalAkhir.value = today;
+            tanggalAkhir.setAttribute('min', this.value);
+        });
+
+        var form = document.getElementById('form-action');
+
+        function cari() {
+            form.action = "{{ url('admin/inquery_penjualan') }}";
+            form.submit();
+        }
+    </script>
 @endsection

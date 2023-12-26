@@ -43,7 +43,6 @@ class Komisi extends Model
         return $this->belongsTo(Pembelian::class);
     }
 
-
     public function penjualan()
     {
         return $this->belongsTo(Penjualan::class);

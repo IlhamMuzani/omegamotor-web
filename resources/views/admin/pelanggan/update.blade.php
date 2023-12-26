@@ -41,8 +41,10 @@
         <div class="card-header">
             <h5>Perbarui Pelanggan</h5>
         </div>
-        <form action="{{ url('admin/pelanggan') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
+       <form action="{{ url('admin/pelanggan/' . $pelanggan->id) }}" method="POST" enctype="multipart/form-data"
+            autocomplete="off">
             @csrf
+            @method('put')
             <div class="card-body">
                 <div class="form-group">
                     <label for="nama_pelanggan">Nama Pelanggan</label>

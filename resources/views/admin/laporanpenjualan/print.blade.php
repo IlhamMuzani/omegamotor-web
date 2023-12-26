@@ -29,7 +29,7 @@
             width: 100%;
             border-collapse: collapse;
             /* margin-top: 20px; */
-            font-size: 12px;
+            font-size: 11px;
             /* Atur ukuran font tabel sesuai kebutuhan */
         }
 
@@ -147,12 +147,12 @@
     </table>
     <table>
         <tr>
-            <th>Faktur Penjualan</th>
-            <th>Tanggal</th>
-            <th>Pelanggan</th>
-            <th>No Registrasi</th>
-            <th>Merek</th>
-            <th>Harga</th>
+            <th style="width: 35%;">F. Penjualan</th>
+            <th style="width: 30%;">Tanggal</th>
+            <th style="width: 30%;">Pelanggan</th>
+            <th style="width: 35%;">No Registrasi</th>
+            <th style="width: 20%;">Model</th>
+            <th style="width: 50%;">Harga</th>
         </tr>
         @php
             $total = 0; // Inisialisasi total
@@ -177,7 +177,7 @@
                 </td>
                 <td>
                     @if ($penjualan->kendaraan->merek)
-                        {{ $penjualan->kendaraan->merek->nama_merek }}
+                        {{ $penjualan->kendaraan->merek->modelken->nama_model }}
                     @else
                         data tidak ada
                     @endif

@@ -9,44 +9,61 @@
     <title>Qr Code Kendaraan</title>
 
     <style type="text/css">
-        .invoice-box {
-            /* max-width: 800px; */
-            margin: auto;
-            border: 1px solid #eee;
-            /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); */
-            font-size: 16px;
-            line-height: 24px;
-            font-family: Arial, sans-serif;
+        /* Reset all margins and padding */
+        * {
+            margin: 0;
+            padding: 0;
         }
 
-        .invoice-box table {
-            max-width: 800px;
-            margin: auto;
-            margin-right: 10px;
-            /* border: 1px solid #eee; */
-            /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); */
-            font-size: 16px;
-            line-height: 24px;
-            font-family: Arial, sans-serif;
+        .box1 {
+            margin-left: 17px;
+            margin-top: 15px;
+        }
+
+        .text-container {
+            position: relative;
+            width: 200px;
+            /* Set an appropriate width */
+            height: 68px;
+            /* Set an appropriate height */
+            transform: rotate(90deg);
+        }
+
+        .text {
+            white-space: nowrap;
+            position: absolute;
+            margin-left: 68px;
+            margin-top: 11px;
+            font-size: 18px;
+            top: 0;
+            /* Adjust the top position as needed */
+            left: 8;
+            /* Adjust the left position as needed */
+        }
+
+        .bold-text {
+            font-weight: bold;
+            font-family: Arial, Helvetica, sans-serif
         }
     </style>
 
 </head>
 
 <body>
-
-    <div class="invoice-box">
-        <table cellpadding="0" cellspacing="0">
-            <td>
-                <p style="font-size:25px; text-align:center; font-weight: bold;">{{ $kendaraans->kode_kendaraan }}</p>
-                <div style="display: inline-block;">
-                    {!! DNS2D::getBarcodeHTML("$kendaraans->qrcode_kendaraan", 'QRCODE', 17, 17) !!}
-                </div>
-                <p style="font-size:25px; text-align:center; font-weight: bold;">{{ $kendaraans->no_pol }}</p>
-            </td>
-        </table>
+    <div>
+        <div class="box1">
+                {!! DNS2D::getBarcodeHTML("$kendaraans->qrcode_kendaraan", 'QRCODE', 3.5, 3.5) !!}
+        </div>
+        <div class="text-container">
+            <div class="text">
+                <p class="bold-text">{{ $kendaraans->kode_kendaraan }}</p>
+                <p class="bold-text">{{ $kendaraans->no_pol }}</p>
+                <p class="bold-text">{{ $kendaraans->tahun_kendaraan }}</p>
+                <p class="bold-text">{{ $kendaraans->no_mesin }}</p>
+                <p class="bold-text">{{ $kendaraans->no_rangka }}</p>
+            </div>
+        </div>
     </div>
-
 </body>
 
 </html>

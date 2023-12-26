@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Models\Jenis_kendaraan;
 use App\Http\Controllers\Controller;
 use App\Models\Gambar;
+use App\Models\Marketing;
 use App\Models\Merek;
 use App\Models\Modelken;
 use App\Models\Pelanggan;
@@ -23,10 +24,36 @@ use Illuminate\Support\Facades\Storage;
 
 class InqueryPembelianController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $pembelians = Pembelian::get();
-        return view('admin/inquerypembelian.index', compact('pembelians'));
+        // $pembelians = Pembelian::get();
+        // return view('admin/inquerypembelian.index', compact('pembelians'));
+
+        $status = $request->status;
+        $tanggal_awal = $request->tanggal_awal;
+        $tanggal_akhir = $request->tanggal_akhir;
+
+        $inquery = Pembelian::query();
+
+        if ($status) {
+            $inquery->where('status', $status);
+        }
+
+        if ($tanggal_awal && $tanggal_akhir) {
+            $inquery->whereBetween('tanggal_awal', [$tanggal_awal, $tanggal_akhir]);
+        } elseif ($tanggal_awal) {
+            $inquery->where('tanggal_awal', '>=', $tanggal_awal);
+        } elseif ($tanggal_akhir) {
+            $inquery->where('tanggal_awal', '<=', $tanggal_akhir);
+        } else {
+            // Jika tidak ada filter tanggal hari ini
+            $inquery->whereDate('tanggal_awal', Carbon::today());
+        }
+
+        $inquery->orderBy('id', 'DESC');
+        $inquery = $inquery->get();
+
+        return view('admin/inquerypembelian.index', compact('inquery'));
     }
 
 
@@ -49,8 +76,9 @@ class InqueryPembelianController extends Controller
         $modelkens = Modelken::all();
         $pelanggans = Pelanggan::all();
         $gambars = Gambar::where('kendaraan_id', $kendaraan->id)->get();
+        $marketings = Marketing::all();
 
-        return view('admin/inquerypembelian.update', compact('gambars', 'modelkens', 'kendaraan', 'pembelian', 'mereks', 'tipes', 'pelanggans'));
+        return view('admin/inquerypembelian.update', compact('marketings','gambars', 'modelkens', 'kendaraan', 'pembelian', 'mereks', 'tipes', 'pelanggans'));
     }
 
     public function update(Request $request, $id)
@@ -59,6 +87,7 @@ class InqueryPembelianController extends Controller
             $request->all(),
             [
                 'pelanggan_id' => 'required',
+                'marketing_id' => 'required',
                 'no_pol' => 'required',
                 'no_rangka' => 'required',
                 'no_mesin' => 'required',
@@ -71,6 +100,7 @@ class InqueryPembelianController extends Controller
             ],
             [
                 'pelanggan_id.required' => 'Pilih pelanggan',
+                'marketing_id.required' => 'Pilih marketing',
                 'no_pol.required' => 'Masukkan no registrasi',
                 'no_rangka.required' => 'Masukkan no rangka',
                 'no_mesin.required' => 'Masukkan no mesin',
@@ -92,6 +122,7 @@ class InqueryPembelianController extends Controller
         $pembelian = Pembelian::where('id', $id)->update(
             [
                 'pelanggan_id' => $request->pelanggan_id,
+                'marketing_id' => $request->marketing_id,
                 'harga' => $request->harga,
                 'status' => 'posting',
             ]
@@ -107,24 +138,6 @@ class InqueryPembelianController extends Controller
         } else {
             $namaGambar = $kendaraan->gambar_stnk;
         }
-
-        // if ($request->gambar_notis) {
-        //     Storage::disk('local')->delete('public/uploads/' . $kendaraan->gambar_notis);
-        //     $gambar = str_replace(' ', '', $request->gambar_notis->getClientOriginalName());
-        //     $namaGambar2 = 'gambar_notis/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
-        //     $request->gambar_notis->storeAs('public/uploads/', $namaGambar2);
-        // } else {
-        //     $namaGambar2 = $kendaraan->gambar_notis;
-        // }
-
-        // if ($request->gambar_bpkb) {
-        //     Storage::disk('local')->delete('public/uploads/' . $kendaraan->gambar_bpkb);
-        //     $gambar = str_replace(' ', '', $request->gambar_bpkb->getClientOriginalName());
-        //     $namaGambar3 = 'gambar_bpkb/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
-        //     $request->gambar_bpkb->storeAs('public/uploads/', $namaGambar3);
-        // } else {
-        //     $namaGambar3 = $kendaraan->gambar_bpkb;
-        // }
 
         if ($request->gambar_dokumen) {
             Storage::disk('local')->delete('public/uploads/' . $kendaraan->gambar_dokumen);

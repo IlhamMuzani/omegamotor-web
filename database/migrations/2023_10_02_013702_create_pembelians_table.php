@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('qrcode_pembelian')->nullable();
             $table->unsignedBigInteger('pelanggan_id')->nullable();
             $table->foreign('pelanggan_id')->references('id')->on('pelanggans')->onDelete('set null');
+            $table->unsignedBigInteger('marketing_id')->nullable();
+            $table->foreign('marketing_id')->references('id')->on('marketings')->onDelete('set null');
             $table->string('harga')->nullable();
             $table->string('tanggal')->nullable();
             $table->string('tanggal_awal')->nullable();

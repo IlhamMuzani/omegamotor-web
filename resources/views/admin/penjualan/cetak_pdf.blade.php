@@ -186,6 +186,50 @@
             /* Mengatur gambar lebih tinggi ke atas */
         }
 
+        .info {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            margin-bottom: 5px;
+        }
+
+        .label {
+            font-weight: bold;
+        }
+
+        .label2 {
+            /* font-weight: bold;
+            margin-left: 43px */
+        }
+
+        .label22 {
+            font-weight: bold;
+            font-size: 13px;
+            /* margin-right: 44px */
+        }
+
+        .content.break-label {
+            margin-left: 34;
+        }
+
+        .content {
+            /* margin-left: 48px; */
+        }
+
+        .content6 {
+            margin-left: 62px;
+        }
+
+        .content2 {
+            /* margin-left: 1px */
+        }
+
+        .content4 {
+            margin-left: 15px
+        }
+
+
+
+
 
         @page {
             /* size: A4; */
@@ -194,65 +238,87 @@
     </style>
 </head>
 
+
+
 <body style="margin: 0; padding: 0;">
     <table width="100%">
         <tr>
-            <td>
-                <div class="info-catatan" style="max-width: 230px;">
-                    <table>
-                        <tr>
-                            <td class="info-catatan2">Nama Pembeli</td>
-                            <td class="info-item">:</td>
-                            <td class="info-text info-left">
-                                @if ($penjualans->pelanggan)
-                                    {{ $penjualans->pelanggan->nama_pelanggan }}
-                                @else
-                                    data tidak ada
-                                @endif
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="info-catatan2">Alamat</td>
-                            <td class="info-item">:</td>
-                            <td class="info-text info-left">
-                                @if ($penjualans->pelanggan)
-                                    {{ $penjualans->pelanggan->alamat }}
-                                @else
-                                    data tidak ada
-                                @endif
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="info-catatan2">Telp / HP</td>
-                            <td class="info-item">:</td>
-                            <td class="info-text info-left">
-                                @if ($penjualans->pelanggan)
-                                    {{ $penjualans->pelanggan->telp }}
-                                @else
-                                    data tidak ada
-                                @endif
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="info-catatan2">ID Pembeli</td>
-                            <td class="info-item">:</td>
-                            <td class="info-text info-left">
-                                @if ($penjualans->pelanggan)
-                                    {{ $penjualans->pelanggan->kode_pelanggan }}
-                                @else
-                                    data tidak ada
-                                @endif
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </td>
             <td>
                 <div id="logo-container">
                     <!-- Tambahkan gambar logo di sini -->
                     <img src="{{ asset('storage/uploads/gambaricon/omega.png') }}" alt="Logo Omega">
                 </div>
             </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="info">
+                    <span class="label">Nama Pembeli</span>
+                    <span class="content">:
+                        @if ($penjualans->pelanggan)
+                            {{ $penjualans->pelanggan->nama_pelanggan }}
+                        @else
+                            data tidak ada
+                        @endif
+                    </span>
+                </div>
+                <div class="info">
+                    <table style="width: 77%;">
+                        <tr>
+                            <td>
+                                <span class="label22">Alamat
+                                </span>
+                                <br>
+                            </td>
+                            <div class="info" style="max-width: 300px;">
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td>
+                                            <span class="label2">:
+                                            </span>
+                                            <br>
+                                        </td>
+                                        <td style="text-align: left;">
+                                            <span class="content2">
+                                                @if ($penjualans->pelanggan)
+                                                    {{ $penjualans->pelanggan->alamat }}
+                                                @else
+                                                    data tidak ada
+                                                @endif
+                                            </span>
+                                            <br>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="info">
+                    <span class="label">Telp</span>
+                    <span class="content6">:
+                        @if ($penjualans->pelanggan)
+                            {{ $penjualans->pelanggan->telp }}
+                        @else
+                            data tidak ada
+                        @endif
+                    </span>
+                </div>
+
+                <div class="info">
+                    <span class="label">ID Pembeli</span>
+                    <span class="content4">:
+                        @if ($penjualans->pelanggan)
+                            {{ $penjualans->pelanggan->kode_pelanggan }}
+                        @else
+                            data tidak ada
+                        @endif
+                    </span>
+                </div>
+
+            </td>
+
         </tr>
     </table>
     <div style="font-weight: bold; text-align: center;">
@@ -268,7 +334,7 @@
                 <br>
             </td>
             <td style="text-align: right; padding-right: 45px;">
-                <span class="info-item" style="font-size: 13px;">Tanggal:{{ $penjualans->tanggal_awal }}</span>
+                <span class="info-item" style="font-size: 13px;">Tanggal:{{ $penjualans->tanggal }}</span>
                 <br>
             </td>
         </tr>
@@ -279,7 +345,7 @@
             <td class="td" style="text-align: center; padding: 5px; font-size: 13px;">No.</td>
             <td class="td" style="text-align: center; padding: 5px; font-size: 13px;">Kode Kendaraan</td>
             <td class="td" style="text-align: center; padding: 5px; font-size: 13px;">No. Registrasi</td>
-            <td class="td" style="text-align: center; padding: 5px; font-size: 13px;">Merek</td>
+            <td class="td" style="text-align: center; padding: 5px; font-size: 13px;">Model</td>
             <td class="td" style="text-align: center; padding: 5px; font-size: 13px;">Type</td>
             {{-- <td class="td" style="text-align: center; padding: 5px; font-size: 13px;">Vi Marketing</td> --}}
             <td class="td" style="text-align: center; padding: 5px; font-size: 13px;">Harga</td>
@@ -310,7 +376,7 @@
             </td>
             <td class="info-text info-left" style="font-size: 13px; text-align: center;">
                 @if ($penjualans->kendaraan)
-                    {{ $penjualans->kendaraan->merek->nama_merek }}
+                    {{ $penjualans->kendaraan->merek->modelken->nama_model }}
                 @else
                     data tidak ada
                 @endif
@@ -378,6 +444,9 @@
     <br>
     <br>
     <br>
+    <br>
+    <br>
+    <br>
     <table class="tdd" cellpadding="10" cellspacing="0" style="margin: 0 auto;">
         <tr>
             <td style="text-align: center;">
@@ -402,7 +471,28 @@
                         <td class="separator" colspan="2"><span></span></td>
                     </tr>
                     <tr style="text-align: center;">
-                        <td class="label">Penjualan</td>
+                        <td class="label">Customer</td>
+                    </tr>
+                </table>
+            </td>
+            <td style="text-align: center;">
+                <table style="margin: 0 auto;">
+                    @if ($penjualans->marketing)
+                        <tr style="text-align: center;">
+                            <td class="label">
+                                {{ $penjualans->marketing->nama_marketing }}</td>
+                        </tr>
+                    @else
+                        <tr style="text-align: center;">
+                            <td class="label" style="min-height: 16px;">&nbsp;</td>
+                        </tr>
+                    @endif
+
+                    <tr>
+                        <td class="separator" colspan="2"><span></span></td>
+                    </tr>
+                    <tr style="text-align: center;">
+                        <td class="label">Marketing</td>
                     </tr>
                 </table>
             </td>
@@ -415,7 +505,7 @@
                         <td class="separator" colspan="2"><span></span></td>
                     </tr>
                     <tr style="text-align: center;">
-                        <td class="label">Accounting</td>
+                        <td class="label">Finance</td>
                     </tr>
                 </table>
             </td>

@@ -115,7 +115,6 @@
                                                     {!! DNS2D::getBarcodeHTML("$pelanggan->qrcode_pelanggan", 'QRCODE', 15, 15) !!}
                                                 </div>
                                                 <p style="font-size:20px; font-weight: bold;">{{ $pelanggan->nama_pelanggan }}</p>
-
                                             </div>
                                             <div class="modal-footer justify-content-between">
                                                 <button type="button" class="btn btn-default"

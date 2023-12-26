@@ -76,7 +76,57 @@
                     <textarea type="text" class="form-control" id="alamat" name="alamat" placeholder="Masukan alamat">{{ old('alamat') }}</textarea>
                 </div> --}}
 
-                <div class="col-lg-8 mb-3">
+                <div class="col-lg-8 mb-3 mt-5">
+                    <h5>Tambah Marketing</h5>
+                </div>
+
+                <div class="mb-3 mt-4">
+                    <button class="btn btn-primary btn-sm" type="button" onclick="showCategoryModalmarketing(this.value)">
+                        Pilih Marketing
+                    </button>
+                </div>
+
+                <label class="form-label" for="nama_marketing">Nama Marketing *</label>
+                <div class="mb-2 d-flex">
+                    <input class="form-control @error('nama_marketing') is-invalid @enderror" id="nama_marketing"
+                        name="no_pol" type="text" placeholder=" " value="{{ old('nama_marketing') }}" readonly
+                        style="margin-right: 10px;" />
+                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#modal-marketing">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="form-group" hidden>
+                    <label for="marketing_id">Id Marketing</label>
+                    <input type="text" class="form-control" id="marketing_id" name="marketing_id" placeholder=""
+                        value="{{ old('marketing_id') }}">
+                </div>
+                <div class="form-group">
+                    <label for="kode_marketing">Kode Marketing</label>
+                    <input type="text" class="form-control" id="kode_marketing" name="kode_marketing" readonly
+                        placeholder="" value="{{ old('kode_marketing') }}">
+                </div>
+                <div class="form-group">
+                    <label for="umur">Umur</label>
+                    <input type="text" class="form-control" id="umur_marketing" name="umur" placeholder="" readonly
+                        value="{{ old('umur') }}">
+                </div>
+                <div class="form-group">
+                    <label for="alamat">Alamat</label>
+                    <textarea type="text" class="form-control" id="alamat_marketing" name="alamat" readonly placeholder="">{{ old('alamat') }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="telp">No. Telepon</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">+62</span>
+                        </div>
+                        <input type="text" id="telp_marketing" name="telp" class="form-control" readonly
+                            placeholder="" value="{{ old('telp') }}">
+                    </div>
+                </div>
+
+                <div class="col-lg-8 mb-3 mt-4">
                     <h5>Tambah Kendaraan</h5>
                 </div>
 
@@ -333,6 +383,141 @@
                 </div>
             </div>
         </form>
+    </div>
+
+    <div class="modal fade" id="tableMarketing" data-backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Data Marketing</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive scrollbar m-2">
+                        <table id="datatables3" class="table table-bordered table-striped">
+                            <thead class="bg-200 text-900">
+                                <tr>
+                                    <th class="text-center">No</th>
+                                    <th>Kode Marketing</th>
+                                    <th>Nama Marketing</th>
+                                    <th>Alamat</th>
+                                    <th>Telepon</th>
+                                    <th>Opsi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($marketings as $marketing)
+                                    <tr>
+                                        <td class="text-center">{{ $loop->iteration }}</td>
+                                        <td>{{ $marketing->kode_marketing }}</td>
+                                        <td>{{ $marketing->nama_marketing }}</td>
+                                        <td>{{ $marketing->alamat }}</td>
+                                        <td>{{ $marketing->telp }}</td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-primary btn-sm"
+                                                onclick="getSelectedDatamarketing('{{ $marketing->id }}', '{{ $marketing->kode_marketing }}', '{{ $marketing->nama_marketing }}', '{{ $marketing->telp }}', '{{ $marketing->umur }}', '{{ $marketing->alamat }}')">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-marketing">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Tambah Marketing</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ url('admin/marketings') }}" method="POST" enctype="multipart/form-data"
+                    autocomplete="off">
+                    @csrf
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="nama_marketing">Nama Marketing</label>
+                            <input type="text" class="form-control" id="nama_marketing" name="nama_marketing"
+                                placeholder="Masukan nama marekting" value="{{ old('nama_marketing') }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="nama">Nama Alias</label>
+                            <input type="text" class="form-control" id="nama_alias" name="nama_alias"
+                                placeholder="Masukan nama alias" value="{{ old('nama_alias') }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="umur">Umur</label>
+                            <input type="text" class="form-control" id="umur" name="umur"
+                                placeholder="Masukan umur" value="{{ old('umur') }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="alamat">Alamat</label>
+                            <textarea type="text" class="form-control" id="alamat" name="alamat" placeholder="Masukan alamat">{{ old('alamat') }}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="telp">No. Telepon</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">+62</span>
+                                </div>
+                                <input type="text" id="telp" name="telp" class="form-control"
+                                    placeholder="Masukan nomor telepon" value="{{ old('telp') }}">
+                            </div>
+                        </div>
+                        {{-- <div class="form-group mb-3">
+                            <label for="email">Email</label>
+                            <input type="text" class="form-control" id="email" name="email"
+                                placeholder="Masukan email" value="{{ old('email') }}">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="ig">Instagram</label>
+                            <input type="text" class="form-control" id="ig" name="ig"
+                                placeholder="Masukan ig" value="{{ old('ig') }}">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="fb">Facebook</label>
+                            <input type="text" class="form-control" id="fb" name="fb"
+                                placeholder="Masukan fb" value="{{ old('fb') }}">
+                        </div> --}}
+                        <div class="mb-3">
+                            <label class="form-label" for="jk">Jenis Kelamin *</label>
+                            <select class="form-control" id="gender" name="gender">
+                                <option value="">- Pilih -</option>
+                                <option value="Laki-laki" {{ old('gender') == 'Laki-laki' ? 'selected' : null }}>
+                                    Laki-laki</option>
+                                <option value="Perempuan" {{ old('gender') == 'Perempuan' ? 'selected' : null }}>
+                                    Perempuan</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="gambar_ktp">Foto KTP</label>
+                            <input class="form-control @error('gambar_ktp') is-invalid @enderror" id="gambar_ktp"
+                                name="gambar_ktp" type="file" accept="image/*" />
+                            @error('gambar_ktp')
+                                <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="card-footer text-end">
+                        <button class="btn btn-secondary me-1" type="reset">
+                            <i class="fas fa-undo"></i> Reset
+                        </button>
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fas fa-save"></i> Simpan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
     <div class="modal fade" id="modal-pelanggan">
@@ -615,6 +800,9 @@
         </div>
     </div>
 
+
+
+
     <script>
         function showCategoryModal(selectedCategory) {
             $('#tableKategori').modal('show');
@@ -640,6 +828,23 @@
             var modalTipe = new bootstrap.Modal(document.getElementById('modal-model'));
             modalTipe.show();
         });
+
+        function showCategoryModalmarketing(selectedCategory) {
+            $('#tableMarketing').modal('show');
+        }
+
+        function getSelectedDatamarketing(marketing_id, kodeMarketing, namaMarketing, Telp, Umur, Alamat) {
+            // Set the values in the form fields
+            document.getElementById('marketing_id').value = marketing_id;
+            document.getElementById('kode_marketing').value = kodeMarketing;
+            document.getElementById('nama_marketing').value = namaMarketing;
+            document.getElementById('telp_marketing').value = Telp;
+            document.getElementById('umur_marketing').value = Umur;
+            document.getElementById('alamat_marketing').value = Alamat;
+
+            // Close the modal (if needed)
+            $('#tableMarketing').modal('hide');
+        }
     </script>
 
 

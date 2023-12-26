@@ -21,6 +21,8 @@ return new class extends Migration
             $table->foreign('pelanggan_id')->references('id')->on('pelanggans')->onDelete('set null');
             $table->unsignedBigInteger('kendaraan_id')->nullable();
             $table->foreign('kendaraan_id')->references('id')->on('kendaraans')->onDelete('set null');
+            $table->unsignedBigInteger('marketing_id')->nullable();
+            $table->foreign('marketing_id')->references('id')->on('marketings')->onDelete('set null');
             $table->string('harga')->nullable();
             $table->string('tanggal')->nullable();
             $table->string('tanggal_awal')->nullable();

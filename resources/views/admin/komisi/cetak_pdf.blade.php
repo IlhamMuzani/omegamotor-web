@@ -186,6 +186,31 @@
             /* Mengatur gambar lebih tinggi ke atas */
         }
 
+        .label {
+            font-weight: bold;
+        }
+
+        .label2 {
+            font-weight: bold;
+            margin-left: 32px
+        }
+
+        .content.break-label {
+            margin-left: 34;
+        }
+
+        .content {
+            margin-left: 48px;
+        }
+
+        .content2 {
+            /* margin-left: 1px */
+        }
+
+        .content4 {
+            margin-left: 1px
+        }
+
         @page {
             /* size: A4; */
             margin: 1cm;
@@ -197,61 +222,76 @@
     <table width="100%">
         <tr>
             <td>
-                <div class="info-catatan" style="max-width: 290px;">
-                    <table>
-                        <tr>
-                            <td class="info-catatan2">Nama Marketing</td>
-                            <td class="info-item">:</td>
-                            <td class="info-text info-left">
-                                @if ($komisis->marketing)
-                                    {{ $komisis->marketing->nama_marketing }}
-                                @else
-                                    data tidak ada
-                                @endif
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="info-catatan2">Alamat</td>
-                            <td class="info-item">:</td>
-                            <td class="info-text info-left">
-                                @if ($komisis->marketing)
-                                    {{ $komisis->marketing->alamat }}
-                                @else
-                                    data tidak ada
-                                @endif
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="info-catatan2">Telp / HP</td>
-                            <td class="info-item">:</td>
-                            <td class="info-text info-left">
-                                @if ($komisis->marketing)
-                                    {{ $komisis->marketing->telp }}
-                                @else
-                                    data tidak ada
-                                @endif
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="info-catatan2">ID Marketing</td>
-                            <td class="info-item">:</td>
-                            <td class="info-text info-left">
-                                @if ($komisis->marketing)
-                                    {{ $komisis->marketing->kode_marketing }}
-                                @else
-                                    data tidak ada
-                                @endif
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </td>
-            <td>
                 <div id="logo-container">
                     <!-- Tambahkan gambar logo di sini -->
                     <img src="{{ asset('storage/uploads/gambaricon/omega.png') }}" alt="Logo Omega">
                 </div>
             </td>
+        </tr>
+        <tr>
+            <td>
+
+                <div class="info">
+                    <span class="label">Nama</span>
+                    <span class="content">:
+                        @if ($komisis->marketing)
+                            {{ $komisis->marketing->nama_marketing }}
+                        @else
+                            data tidak ada
+                        @endif
+                    </span>
+                </div>
+                <div class="info" style="max-width: 450px;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>
+                                <span class="label">Alamat
+                                </span>
+                                <br>
+                            </td>
+                            <td>
+                                <span class="label2">:
+                                </span>
+                                <br>
+                            </td>
+                            <td style="text-align: left;">
+                                <span class="content2">
+                                    @if ($komisis->marketing)
+                                        {{ $komisis->marketing->alamat }}
+                                    @else
+                                        data tidak ada
+                                    @endif
+                                </span>
+                                <br>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="info">
+                    <span class="label">Telp</span>
+                    <span class="content">:
+                        @if ($komisis->marketing)
+                            {{ $komisis->marketing->telp }}
+                        @else
+                            data tidak ada
+                        @endif
+                    </span>
+                </div>
+
+                <div class="info">
+                    <span class="label">ID Pembeli</span>
+                    <span class="content4">:
+                        @if ($komisis->marketing)
+                            {{ $komisis->marketing->kode_marketing }}
+                        @else
+                            data tidak ada
+                        @endif
+                    </span>
+                </div>
+
+            </td>
+
         </tr>
     </table>
     <div style="font-weight: bold; text-align: center;">
@@ -268,7 +308,7 @@
                 <br>
             </td>
             <td style="text-align: right; padding-right: 45px;">
-                <span class="info-item" style="font-size: 13px;">Tanggal:{{ $komisis->tanggal_awal }}</span>
+                <span class="info-item" style="font-size: 13px;">Tanggal:{{ $komisis->tanggal }}</span>
                 <br>
             </td>
         </tr>
@@ -376,13 +416,13 @@
             <td style="text-align: center;">
                 <table style="margin: 0 auto;">
                     <tr style="text-align: center;">
-                        <td class="label" style="min-height: 16px;">&nbsp;</td>
+                        <td class="label">{{ $komisis->marketing->nama_marketing }}</td>
                     </tr>
                     <tr>
                         <td class="separator" colspan="2"><span></span></td>
                     </tr>
                     <tr style="text-align: center;">
-                        <td class="label">Gudang</td>
+                        <td class="label">Marketing</td>
                     </tr>
                 </table>
             </td>
@@ -395,11 +435,11 @@
                         <td class="separator" colspan="2"><span></span></td>
                     </tr>
                     <tr style="text-align: center;">
-                        <td class="label">Pembelian</td>
+                        <td class="label">Finance</td>
                     </tr>
                 </table>
             </td>
-            <td style="text-align: center;">
+            {{-- <td style="text-align: center;">
                 <table style="margin: 0 auto;">
                     <tr style="text-align: center;">
                         <td class="label" style="min-height: 16px;">&nbsp;</td>
@@ -411,7 +451,7 @@
                         <td class="label">Accounting</td>
                     </tr>
                 </table>
-            </td>
+            </td> --}}
         </tr>
     </table>
 </body>

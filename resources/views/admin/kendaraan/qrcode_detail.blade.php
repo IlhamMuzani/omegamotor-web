@@ -189,6 +189,108 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
+                            <div class="col-md-6">
+                                <div class="row mb-3">
+                                    <div class="col-md-6 mt-4">
+                                        <strong>Qr Code</strong>
+                                    </div>
+                                    <div class="col-md-4 mt-4">
+                                        <div data-bs-toggle="modal"
+                                            data-bs-target="#modal-qrcode-{{ $kendaraan->id }}"
+                                            style="display: inline-block;">
+                                            {!! DNS2D::getBarcodeHTML("$kendaraan->qrcode_kendaraan", 'QRCODE', 3, 3) !!}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <strong>Kode Kendaraan</strong>
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{ $kendaraan->kode_kendaraan }}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <strong>No Registrasi</strong>
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{ $kendaraan->no_pol }}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <strong>No Rangka</strong>
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{ $kendaraan->no_rangka }}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <strong>No Mesin</strong>
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{ $kendaraan->no_mesin }}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <strong>Tahun Pembuatan</strong>
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{ $kendaraan->tahun_kendaraan }}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <strong>Warna</strong>
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{ $kendaraan->warna }}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <strong>Merek</strong>
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{ $kendaraan->merek->nama_merek }}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <strong>Model</strong>
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{ $kendaraan->merek->modelken->nama_model }}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <strong>Type</strong>
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{ $kendaraan->merek->tipe->nama_tipe }}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <strong>Transmisi</strong>
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{ $kendaraan->transmisi }}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <strong>Km Berjalan</strong>
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{ $kendaraan->km_berjalan }}
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-md-3">
                                 <label for="">Foto Depan</label>
                                 @if ($kendaraan->gambar_depan)
@@ -294,108 +396,6 @@
                                 @endif
                             </div>
 
-                            <div class="col-md-6">
-                                <div class="row mb-3">
-                                    <div class="col-md-4">
-                                        <strong>Qr Code</strong>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div data-bs-toggle="modal"
-                                            data-bs-target="#modal-qrcode-{{ $kendaraan->id }}"
-                                            style="display: inline-block;">
-                                            {!! DNS2D::getBarcodeHTML("$kendaraan->qrcode_kendaraan", 'QRCODE', 3, 3) !!}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-md-4">
-                                        <strong>Kode Kendaraan</strong>
-                                    </div>
-                                    <div class="col-md-4">
-                                        {{ $kendaraan->kode_kendaraan }}
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-md-4">
-                                        <strong>No Registrasi</strong>
-                                    </div>
-                                    <div class="col-md-4">
-                                        {{ $kendaraan->no_pol }}
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-md-4">
-                                        <strong>No Rangka</strong>
-                                    </div>
-                                    <div class="col-md-4">
-                                        {{ $kendaraan->no_rangka }}
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-md-4">
-                                        <strong>No Mesin</strong>
-                                    </div>
-                                    <div class="col-md-4">
-                                        {{ $kendaraan->no_mesin }}
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-md-4">
-                                        <strong>Tahun</strong>
-                                    </div>
-                                    <div class="col-md-4">
-                                        {{ $kendaraan->tahun_kendaraan }}
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-md-4">
-                                        <strong>Warna</strong>
-                                    </div>
-                                    <div class="col-md-4">
-                                        {{ $kendaraan->warna }}
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-md-4">
-                                        <strong>Merek</strong>
-                                    </div>
-                                    <div class="col-md-4">
-                                        {{ $kendaraan->merek->nama_merek }}
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-md-4">
-                                        <strong>Model</strong>
-                                    </div>
-                                    <div class="col-md-4">
-                                        {{ $kendaraan->merek->modelken->nama_model }}
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-md-4">
-                                        <strong>Type</strong>
-                                    </div>
-                                    <div class="col-md-4">
-                                        {{ $kendaraan->merek->tipe->nama_tipe }}
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-md-4">
-                                        <strong>Transmisi</strong>
-                                    </div>
-                                    <div class="col-md-4">
-                                        {{ $kendaraan->transmisi }}
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-md-4">
-                                        <strong>Km Berjalan</strong>
-                                    </div>
-                                    <div class="col-md-4">
-                                        {{ $kendaraan->km_berjalan }}
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
 

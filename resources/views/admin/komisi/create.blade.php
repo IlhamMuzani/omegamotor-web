@@ -71,9 +71,14 @@
                     </button>
                 </div> --}}
                 <div class="mb-3" hidden>
-                    <label class="form-label" for="kode_pembelian">Pembelian / Penjualan id *</label>
+                    <label class="form-label" for="kode_pembelian">Pembelian id *</label>
                     <input class="form-control @error('kode_pembelian') is-invalid @enderror" id="pembelian_id"
                         name="pembelian_id" readonly type="text" placeholder="" value="{{ old('pembelian_id') }}" />
+                </div>
+                <div class="mb-3" hidden>
+                    <label class="form-label" for="kode_pembelian">Penjualan id *</label>
+                    <input class="form-control @error('kode_pembelian') is-invalid @enderror" id="penjualan_id"
+                        name="penjualan_id" readonly type="text" placeholder="" value="{{ old('penjualan_id') }}" />
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="kode">Kode Faktur *</label>
@@ -97,31 +102,25 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="no_pol">No Registrasi Kendaraan *</label>
-                    <input class="form-control @error('no_pol') is-invalid @enderror" id="kendaraan" name="no_pol" readonly
-                        type="text" placeholder="" value="{{ old('no_pol') }}" />
+                    <input class="form-control @error('no_pol') is-invalid @enderror" id="kendaraan" name="no_pol"
+                        readonly type="text" placeholder="" value="{{ old('no_pol') }}" />
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="harga">Harga *</label>
                     <input class="form-control @error('harga') is-invalid @enderror" id="harga" name="harga"
                         readonly type="text" placeholder="" value="{{ old('harga') }}" />
                 </div>
-                <div class="mb-3">
+                {{-- <div class="mb-3">
                     <button class="btn btn-primary btn-sm" type="button"
                         onclick="showCategoryModalmarketing(this.value)">
                         Pilih Marketing
                     </button>
+                </div> --}}
+
+                <div class="col-lg-8 mb-3 mt-4">
+                    <h5>Identitas Marketing</h5>
                 </div>
 
-                <label class="form-label" for="nama_marketing">Nama Pembeli *</label>
-                <div class="mb-2 d-flex">
-                    <input class="form-control @error('nama_marketing') is-invalid @enderror" id="nama_marketing"
-                        name="no_pol" type="text" placeholder=" " value="{{ old('nama_marketing') }}" readonly
-                        style="margin-right: 10px;" />
-                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                        data-bs-target="#modal-marketing">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                </div>
                 <div class="form-group" hidden>
                     <label for="marketing_id">Id Marketing</label>
                     <input type="text" class="form-control" id="marketing_id" name="marketing_id" placeholder=""
@@ -133,14 +132,21 @@
                         placeholder="" value="{{ old('kode_marketing') }}">
                 </div>
                 <div class="form-group">
+                    <label for="marketing_id">Nama Marketing</label>
+                    <input type="text" class="form-control" id="nama_marketing" readonly name="nama_marketing"
+                        placeholder="" value="{{ old('nama_marketing') }}">
+                </div>
+                <div class="form-group">
                     <label for="umur">Umur</label>
                     <input type="text" class="form-control" id="umur" name="umur" placeholder="" readonly
                         value="{{ old('umur') }}">
                 </div>
+
                 <div class="form-group">
                     <label for="alamat">Alamat</label>
                     <textarea type="text" class="form-control" id="alamat" name="alamat" readonly placeholder="">{{ old('alamat') }}</textarea>
                 </div>
+
                 <div class="form-group">
                     <label for="telp">No. Telepon</label>
                     <div class="input-group mb-3">
@@ -213,7 +219,7 @@
                                             <td>{{ $pembelian->harga }}</td>
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-primary btn-sm"
-                                                    onclick="getSelectedData('{{ $pembelian->id ?? '' }}', '{{ $pembelian->kode_pembelian ?? '' }}', '{{ $pembelian->pelanggan->id ?? '' }}', '{{ $pembelian->pelanggan->nama_pelanggan ?? '' }}', '{{ $pembelian->detail_kendaraan->first()->id ?? '' }}', '{{ $pembelian->detail_kendaraan->first()->no_pol ?? '' }}', '{{ $pembelian->harga ?? '' }}')">
+                                                    onclick="getSelectedData('{{ $pembelian->id ?? '' }}', '{{ $pembelian->kode_pembelian ?? '' }}', '{{ $pembelian->pelanggan->id ?? '' }}', '{{ $pembelian->pelanggan->nama_pelanggan ?? '' }}', '{{ $pembelian->detail_kendaraan->first()->id ?? '' }}', '{{ $pembelian->detail_kendaraan->first()->no_pol ?? '' }}', '{{ $pembelian->harga ?? '' }}','{{ $pembelian->marketing->id ?? '' }}', '{{ $pembelian->marketing->kode_marketing ?? '' }}', '{{ $pembelian->marketing->nama_marketing ?? '' }}', '{{ $pembelian->marketing->umur ?? '' }}', '{{ $pembelian->marketing->alamat ?? '' }}', '{{ $pembelian->marketing->telp ?? '' }}')">
                                                     <i class="fas fa-plus"></i>
                                                 </button>
                                             </td>
@@ -273,7 +279,7 @@
                                             <td>{{ $penjualan->harga }}</td>
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-primary btn-sm"
-                                                    onclick="getSelectedData2('{{ $penjualan->id ?? '' }}', '{{ $penjualan->kode_penjualan ?? '' }}', '{{ $penjualan->pelanggan->id ?? '' }}', '{{ $penjualan->pelanggan->nama_pelanggan ?? '' }}', '{{ $penjualan->kendaraan->id ?? '' }}', '{{ $penjualan->kendaraan->no_pol ?? '' }}', '{{ $penjualan->harga ?? '' }}')">
+                                                    onclick="getSelectedData2('{{ $penjualan->id ?? '' }}', '{{ $penjualan->kode_penjualan ?? '' }}', '{{ $penjualan->pelanggan->id ?? '' }}', '{{ $penjualan->pelanggan->nama_pelanggan ?? '' }}', '{{ $penjualan->kendaraan->id ?? '' }}', '{{ $penjualan->kendaraan->no_pol ?? '' }}', '{{ $penjualan->harga ?? '' }}','{{ $penjualan->marketing->id ?? '' }}', '{{ $penjualan->marketing->kode_marketing ?? '' }}', '{{ $penjualan->marketing->nama_marketing ?? '' }}', '{{ $penjualan->marketing->umur ?? '' }}', '{{ $penjualan->marketing->alamat ?? '' }}', '{{ $penjualan->marketing->telp ?? '' }}')">
                                                     <i class="fas fa-plus"></i>
                                                 </button>
 
@@ -377,7 +383,7 @@
                                     placeholder="Masukan nomor telepon" value="{{ old('telp') }}">
                             </div>
                         </div>
-                        <div class="form-group mb-3">
+                        {{-- <div class="form-group mb-3">
                             <label for="email">Email</label>
                             <input type="text" class="form-control" id="email" name="email"
                                 placeholder="Masukan email" value="{{ old('email') }}">
@@ -391,7 +397,7 @@
                             <label for="fb">Facebook</label>
                             <input type="text" class="form-control" id="fb" name="fb"
                                 placeholder="Masukan fb" value="{{ old('fb') }}">
-                        </div>
+                        </div> --}}
                         <div class="mb-3">
                             <label class="form-label" for="jk">Jenis Kelamin *</label>
                             <select class="form-control" id="gender" name="gender">
@@ -443,7 +449,8 @@
             $('#tableMarketing').modal('show');
         }
 
-        function getSelectedData(Pembelian_id, Kode_pembelian, Pelanggan_id, Pelanggan, Kendaraan_id, Kendaraan, Harga) {
+        function getSelectedData(Pembelian_id, Kode_pembelian, Pelanggan_id, Pelanggan, Kendaraan_id, Kendaraan, Harga,
+            marketing_id, kodeMarketing, namaMarketing, Umur, Alamat, Telp) {
             // Set the values in the form fields
             document.getElementById('pembelian_id').value = Pembelian_id;
             document.getElementById('kode').value = Kode_pembelian;
@@ -452,37 +459,50 @@
             document.getElementById('kendaraan_id').value = Kendaraan_id;
             document.getElementById('kendaraan').value = Kendaraan;
             document.getElementById('harga').value = Harga;
+            document.getElementById('marketing_id').value = marketing_id;
+            document.getElementById('kode_marketing').value = kodeMarketing;
+            document.getElementById('nama_marketing').value = namaMarketing;
+            document.getElementById('umur').value = Umur;
+            document.getElementById('alamat').value = Alamat;
+            document.getElementById('telp').value = Telp;
 
             // Close the modal (if needed)
             $('#tablePembelians').modal('hide');
         }
 
-        function getSelectedData2(Penjualan_id, Kode_Penjualan, Pelanggan_id, Pelanggan, Kendaraan_id, Kendaraan, Harga) {
+        function getSelectedData2(Penjualan_id, Kode_Penjualan, Pelanggan_id, Pelanggan, Kendaraan_id, Kendaraan, Harga,
+            marketing_id, kodeMarketing, namaMarketing, Umur, Alamat, Telp) {
             // Set the values in the form fields
-            document.getElementById('pembelian_id').value = Penjualan_id;
+            document.getElementById('penjualan_id').value = Penjualan_id;
             document.getElementById('kode').value = Kode_Penjualan;
             document.getElementById('pelanggan_id').value = Pelanggan_id;
             document.getElementById('nama_pelanggan').value = Pelanggan;
             document.getElementById('kendaraan_id').value = Kendaraan_id;
             document.getElementById('kendaraan').value = Kendaraan;
             document.getElementById('harga').value = Harga;
+            document.getElementById('marketing_id').value = marketing_id;
+            document.getElementById('kode_marketing').value = kodeMarketing;
+            document.getElementById('nama_marketing').value = namaMarketing;
+            document.getElementById('umur').value = Umur;
+            document.getElementById('alamat').value = Alamat;
+            document.getElementById('telp').value = Telp;
 
             // Close the modal (if needed)
             $('#tablePenjualans').modal('hide');
         }
 
-        function getSelectedDatamarketing(marketing_id, kodeMarketing, namaMarketing, Telp, Umur, Alamat) {
-            // Set the values in the form fields
-            document.getElementById('marketing_id').value = marketing_id;
-            document.getElementById('kode_marketing').value = kodeMarketing;
-            document.getElementById('nama_marketing').value = namaMarketing;
-            document.getElementById('telp').value = Telp;
-            document.getElementById('umur').value = Umur;
-            document.getElementById('alamat').value = Alamat;
+        // function getSelectedDatamarketing(marketing_id, kodeMarketing, namaMarketing, Telp, Umur, Alamat) {
+        //     // Set the values in the form fields
+        //     document.getElementById('marketing_id').value = marketing_id;
+        //     document.getElementById('kode_marketing').value = kodeMarketing;
+        //     document.getElementById('nama_marketing').value = namaMarketing;
+        //     document.getElementById('telp').value = Telp;
+        //     document.getElementById('umur').value = Umur;
+        //     document.getElementById('alamat').value = Alamat;
 
-            // Close the modal (if needed)
-            $('#tableMarketing').modal('hide');
-        }
+        //     // Close the modal (if needed)
+        //     $('#tableMarketing').modal('hide');
+        // }
     </script>
 
 

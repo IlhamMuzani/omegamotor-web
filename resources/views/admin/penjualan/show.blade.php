@@ -156,7 +156,6 @@
         <tr>
             <td>
                 <div class="info-container">
-
                     <div class="info-catatan" style="max-width: 230px;">
                         <table>
                             <tr>
@@ -204,7 +203,7 @@
             </td>
             <td style="text-align: right;">
                 {{-- <span class="info-item">Tanggal:{{ now()->format('d-m-Y') }}</span> --}}
-                <span class="info-item">Tanggal:{{ $penjualans->tanggal_awal }}</span>
+                <span class="info-item">Tanggal:{{ $penjualans->tanggal }}</span>
                 <br>
             </td>
         </tr>
@@ -215,7 +214,7 @@
             <td class="td" style="text-align: center; padding: 0px;">No.</td>
             <td class="td" style="text-align: center; padding: 2px;">Kode Kendaraan</td>
             <td class="td" style="text-align: center; padding: 2px;">No. Registrasi</td>
-            <td class="td" style="text-align: center; padding: 2px;">Merek</td>
+            <td class="td" style="text-align: center; padding: 2px;">Model</td>
             <td class="td" style="text-align: center; padding: 2px;">Type</td>
             <td class="td" style="text-align: center; padding: 2px;">Harga</td>
         </tr>
@@ -232,7 +231,7 @@
             <td class="td" style="text-align: center; padding: 2px;">{{ $penjualans->kendaraan->kode_kendaraan }}
             </td>
             <td class="td" style="text-align: center; padding: 2px;">{{ $penjualans->kendaraan->no_pol }}</td>
-            <td class="td" style="text-align: center; padding: 2px;">{{ $penjualans->kendaraan->merek->nama_merek }}
+            <td class="td" style="text-align: center; padding: 2px;">{{ $penjualans->kendaraan->merek->modelken->nama_model }}
             </td>
             <td class="td" style="text-align: center; padding: 2px;">
                 {{ $penjualans->kendaraan->merek->tipe->nama_tipe }}</td>
@@ -286,8 +285,9 @@
     <table class="tdd" style="width: 100%;" cellpadding="10" cellspacing="0">
         <tr>
             <td style="text-align: center">Gudang</td>
-            <td style="text-align: center">Pembelian</td>
-            <td style="text-align: center">Accounting</td>
+            <td style="text-align: center">Customer</td>
+            <td style="text-align: center">Marketing</td>
+            <td style="text-align: center">Finance</td>
         </tr>
     </table>
 </body>

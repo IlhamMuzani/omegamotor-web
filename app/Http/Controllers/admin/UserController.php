@@ -203,7 +203,6 @@ class UserController extends Controller
 
         // LogAktivitas::where('user_id', $id)->update(['user_id' => null]);
 
-
         return redirect('admin/user')->with('success', 'Berhasil menghapus user');
     }
 }

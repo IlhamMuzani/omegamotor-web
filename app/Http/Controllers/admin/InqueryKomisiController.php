@@ -13,15 +13,42 @@ use App\Models\Pelanggan;
 use App\Models\Pembelian;
 use App\Models\Penjualan;
 use App\Models\Tipe;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 
 class InqueryKomisiController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $komisis = Komisi::get();
-        return view('admin/inquerykomisi.index', compact('komisis'));
+        // $komisis = Komisi::get();
+        // return view('admin/inquerykomisi.index', compact('komisis'));
+
+        $status = $request->status;
+        $tanggal_awal = $request->tanggal_awal;
+        $tanggal_akhir = $request->tanggal_akhir;
+
+        $inquery = Komisi::query();
+
+        if ($status) {
+            $inquery->where('status', $status);
+        }
+
+        if ($tanggal_awal && $tanggal_akhir) {
+            $inquery->whereBetween('tanggal_awal', [$tanggal_awal, $tanggal_akhir]);
+        } elseif ($tanggal_awal) {
+            $inquery->where('tanggal_awal', '>=', $tanggal_awal);
+        } elseif ($tanggal_akhir) {
+            $inquery->where('tanggal_awal', '<=', $tanggal_akhir);
+        } else {
+            // Jika tidak ada filter tanggal hari ini
+            $inquery->whereDate('tanggal_awal', Carbon::today());
+        }
+
+        $inquery->orderBy('id', 'DESC');
+        $inquery = $inquery->get();
+
+        return view('admin/inquerykomisi.index', compact('inquery'));
     }
 
 
@@ -66,19 +93,41 @@ class InqueryKomisiController extends Controller
             return back()->withInput()->with('error', $errors);
         }
 
+        $kategori = $request->kategori;
+
+        $penjualan_id = null;
+        $pembelian_id = null;
+
+        if ($kategori === 'Pembelian') {
+            $pembelian_id = $request->pembelian_id;
+        } elseif ($kategori === 'Penjualan') {
+            $penjualan_id = $request->penjualan_id;
+        }
+
         $komisi = Komisi::where('id', $id)->update(
             [
                 'kategori' => $request->kategori,
                 'pelanggan_id' => $request->pelanggan_id,
-                'penjualan_id' => $request->penjualan_id,
-                'pembelian_id' => $request->pembelian_id,
+                'kendaraan_id' => $request->kendaraan_id,
                 'marketing_id' => $request->marketing_id,
                 'harga' => $request->harga,
                 'kode_faktur' => $request->kode_faktur,
                 'fee' => $request->fee,
                 'status' => 'posting',
+                'penjualan_id' => $penjualan_id, // Set penjualan_id based on the condition
+                'pembelian_id' => $pembelian_id, // Set pembelian_id based on the condition
             ]
         );
+
+        if ($kategori == 'Penjualan') {
+            $faktur = Penjualan::where('id', $penjualan_id)->update([
+                'status_komisi' => 'aktif',
+            ]);
+        } elseif ($kategori == 'Pembelian') {
+            $faktur = Pembelian::where('id', $pembelian_id)->update([
+                'status_komisi' => 'aktif',
+            ]);
+        }
 
         return redirect('admin/inquery_komisi')->with('success', 'Berhasil memperbarui komisi');
     }
@@ -108,9 +157,23 @@ class InqueryKomisiController extends Controller
 
     public function destroy($id)
     {
-        $ban = Komisi::find($id);
-        $ban->delete();
+        $komisi = Komisi::find($id);
 
-        return redirect('admin/inquery_komisi')->with('success', 'Berhasil menghapus komisi');
+        if ($komisi) {
+            if ($komisi->kategori === 'Penjualan') {
+                $faktur = Penjualan::where('id', $komisi->penjualan_id)->update([
+                    'status_komisi' => 'tidak aktif',
+                ]);
+            } elseif ($komisi->kategori === 'Pembelian') {
+                $faktur = Pembelian::where('id', $komisi->pembelian_id)->update([
+                    'status_komisi' => 'tidak aktif',
+                ]);
+            }
+
+            $komisi->delete();
+            return redirect('admin/inquery_komisi')->with('success', 'Berhasil menghapus komisi');
+        } else {
+            return redirect('admin/inquery_komisi')->with('error', 'Komisi tidak ditemukan');
+        }
     }
 }

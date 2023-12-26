@@ -203,7 +203,7 @@
             </td>
             <td style="text-align: right;">
                 {{-- <span class="info-item">Tanggal:{{ now()->format('d-m-Y') }}</span> --}}
-                <span class="info-item">Tanggal:{{ $komisis->tanggal_awal }}</span>
+                <span class="info-item">Tanggal:{{ $komisis->tanggal }}</span>
                 <br>
             </td>
         </tr>
@@ -288,9 +288,9 @@
 
     <table class="tdd" style="width: 100%;" cellpadding="10" cellspacing="0">
         <tr>
-            <td style="text-align: center">Gudang</td>
-            <td style="text-align: center">Pembelian</td>
-            <td style="text-align: center">Accounting</td>
+            {{-- <td style="text-align: center">Gudang</td> --}}
+            <td style="text-align: center">Marketing</td>
+            <td style="text-align: center">Finance</td>
         </tr>
     </table>
 </body>

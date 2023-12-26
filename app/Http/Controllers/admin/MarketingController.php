@@ -54,7 +54,7 @@ class MarketingController extends Controller
 
         if ($request->gambar_ktp) {
             $gambar = str_replace(' ', '', $request->gambar_ktp->getClientOriginalName());
-            $namaGambar = 'marketing/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
+            $namaGambar = 'gambar_ktp/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
             $request->gambar_ktp->storeAs('public/uploads/', $namaGambar);
         } else {
             $namaGambar = null;
@@ -133,13 +133,13 @@ class MarketingController extends Controller
 
         $marketing = Marketing::findOrFail($id);
 
-        if ($request->gambar) {
-            Storage::disk('local')->delete('public/uploads/' . $marketing->gambar);
-            $gambar = str_replace(' ', '', $request->gambar->getClientOriginalName());
-            $namaGambar = 'marketing/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
-            $request->gambar->storeAs('public/uploads/', $namaGambar);
+        if ($request->gambar_ktp) {
+            Storage::disk('local')->delete('public/uploads/' . $marketing->gambar_ktp);
+            $gambar = str_replace(' ', '', $request->gambar_ktp->getClientOriginalName());
+            $namaGambar = 'gambar_ktp/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
+            $request->gambar_ktp->storeAs('public/uploads/', $namaGambar);
         } else {
-            $namaGambar = $marketing->gambar;
+            $namaGambar = $marketing->gambar_ktp;
         }
         
         Marketing::where('id', $id)->update([

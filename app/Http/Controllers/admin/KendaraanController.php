@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Carbon\Carbon;
-use Dompdf\Dompdf;
-use App\Models\Divisi;
-use App\Models\Golongan;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Kendaraan;
 use Illuminate\Http\Request;
 use App\Models\Jenis_kendaraan;
@@ -23,8 +21,19 @@ class KendaraanController extends Controller
 {
     public function index(Request $request)
     {
-        $kendaraans = Kendaraan::all();
-        return view('admin/kendaraan.index', compact('kendaraans'));
+        $status = $request->status;
+
+        $query = Kendaraan::query();
+
+        if ($status) {
+            $query->where('status', $status);
+        } else {
+            $query->where('status', 'stok'); // Hanya status 'stok' jika $status tidak diberikan.
+        }
+
+        $kendaraans = $query->get();
+
+        return view('admin.kendaraan.index', compact('kendaraans'));
     }
 
 
@@ -176,6 +185,7 @@ class KendaraanController extends Controller
                 'kode_kendaraan' => $this->kode(),
                 'qrcode_kendaraan' => 'https:///omegamotor.id/kendaraan/' . $kode,
                 'tanggal_awal' => $tanggal,
+                'status' => 'stok',
             ]
         ));
 
@@ -476,5 +486,23 @@ class KendaraanController extends Controller
         $data = 'AD';
         $kode_merek = $data . $num;
         return $kode_merek;
+    }
+
+    public function print_kendaraan(Request $request)
+    {
+        $status = $request->status;
+
+        $query = Kendaraan::orderBy('id', 'DESC');
+
+        if ($status == "stok") {
+            $query->where('status', $status);
+        } else {
+            $query->where('status', 'stok');
+        }
+
+        $inquery = $query->orderBy('id', 'DESC')->get();
+
+        $pdf = PDF::loadView('admin.kendaraan.print', compact('inquery'));
+        return $pdf->stream('Laporan_Kendaraan.pdf');
     }
 }

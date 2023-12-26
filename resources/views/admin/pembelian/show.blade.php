@@ -204,7 +204,7 @@
             </td>
             <td style="text-align: right;">
                 {{-- <span class="info-item">Tanggal:{{ now()->format('d-m-Y') }}</span> --}}
-                <span class="info-item">Tanggal:{{ $pembelians->tanggal_awal }}</span>
+                <span class="info-item">Tanggal:{{ $pembelians->tanggal }}</span>
                 <br>
             </td>
         </tr>
@@ -215,7 +215,7 @@
             <td class="td" style="text-align: center; padding: 0px;">No.</td>
             <td class="td" style="text-align: center; padding: 2px;">Kode Kendaraan</td>
             <td class="td" style="text-align: center; padding: 2px;">No. Registrasi</td>
-            <td class="td" style="text-align: center; padding: 2px;">Merek</td>
+            <td class="td" style="text-align: center; padding: 2px;">Model</td>
             <td class="td" style="text-align: center; padding: 2px;">Type</td>
             {{-- <td class="td" style="text-align: center; padding: 2px;">Vi Marketing</td> --}}
             <td class="td" style="text-align: center; padding: 2px;">Harga</td>
@@ -234,7 +234,7 @@
                 <td class="td" style="text-align: center; padding: 2px;">{{ $item->no_pol }}</td>
                 <td class="td" style="text-align: center; padding: 2px;">
                     @if ($item->merek)
-                        {{ $item->merek->nama_merek }}
+                        {{ $item->merek->modelken->nama_model }}
                     @else
                         data tidak ada
                     @endif
@@ -289,9 +289,10 @@
     }
     ?>
 
-     <br>
+    <br>
     <span
-        style="font-weight: bold; font-size: 18px; margin-left: 100px; font-style: italic;">({{ terbilang($pembelians->harga) }} Rupiah)</span>
+        style="font-weight: bold; font-size: 18px; margin-left: 100px; font-style: italic;">({{ terbilang($pembelians->harga) }}
+        Rupiah)</span>
 
     <br><br><br>
     <br><br><br>
@@ -299,8 +300,9 @@
     <table class="tdd" style="width: 100%;" cellpadding="10" cellspacing="0">
         <tr>
             <td style="text-align: center">Gudang</td>
-            <td style="text-align: center">Pembelian</td>
-            <td style="text-align: center">Accounting</td>
+            <td style="text-align: center">Customer</td>
+            <td style="text-align: center">Marketing</td>
+            <td style="text-align: center">Finance</td>
         </tr>
     </table>
 </body>

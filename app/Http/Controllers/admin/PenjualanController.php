@@ -11,17 +11,19 @@ use App\Models\Kendaraan;
 use App\Models\Pelanggan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Marketing;
 use App\Models\Penjualan;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class PenjualanController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         $pelanggans = Pelanggan::all();
-        $kendaraans = Kendaraan::all();
-        return view('admin/penjualan.create', compact('pelanggans', 'kendaraans'));
+        $kendaraans = Kendaraan::where(['status' => 'stok'])->get();
+        $marketings = Marketing::all();
+        return view('admin/penjualan.create', compact('pelanggans', 'kendaraans', 'marketings'));
     }
 
     public function store(Request $request)
@@ -31,11 +33,13 @@ class PenjualanController extends Controller
             [
                 'pelanggan_id' => 'required',
                 'kendaraan_id' => 'required',
+                'marketing_id' => 'required',
                 'harga' => 'required',
             ],
             [
                 'pelanggan_id.required' => 'Pilih pelanggan',
                 'kendaraan_id.required' => 'Pilih Kendaraan',
+                'marketing_id.required' => 'Pilih Marketing',
                 'harga.required' => 'Masukkan harga',
             ]
         );
@@ -47,20 +51,32 @@ class PenjualanController extends Controller
 
         $kode = $this->kode();
 
+        // tgl indo
+        $tanggal1 = Carbon::now('Asia/Jakarta');
+        $format_tanggal = $tanggal1->format('d F Y');
+
         $tanggal = Carbon::now()->format('Y-m-d');
         $penjualans = Penjualan::create(array_merge(
             $request->all(),
             [
                 'pelanggan_id' => $request->pelanggan_id,
                 'kendaraan_id' => $request->kendaraan_id,
+                'marketing_id' => $request->marketing_id,
                 'harga' => $request->harga,
                 'kode_penjualan' => $this->kode(),
                 'qrcode_penjualan' => 'https:///omegamotor.id/penjualan/' . $kode,
+                'tanggal' => $format_tanggal,
                 'tanggal_awal' => $tanggal,
                 'status' => 'posting',
                 'status_komisi' => 'tidak aktif',
             ]
         ));
+
+        $kendaraan = Kendaraan::findOrFail($request->kendaraan_id);
+        $kendaraan->update([
+            'status' => 'terjual'
+        ]);
+
         return view('admin.penjualan.show', compact('penjualans'));
     }
 

@@ -71,7 +71,7 @@ class KaryawanController extends Controller
 
         if ($request->gambar) {
             $gambar = str_replace(' ', '', $request->gambar->getClientOriginalName());
-            $namaGambar = 'karyawan/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
+            $namaGambar = 'gambar/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
             $request->gambar->storeAs('public/uploads/', $namaGambar);
         } else {
             $namaGambar = '';
@@ -126,6 +126,22 @@ class KaryawanController extends Controller
         $pdf->setPaper('letter', 'portrait');
         return $pdf->stream('QrCodeKaryawan.pdf');
     }
+
+    // public function cetakqrcode($id)
+    // {
+    //     $karyawans = Karyawan::find($id);
+
+    //     // Generate the QR code
+    //     $qrcode = QrCode::format('png')->size(200)->generate($karyawans->qrcode_karyawan);
+
+    //     // Save the QR code as a PNG file
+    //     $filename = 'QrCodeKaryawan.png';
+    //     $path = public_path('qrcodes/' . $filename);
+    //     file_put_contents($path, $qrcode);
+
+    //     // Now, you can return or download the PNG file
+    //     return response()->download($path, $filename);
+    // }
 
     public function show($id)
     {
@@ -196,7 +212,7 @@ class KaryawanController extends Controller
         if ($request->gambar) {
             Storage::disk('local')->delete('public/uploads/' . $karyawan->gambar);
             $gambar = str_replace(' ', '', $request->gambar->getClientOriginalName());
-            $namaGambar = 'karyawan/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
+            $namaGambar = 'gambar/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
             $request->gambar->storeAs('public/uploads/', $namaGambar);
         } else {
             $namaGambar = $karyawan->gambar;
