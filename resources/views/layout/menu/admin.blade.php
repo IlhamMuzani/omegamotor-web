@@ -392,6 +392,23 @@
                                 </a>
                             </li>
                         @endif
+                        @if (auth()->check() && auth()->user()->menu['laporan komisi'])
+                            @php
+                                $isActive = request()->is('admin/laporan_komisi*');
+                                $backgroundColor = $isActive ? 'background-color: black;' : '';
+                                $textColor = $isActive ? 'color: white;' : '';
+                            @endphp
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('admin/laporan_komisi') }}" aria-expanded="false"
+                                    style="{{ $backgroundColor }} {{ $textColor }}">
+                                    <div class="d-flex align-items-center">
+                                        <span class="nav-link-text ps-1">
+                                            <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                                            Test</span>
+                                    </div>
+                                </a>
+                            </li>
+                        @endif
                     </ul>
                 </li>
 
@@ -406,19 +423,19 @@
                 </li>
 
                 <li class="nav-item">
-                        @php
-                            $isActive = request()->is('admin/profile*');
-                            $backgroundColor = $isActive ? 'background-color: black;' : '';
-                            $textColor = $isActive ? 'color: white;' : '';
-                        @endphp
-                        <a class="nav-link" href="{{ url('admin/profile') }}" aria-expanded="false"
-                            style="{{ $backgroundColor }} {{ $textColor }}">
-                            <div class="d-flex align-items-center"> <span class="nav-link-icon">
-                                    <span class="fas fas fa-user-edit"></span>
-                                </span>
-                                <span class="nav-link-text ps-1" style="color:white">Update Profil</span>
-                            </div>
-                        </a>
+                    @php
+                        $isActive = request()->is('admin/profile*');
+                        $backgroundColor = $isActive ? 'background-color: black;' : '';
+                        $textColor = $isActive ? 'color: white;' : '';
+                    @endphp
+                    <a class="nav-link" href="{{ url('admin/profile') }}" aria-expanded="false"
+                        style="{{ $backgroundColor }} {{ $textColor }}">
+                        <div class="d-flex align-items-center"> <span class="nav-link-icon">
+                                <span class="fas fas fa-user-edit"></span>
+                            </span>
+                            <span class="nav-link-text ps-1" style="color:white">Update Profil</span>
+                        </div>
+                    </a>
                     <a class="nav-link" data-bs-toggle="modal" data-bs-target="#modalLogout" href="#">
                         <div class="d-flex align-items-center">
                             <span class="nav-link-icon">
