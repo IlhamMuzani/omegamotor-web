@@ -345,13 +345,14 @@
             <td class="td" style="text-align: center; padding: 5px; font-size: 13px;">No.</td>
             <td class="td" style="text-align: center; padding: 5px; font-size: 13px;">Kode Kendaraan</td>
             <td class="td" style="text-align: center; padding: 5px; font-size: 13px;">No. Registrasi</td>
+            <td class="td" style="text-align: center; padding: 5px; font-size: 13px;">Tahun</td>
             <td class="td" style="text-align: center; padding: 5px; font-size: 13px;">Model</td>
             <td class="td" style="text-align: center; padding: 5px; font-size: 13px;">Type</td>
             {{-- <td class="td" style="text-align: center; padding: 5px; font-size: 13px;">Vi Marketing</td> --}}
             <td class="td" style="text-align: center; padding: 5px; font-size: 13px;">Harga</td>
         </tr>
         <tr style="border-bottom: 1px solid black;">
-            <td colspan="6" style="padding: 0px;"></td>
+            <td colspan="7" style="padding: 0px;"></td>
         </tr>
         {{-- @php
             $totalHarga = $pembelians->harga + $pembelians->vi_marketing;
@@ -363,6 +364,9 @@
                 <td class="td" style="text-align: center;  font-size: 13px;">{{ $item->kode_kendaraan }}</td>
                 <td class="info-text info-left" style="font-size: 13px; text-align: center;">
                     {{ $item->no_pol }}
+                </td>
+                <td class="info-text info-left" style="font-size: 13px; text-align: center;">
+                    {{ $item->tahun_kendaraan }}
                 </td>
                 <td class="info-text info-left" style="font-size: 13px; text-align: center;">
                     @if ($item->merek)
@@ -387,10 +391,10 @@
             </tr>
         @endforeach
         <tr style="border-bottom: 1px solid black;">
-            <td colspan="5" style="padding: 0px;"></td>
+            <td colspan="6" style="padding: 0px;"></td>
         </tr>
         <tr>
-            <td colspan="5" style="text-align: right; font-weight: bold; padding: 5px; font-size: 13px;">
+            <td colspan="6" style="text-align: right; font-weight: bold; padding: 5px; font-size: 13px;">
             </td>
             <td class="td" style="text-align: center; font-weight: bold; padding: 5px; font-size: 13px;">
                 {{-- {{ number_format($pembelians->harga, 0, ',', '.') }} --}}
@@ -462,7 +466,7 @@
                         <td class="separator" colspan="2"><span></span></td>
                     </tr>
                     <tr style="text-align: center;">
-                        <td class="label">Customer</td>
+                        <td class="label">Penjual</td>
                     </tr>
                 </table>
             </td>

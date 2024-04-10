@@ -320,7 +320,7 @@
     <table class="tdd" style="width: 100%;" cellpadding="10" cellspacing="0">
         <tr>
             <td style="text-align: center">Gudang</td>
-            <td style="text-align: center">Customer</td>
+            <td style="text-align: center">Penjual</td>
             <td style="text-align: center">Marketing</td>
             <td style="text-align: center">Finance</td>
         </tr>

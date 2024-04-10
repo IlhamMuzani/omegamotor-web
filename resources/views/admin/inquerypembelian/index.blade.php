@@ -69,6 +69,7 @@
                             <th class="text-center">No</th>
                             <th>Faktur Pembelian</th>
                             <th>Model Mobil</th>
+                            <th>Tahun</th>
                             <th>Tanggal</th>
                             <th class="text-center">Supplier</th>
                             <th class="text-center">Harga</th>
@@ -80,7 +81,20 @@
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
                                 <td>{{ $pembelian->kode_pembelian }}</td>
-                                <td>{{ $pembelian->detail_kendaraan->first()->merek->modelken->nama_model }}</td>
+                                <td>
+                                    @if ($pembelian->detail_kendaraan->first())
+                                        {{ $pembelian->detail_kendaraan->first()->merek->modelken->nama_model }}
+                                    @else
+                                        tidak ada
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($pembelian->detail_kendaraan->first())
+                                        {{ $pembelian->detail_kendaraan->first()->tahun_kendaraan }}
+                                    @else
+                                        tidak ada
+                                    @endif
+                                </td>
                                 <td>{{ $pembelian->tanggal_awal }}</td>
                                 <td>
                                     @if ($pembelian->pelanggan)

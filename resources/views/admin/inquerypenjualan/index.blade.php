@@ -69,6 +69,7 @@
                             <th class="text-center">No</th>
                             <th>Faktur Penjualan</th>
                             <th>Model</th>
+                            <th>Tahun</th>
                             <th>Tanggal</th>
                             <th class="text-center">Pelanggan</th>
                             <th class="text-center">Harga</th>
@@ -81,6 +82,7 @@
                                 <td class="text-center">{{ $loop->iteration }}</td>
                                 <td>{{ $penjualan->kode_penjualan }}</td>
                                 <td>{{ $penjualan->kendaraan->merek->modelken->nama_model }}</td>
+                                <td>{{ $penjualan->kendaraan->tahun_kendaraan }}</td>
                                 <td>{{ $penjualan->tanggal_awal }}</td>
                                 <td>
                                     @if ($penjualan->pelanggan)
