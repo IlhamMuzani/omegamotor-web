@@ -90,7 +90,8 @@
                 <label class="form-label" for="nama_marketing">Nama Marketing *</label>
                 <div class="mb-2 d-flex">
                     <input class="form-control @error('nama_marketing') is-invalid @enderror" id="nama_marketing"
-                        name="no_pol" type="text" placeholder=" " value="{{ old('nama_marketing', $pembelian->marketing->nama_marketing) }}" readonly
+                        name="no_pol" type="text" placeholder=" "
+                        value="{{ old('nama_marketing', $pembelian->marketing->nama_marketing) }}" readonly
                         style="margin-right: 10px;" />
                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                         data-bs-target="#modal-marketing">
@@ -259,6 +260,8 @@
                             Hitam</option>
                         <option value="Putih" {{ old('warna', $kendaraan->warna) == 'Putih' ? 'selected' : null }}>
                             Putih</option>
+                        <option value="Abu-Abu" {{ old('warna', $kendaraan->warna) == 'Abu-Abu' ? 'selected' : null }}>
+                            Abu-Abu</option>
                     </select>
                 </div>
                 <div class="mb-3 mt-4">
@@ -985,7 +988,7 @@
             $('#tableMarketing').modal('show');
         }
 
-         function getSelectedDatamarketing(marketing_id, kodeMarketing, namaMarketing, Telp, Umur, Alamat) {
+        function getSelectedDatamarketing(marketing_id, kodeMarketing, namaMarketing, Telp, Umur, Alamat) {
             // Set the values in the form fields
             document.getElementById('marketing_id').value = marketing_id;
             document.getElementById('kode_marketing').value = kodeMarketing;
