@@ -59,7 +59,7 @@
             <div class="card-body">
                 <label class="form-label" for="no_pol">Pelanggan *</label>
                 <div class="mb-5 d-flex">
-                    <select class="form-control" id="pelanggan_id" name="pelanggan_id" style="margin-right: 10px;">
+                    <select class="select2bs4" name="pelanggan_id" id="pelanggan_id" style="width: 100%;">
                         <option value="">- Pilih -</option>
                         @foreach ($pelanggans as $pelanggan)
                             <option value="{{ $pelanggan->id }}"
@@ -1002,4 +1002,17 @@
         }
     </script>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+    <!-- Tambahkan script inisialisasi -->
+    <script>
+        $(document).ready(function() {
+            $('.select2bs4').select2({
+                theme: 'bootstrap4', // Menggunakan tema Bootstrap 4
+                placeholder: 'Pilih Pelanggan..', // Pesan placeholder
+                allowClear: true // Menambahkan opsi untuk menghapus pilihan
+            });
+        });
+    </script>
 @endsection
