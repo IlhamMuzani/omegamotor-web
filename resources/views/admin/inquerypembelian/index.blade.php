@@ -83,7 +83,11 @@
                                 <td>{{ $pembelian->kode_pembelian }}</td>
                                 <td>
                                     @if ($pembelian->detail_kendaraan->first())
-                                        {{ $pembelian->detail_kendaraan->first()->merek->modelken->nama_model }}
+                                        @if ($pembelian->detail_kendaraan->first()->merek->modelken)
+                                            {{ $pembelian->detail_kendaraan->first()->merek->modelken->nama_model }}
+                                        @else
+                                            tidak ada
+                                        @endif
                                     @else
                                         tidak ada
                                     @endif

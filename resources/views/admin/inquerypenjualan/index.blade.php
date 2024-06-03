@@ -81,7 +81,13 @@
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
                                 <td>{{ $penjualan->kode_penjualan }}</td>
-                                <td>{{ $penjualan->kendaraan->merek->modelken->nama_model }}</td>
+                                <td>
+                                    @if ($penjualan->kendaraan->merek->modelken)
+                                        {{ $penjualan->kendaraan->merek->modelken->nama_model }}
+                                    @else
+                                        tidak ada
+                                    @endif
+                                </td>
                                 <td>{{ $penjualan->kendaraan->tahun_kendaraan }}</td>
                                 <td>{{ $penjualan->tanggal_awal }}</td>
                                 <td>

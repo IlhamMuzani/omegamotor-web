@@ -646,11 +646,22 @@
                                     <td class="text-center">{{ $loop->iteration }}</td>
                                     <td>{{ $merek->kode_merek }}</td>
                                     <td>{{ $merek->nama_merek }}</td>
-                                    <td>{{ $merek->modelken->nama_model }}</td>
+                                    <td>
+                                        @if ($merek->modelken)
+                                            {{ $merek->modelken->nama_model }}
+                                        @else
+                                            tidak ada
+                                        @endif
+                                    </td>
                                     <td>{{ $merek->tipe->nama_tipe }}</td>
                                     <td class="text-center">
                                         <button type="button" class="btn btn-primary btn-sm"
-                                            onclick="getSelectedData('{{ $merek->id }}', '{{ $merek->nama_merek }}', '{{ $merek->modelken->nama_model }}', '{{ $merek->tipe->nama_tipe }}')">
+                                            onclick="getSelectedData(
+            '{{ $merek->id }}',
+            '{{ $merek->nama_merek }}',
+            '{{ $merek->modelken ? $merek->modelken->nama_model : '' }}',
+            '{{ $merek->tipe->nama_tipe }}'
+        )">
                                             <i class="fas fa-plus"></i>
                                         </button>
 

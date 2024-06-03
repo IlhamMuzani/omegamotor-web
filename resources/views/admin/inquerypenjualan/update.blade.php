@@ -156,7 +156,7 @@
                     <label class="form-label" for="model">Model *</label>
                     <input class="form-control @error('model') is-invalid @enderror" id="model" name="model"
                         readonly readonly type="text" placeholder=""
-                        value="{{ old('model', $penjualan->kendaraan->merek->modelken->nama_model) }}" />
+                        value="{{ old('model', $penjualan->kendaraan->merek->modelken ? $penjualan->kendaraan->merek->modelken->nama_model : 'tidak ada') }}" />
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="tipe">Tipe *</label>
@@ -190,7 +190,8 @@
                 <label class="form-label" for="nama_marketing">Nama Marketing *</label>
                 <div class="mb-2 d-flex">
                     <input class="form-control @error('nama_marketing') is-invalid @enderror" id="nama_marketing"
-                        name="no_pol" type="text" placeholder=" " value="{{ old('nama_marketing', $penjualan->marketing->nama_marketing) }}" readonly
+                        name="no_pol" type="text" placeholder=" "
+                        value="{{ old('nama_marketing', $penjualan->marketing->nama_marketing) }}" readonly
                         style="margin-right: 10px;" />
                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                         data-bs-target="#modal-marketing">
@@ -380,7 +381,11 @@
                                     </td>
                                     <td>
                                         @if ($kendaraan->merek)
-                                            {{ $kendaraan->merek->modelken->nama_model }}
+                                            @if ($kendaraan->merek->modelken)
+                                                {{ $kendaraan->merek->modelken->nama_model }}
+                                            @else
+                                                tidak ada
+                                            @endif
                                         @else
                                             data tidak ada
                                         @endif
@@ -389,7 +394,7 @@
                                     <td>{{ $kendaraan->warna }}</td>
                                     <td class="text-center">
                                         <button type="button" class="btn btn-primary btn-sm"
-                                            onclick="getSelectedData('{{ $kendaraan->id }}', '{{ $kendaraan->kode_kendaraan }}', '{{ $kendaraan->no_pol }}', '{{ $kendaraan->no_rangka }}', '{{ $kendaraan->no_mesin }}', '{{ $kendaraan->warna }}', '{{ $kendaraan->merek->nama_merek }}', '{{ $kendaraan->merek->modelken->nama_model }}', '{{ $kendaraan->merek->tipe->nama_tipe }}', '{{ $kendaraan->transmisi }}', '{{ $kendaraan->km_berjalan }}')">
+                                            onclick="getSelectedData('{{ $kendaraan->id }}', '{{ $kendaraan->kode_kendaraan }}', '{{ $kendaraan->no_pol }}', '{{ $kendaraan->no_rangka }}', '{{ $kendaraan->no_mesin }}', '{{ $kendaraan->warna }}', '{{ $kendaraan->merek->nama_merek }}', '{{ $kendaraan->merek->modelken ? $kendaraan->merek->modelken->nama_model : '' }}', '{{ $kendaraan->merek->tipe->nama_tipe }}', '{{ $kendaraan->transmisi }}', '{{ $kendaraan->km_berjalan }}')">
                                             <i class="fas fa-plus"></i>
                                         </button>
                                     </td>

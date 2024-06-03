@@ -177,7 +177,11 @@
                 </td>
                 <td>
                     @if ($pembelian->detail_kendaraan->first()->merek)
-                        {{ $pembelian->detail_kendaraan->first()->merek->modelken->nama_model }}
+                        @if ($pembelian->detail_kendaraan->first()->merek->modelken)
+                            {{ $pembelian->detail_kendaraan->first()->merek->modelken->nama_model }}
+                        @else
+                            tidak ada
+                        @endif
                     @else
                         data tidak ada
                     @endif
