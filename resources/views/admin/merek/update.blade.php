@@ -58,17 +58,20 @@
                 <div class="mb-3">
                     <label class="form-label" for="nama_merek">Nama Merek *</label>
                     <input class="form-control @error('nama_merek') is-invalid @enderror" id="nama_merek" name="nama_merek"
-                        type="text" placeholder="masukan nama  merek" value="{{ old('nama_merek', $merek->nama_merek) }}" />
+                        type="text" placeholder="masukan nama  merek"
+                        value="{{ old('nama_merek', $merek->nama_merek) }}" />
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="modelken_id">Nama Model *</label>
                     <div class="mb-3 d-flex">
-                        <select class="form-control" id="modelken_id" name="modelken_id" style="margin-right: 10px;">
+                        <select class="form-control select2bs4" id="modelken_id" name="modelken_id"
+                            style="margin-right: 10px;">
                             <option value="">- Pilih -</option>
                             @foreach ($modelkens as $model)
                                 <option value="{{ $model->id }}"
                                     {{ old('modelken_id', $merek->modelken_id) == $model->id ? 'selected' : '' }}>
-                                    {{ $model->nama_model }}</option>
+                                    {{ $model->nama_model }}
+                                </option>
                             @endforeach
                         </select>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
@@ -80,12 +83,13 @@
                 <div class="mb-3">
                     <label class="form-label" for="tipe_id">Nama Type *</label>
                     <div class="mb-3 d-flex">
-                        <select class="form-control" id="tipe_id" name="tipe_id" style="margin-right: 10px;">
+                        <select class="form-control select2bs4" id="tipe_id" name="tipe_id" style="margin-right: 10px;">
                             <option value="">- Pilih -</option>
                             @foreach ($tipes as $tipe)
                                 <option value="{{ $tipe->id }}"
                                     {{ old('tipe_id', $merek->tipe_id) == $tipe->id ? 'selected' : '' }}>
-                                    {{ $tipe->nama_tipe }}</option>
+                                    {{ $tipe->nama_tipe }}
+                                </option>
                             @endforeach
                         </select>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
@@ -171,4 +175,16 @@
             </div>
         </div>
     </div>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.select2bs4').select2({
+                theme: 'bootstrap4', // Menggunakan tema Bootstrap 4
+                placeholder: 'Pilih..', // Pesan placeholder
+                allowClear: true // Menambahkan opsi untuk menghapus pilihan
+            });
+        });
+    </script>
 @endsection

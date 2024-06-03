@@ -61,10 +61,11 @@
                 <div class="mb-3">
                     <label class="form-label" for="modelken_id">Nama Model *</label>
                     <div class="mb-3 d-flex">
-                        <select class="form-control" id="modelken_id" name="modelken_id" style="margin-right: 10px;">
+                        <select class="select2bs4" name="modelken_id" id="modelken_id" style="width: 100%;">
                             <option value="">- Pilih -</option>
                             @foreach ($modelkens as $model)
-                                <option value="{{ $model->id }}" {{ old('modelken_id') == $model->id ? 'selected' : '' }}>
+                                <option value="{{ $model->id }}"
+                                    {{ old('modelken_id') == $model->id ? 'selected' : '' }}>
                                     {{ $model->nama_model }}
                                 </option>
                             @endforeach
@@ -76,9 +77,9 @@
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="tipe_id">Nama Type *</label>
+                    <label class="form-label" for="tipe_id">Nama Tipe *</label>
                     <div class="mb-3 d-flex">
-                        <select class="form-control" id="tipe_id" name="tipe_id" style="margin-right: 10px;">
+                        <select class="select2bs4" name="tipe_id" id="tipe_id" style="width: 100%;">
                             <option value="">- Pilih -</option>
                             @foreach ($tipes as $tipe)
                                 <option value="{{ $tipe->id }}" {{ old('tipe_id') == $tipe->id ? 'selected' : '' }}>
@@ -169,4 +170,16 @@
             </div>
         </div>
     </div>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.select2bs4').select2({
+                theme: 'bootstrap4', // Menggunakan tema Bootstrap 4
+                placeholder: 'Pilih..', // Pesan placeholder
+                allowClear: true // Menambahkan opsi untuk menghapus pilihan
+            });
+        });
+    </script>
 @endsection
