@@ -54,8 +54,8 @@
                                     </button>
                                 </div>
                                 <div class="input-group-append">
-                                    <button style="margin-left: 10px" type="button" class="btn btn-primary btn-block" onclick="printReport()"
-                                        target="_blank">
+                                    <button style="margin-left: 10px" type="button" class="btn btn-primary btn-block"
+                                        onclick="printReport()" target="_blank">
                                         <i class="fas fa-print"></i> Cetak
                                     </button>
                                 </div>
@@ -92,7 +92,11 @@
                                 </td>
                                 <td>
                                     @if ($kendaraan->merek)
-                                        {{ $kendaraan->merek->modelken->nama_model }}
+                                        @if ($kendaraan->merek->modelken)
+                                            {{ $kendaraan->merek->modelken->nama_model }}
+                                        @else
+                                            tidak ada
+                                        @endif
                                     @else
                                         data tidak ada
                                     @endif
