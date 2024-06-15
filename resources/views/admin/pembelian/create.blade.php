@@ -657,11 +657,11 @@
                                     <td class="text-center">
                                         <button type="button" class="btn btn-primary btn-sm"
                                             onclick="getSelectedData(
-            '{{ $merek->id }}',
-            '{{ $merek->nama_merek }}',
-            '{{ $merek->modelken ? $merek->modelken->nama_model : '' }}',
-            '{{ $merek->tipe->nama_tipe }}'
-        )">
+                                                '{{ $merek->id }}',
+                                                '{{ $merek->nama_merek }}',
+                                                '{{ $merek->modelken ? $merek->modelken->nama_model : '' }}',
+                                                '{{ $merek->tipe->nama_tipe }}'
+                                            )">
                                             <i class="fas fa-plus"></i>
                                         </button>
 

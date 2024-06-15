@@ -787,7 +787,7 @@
                             class="btn btn-primary btn-sm mb-2" data-dismiss="modal">
                             Tambah
                         </button> --}}
-                    <table id="example" class="table table-bordered table-striped">
+                    <table id="datatables" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
@@ -814,7 +814,12 @@
                                     <td>{{ $merek->tipe->nama_tipe }}</td>
                                     <td class="text-center">
                                         <button type="button" class="btn btn-primary btn-sm"
-                                            onclick="getSelectedData('{{ $merek->id }}', '{{ $merek->nama_merek }}', '{{ $merek->modelken ? $merek->modelken->nama_model : '' }}',', '{{ $merek->tipe->nama_tipe }}')">
+                                            onclick="getSelectedData(
+                                                '{{ $merek->id }}',
+                                                '{{ $merek->nama_merek }}',
+                                                '{{ $merek->modelken ? $merek->modelken->nama_model : '' }}',
+                                                '{{ $merek->tipe->nama_tipe }}'
+                                            )">
                                             <i class="fas fa-plus"></i>
                                         </button>
 
@@ -827,6 +832,7 @@
             </div>
         </div>
     </div>
+
 
     <div class="modal fade" id="modal-merek"data-backdrop="static">
         <div class="modal-dialog modal-lg">
