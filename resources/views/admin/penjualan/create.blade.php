@@ -414,7 +414,6 @@
                                                     @if ($kendaraan->merek->modelken)
                                                         {{ $kendaraan->merek->modelken->nama_model }}
                                                     @endif
-                                                    tidak ada
                                                 @else
                                                     data tidak ada
                                                 @endif

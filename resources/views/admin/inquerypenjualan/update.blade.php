@@ -383,8 +383,6 @@
                                         @if ($kendaraan->merek)
                                             @if ($kendaraan->merek->modelken)
                                                 {{ $kendaraan->merek->modelken->nama_model }}
-                                            @else
-                                                tidak ada
                                             @endif
                                         @else
                                             data tidak ada
