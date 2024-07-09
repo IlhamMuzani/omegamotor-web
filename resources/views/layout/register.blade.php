@@ -122,7 +122,8 @@
                                                     placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                                     aria-describedby="password"
                                                     value="{{ Session::get('password') }}" />
-                                                 <span class="input-group-text cursor-pointer" id="password-confirm-toggle"><i
+                                                <span class="input-group-text cursor-pointer"
+                                                    id="password-confirm-toggle"><i
                                                         class="far fa-eye-slash"></i></span>
                                                 @error('password')
                                                     <span class="invalid-feedback"
@@ -136,8 +137,7 @@
                                         </div>
                                     </form>
                                     <div class="social-auth-links text-center mt-3">belum punya akun ?
-                                        <a href="{{ url('login') }}"
-                                            class="social-auth-links text-center">Daftar</a>
+                                        <a href="{{ url('login') }}" class="social-auth-links text-center">Login</a>
                                     </div>
                                 </div>
                             </div>
@@ -152,7 +152,7 @@
     <!-- ===============================================-->
 
 
-    <div class="offcanvas offcanvas-end settings-panel border-0" id="settings-offcanvas" tabindex="-1"
+    {{-- <div class="offcanvas offcanvas-end settings-panel border-0" id="settings-offcanvas" tabindex="-1"
         aria-labelledby="settings-offcanvas">
         <div class="offcanvas-header settings-panel-header bg-shape">
             <div class="z-index-1 py-1 light">
@@ -309,7 +309,7 @@
             </div><small
                 class="text-uppercase text-primary fw-bold bg-soft-primary py-2 pe-2 ps-1 rounded-end">customize</small>
         </div>
-    </a>
+    </a> --}}
 
 
     <!-- ===============================================-->
@@ -321,7 +321,7 @@
     <script src="{{ asset('falcon/public/vendors/is/is.min.js') }}"></script>
     <script src="{{ asset('falcon/public/vendors/fontawesome/all.min.js') }}"></script>
     <script src="{{ asset('falcon/public/vendors/lodash/lodash.min.js') }}"></script>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+    {{-- <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script> --}}
     <script src="{{ asset('falcon/public/vendors/list.js/list.min.js') }}"></script>
     <script src="{{ asset('falcon/public/assets/js/theme.js') }}"></script>
 
