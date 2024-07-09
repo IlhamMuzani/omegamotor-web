@@ -129,7 +129,7 @@
     <script src="{{ asset('falcon/public/vendors/echarts/echarts.min.js') }}"></script>
     <script src="{{ asset('falcon/public/vendors/fontawesome/all.min.js') }}"></script>
     <script src="{{ asset('falcon/public/vendors/lodash/lodash.min.js') }}"></script>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+    {{-- <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script> --}}
     <script src="{{ asset('falcon/public/vendors/list.js/list.min.js') }}"></script>
     <script src="{{ asset('falcon/public/assets/js/theme.js') }}"></script>
     <script src="{{ asset('falcon/public/vendors/countup/countUp.umd.js') }}"></script>
