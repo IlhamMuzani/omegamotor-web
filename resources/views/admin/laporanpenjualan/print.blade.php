@@ -177,7 +177,11 @@
                 </td>
                 <td>
                     @if ($penjualan->kendaraan->merek)
-                        {{ $penjualan->kendaraan->merek->modelken->nama_model }}
+                        @if ($penjualan->kendaraan->merek->modelken)
+                            {{ $penjualan->kendaraan->merek->modelken->nama_model }}
+                        @else
+                            tidak ada
+                        @endif
                     @else
                         data tidak ada
                     @endif
