@@ -13,4 +13,9 @@ class Gambar extends Model
         'kendaraan_id',
         'gambar',
     ];
+
+    public function kendaraan()
+    {
+        return $this->belongsTo(Kendaraan::class);
+    }
 }

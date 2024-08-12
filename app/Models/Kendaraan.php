@@ -55,7 +55,6 @@ class Kendaraan extends Model
         return $this->hasMany(Gambar::class);
     }
 
-
     public function pembelian()
     {
         return $this->belongsTo(Pembelian::class);

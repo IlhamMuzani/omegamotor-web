@@ -545,8 +545,8 @@
                         <div style="text-align: center;">
                             <p style="font-size:20px; font-weight: bold;">{{ $kendaraan->kode_kendaraan }}</p>
                             <div style="display: inline-block;">
-                                @if ($kendaraan->gambar_bpkb)
-                                    <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_bpkb) }}"
+                                @if ($kendaraan->gambar->first())
+                                    <img src="{{ asset('storage/uploads/' . $kendaraan->gambar->first()->gambar) }}"
                                         alt="{{ $kendaraan->no_pol }}" style="max-width: 100%; height: auto;"
                                         class="rounded border">
                                 @else
@@ -559,8 +559,8 @@
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
-                        @if ($kendaraan->gambar_bpkb)
-                            <a href="{{ asset('storage/uploads/' . $kendaraan->gambar_bpkb) }}"
+                        @if ($kendaraan->gambar->first())
+                            <a href="{{ asset('storage/uploads/' . $kendaraan->gambar->first()->gambar) }}"
                                 download="{{ $kendaraan->no_pol }}.jpg" class="btn btn-primary btn-sm">
                                 <i class="fas fa-download"></i> Download Image
                             </a>
