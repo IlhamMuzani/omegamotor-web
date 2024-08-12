@@ -133,7 +133,8 @@
                 <div class="col-md-3">
                     <label for="">Foto Depan</label>
                     @if ($kendaraan->gambar_depan)
-                        <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_depan) }}"
+                        <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_depan) }}" data-bs-toggle="modal"
+                            data-bs-target="#modal-gambardepan-{{ $kendaraan->id }}" style="display: inline-block;"
                             alt="{{ $kendaraan->no_pol }}" height="130" width="100" class="w-100 rounded border">
                     @else
                         <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
@@ -141,7 +142,8 @@
                     @endif
                     <label for="">Foto Kanan</label>
                     @if ($kendaraan->gambar_kanan)
-                        <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_kanan) }}"
+                        <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_kanan) }}" data-bs-toggle="modal"
+                            data-bs-target="#modal-gambardepan-{{ $kendaraan->id }}" style="display: inline-block;"
                             alt="{{ $kendaraan->no_pol }}" height="130" width="100" class="w-100 rounded border">
                     @else
                         <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
@@ -149,7 +151,8 @@
                     @endif
                     <label for="">Foto Dashboard</label>
                     @if ($kendaraan->gambar_dashboard)
-                        <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_dashboard) }}"
+                        <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_dashboard) }}" data-bs-toggle="modal"
+                            data-bs-target="#modal-gambardepan-{{ $kendaraan->id }}" style="display: inline-block;"
                             alt="{{ $kendaraan->no_pol }}" height="130" width="100" class="w-100 rounded border">
                     @else
                         <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
@@ -157,7 +160,8 @@
                     @endif
                     <label for="">Foto STNK</label>
                     @if ($kendaraan->gambar_stnk)
-                        <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_stnk) }}"
+                        <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_stnk) }}" data-bs-toggle="modal"
+                            data-bs-target="#modal-gambardepan-{{ $kendaraan->id }}" style="display: inline-block;"
                             alt="{{ $kendaraan->no_pol }}" height="130" width="100" class="w-100 rounded border">
                     @else
                         <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
@@ -165,7 +169,8 @@
                     @endif
                     <label for="">Foto Dokumen</label>
                     @if ($kendaraan->gambar_dokumen)
-                        <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_dokumen) }}"
+                        <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_dokumen) }}" data-bs-toggle="modal"
+                            data-bs-target="#modal-gambardepan-{{ $kendaraan->id }}" style="display: inline-block;"
                             alt="{{ $kendaraan->no_pol }}" height="130" width="100" class="w-100 rounded border">
                     @else
                         <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
@@ -175,7 +180,8 @@
                 <div class="col-md-3">
                     <label for="">Foto Belakang</label>
                     @if ($kendaraan->gambar_belakang)
-                        <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_belakang) }}"
+                        <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_belakang) }}" data-bs-toggle="modal"
+                            data-bs-target="#modal-gambardepan-{{ $kendaraan->id }}" style="display: inline-block;"
                             alt="{{ $kendaraan->no_pol }}" height="130" width="100" class="w-100 rounded border">
                     @else
                         <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
@@ -183,7 +189,8 @@
                     @endif
                     <label for="">Foto Kiri</label>
                     @if ($kendaraan->gambar_kiri)
-                        <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_kiri) }}"
+                        <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_kiri) }}" data-bs-toggle="modal"
+                            data-bs-target="#modal-gambardepan-{{ $kendaraan->id }}" style="display: inline-block;"
                             alt="{{ $kendaraan->no_pol }}" height="130" width="100" class="w-100 rounded border">
                     @else
                         <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
@@ -191,7 +198,8 @@
                     @endif
                     <label for="">Foto Interior</label>
                     @if ($kendaraan->gambar_interior)
-                        <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_interior) }}"
+                        <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_interior) }}" data-bs-toggle="modal"
+                            data-bs-target="#modal-gambardepan-{{ $kendaraan->id }}" style="display: inline-block;"
                             alt="{{ $kendaraan->no_pol }}" height="130" width="100" class="w-100 rounded border">
                     @else
                         <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
@@ -200,14 +208,17 @@
                     <label for="">Foto BPKB</label>
                     @if (isset($kendaraan->gambar) && $kendaraan->gambar->first() && $kendaraan->gambar->first()->gambar)
                         <img src="{{ asset('storage/uploads/' . $kendaraan->gambar->first()->gambar) }}"
-                            alt="{{ $kendaraan->no_pol }}" height="130" width="100" class="w-100 rounded border">
+                            data-bs-toggle="modal" data-bs-target="#modal-gambardepan-{{ $kendaraan->id }}"
+                            style="display: inline-block;" alt="{{ $kendaraan->no_pol }}" height="130" width="100"
+                            class="w-100 rounded border">
                     @else
                         <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
                             alt="AdminLTELogo" height="100" width="200">
                     @endif
                     <label for="">Foto Faktur</label>
                     @if ($kendaraan->gambar_faktur)
-                        <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_faktur) }}"
+                        <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_faktur) }}" data-bs-toggle="modal"
+                            data-bs-target="#modal-gambardepan-{{ $kendaraan->id }}" style="display: inline-block;"
                             alt="{{ $kendaraan->no_pol }}" height="130" width="100" class="w-100 rounded border">
                     @else
                         <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
@@ -238,7 +249,7 @@
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
-                        <a href="{{ url('admin/kendaraan/cetak-pdf/' . $kendaraan->id) }}"
+                        <a href="{{ url('admin/kendaraan/cetak-qrcode/' . $kendaraan->id) }}"
                             class="btn btn-primary btn-sm">
                             <i class=""></i> Cetak
                         </a>
@@ -246,6 +257,46 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="modal-gambardepan-{{ $kendaraan->id }}" tabindex="-1"
+            aria-labelledby="modal-gambardepan-label" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-gambardepan-label">Gambar QR Code</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div style="text-align: center;">
+                            <p style="font-size:20px; font-weight: bold;">{{ $kendaraan->kode_kendaraan }}</p>
+                            <div style="display: inline-block;">
+                                @if ($kendaraan->gambar_depan)
+                                    <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_depan) }}"
+                                        alt="{{ $kendaraan->no_pol }}" style="max-width: 100%; height: auto;"
+                                        class="rounded border">
+                                @else
+                                    <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
+                                        alt="No Image" style="max-width: 100%; height: auto;">
+                                @endif
+                            </div>
+                            <p style="font-size:20px; font-weight: bold;">{{ $kendaraan->no_pol }}</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
+                        @if ($kendaraan->gambar_depan)
+                            <a href="{{ asset('storage/uploads/' . $kendaraan->gambar_depan) }}"
+                                download="{{ $kendaraan->no_pol }}.jpg" class="btn btn-primary btn-sm">
+                                <i class="fas fa-download"></i> Download Image
+                            </a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
     </div>
 @endsection
