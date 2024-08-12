@@ -143,7 +143,7 @@
                     <label for="">Foto Kanan</label>
                     @if ($kendaraan->gambar_kanan)
                         <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_kanan) }}" data-bs-toggle="modal"
-                            data-bs-target="#modal-gambardepan-{{ $kendaraan->id }}" style="display: inline-block;"
+                            data-bs-target="#modal-gambarkanan-{{ $kendaraan->id }}" style="display: inline-block;"
                             alt="{{ $kendaraan->no_pol }}" height="130" width="100" class="w-100 rounded border">
                     @else
                         <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
@@ -152,7 +152,7 @@
                     <label for="">Foto Dashboard</label>
                     @if ($kendaraan->gambar_dashboard)
                         <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_dashboard) }}" data-bs-toggle="modal"
-                            data-bs-target="#modal-gambardepan-{{ $kendaraan->id }}" style="display: inline-block;"
+                            data-bs-target="#modal-gambardashboard-{{ $kendaraan->id }}" style="display: inline-block;"
                             alt="{{ $kendaraan->no_pol }}" height="130" width="100" class="w-100 rounded border">
                     @else
                         <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
@@ -161,7 +161,7 @@
                     <label for="">Foto STNK</label>
                     @if ($kendaraan->gambar_stnk)
                         <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_stnk) }}" data-bs-toggle="modal"
-                            data-bs-target="#modal-gambardepan-{{ $kendaraan->id }}" style="display: inline-block;"
+                            data-bs-target="#modal-gambarstnk-{{ $kendaraan->id }}" style="display: inline-block;"
                             alt="{{ $kendaraan->no_pol }}" height="130" width="100" class="w-100 rounded border">
                     @else
                         <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
@@ -170,7 +170,7 @@
                     <label for="">Foto Dokumen</label>
                     @if ($kendaraan->gambar_dokumen)
                         <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_dokumen) }}" data-bs-toggle="modal"
-                            data-bs-target="#modal-gambardepan-{{ $kendaraan->id }}" style="display: inline-block;"
+                            data-bs-target="#modal-gambardokumen-{{ $kendaraan->id }}" style="display: inline-block;"
                             alt="{{ $kendaraan->no_pol }}" height="130" width="100" class="w-100 rounded border">
                     @else
                         <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
@@ -181,7 +181,7 @@
                     <label for="">Foto Belakang</label>
                     @if ($kendaraan->gambar_belakang)
                         <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_belakang) }}" data-bs-toggle="modal"
-                            data-bs-target="#modal-gambardepan-{{ $kendaraan->id }}" style="display: inline-block;"
+                            data-bs-target="#modal-gambarbelakang-{{ $kendaraan->id }}" style="display: inline-block;"
                             alt="{{ $kendaraan->no_pol }}" height="130" width="100" class="w-100 rounded border">
                     @else
                         <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
@@ -190,7 +190,7 @@
                     <label for="">Foto Kiri</label>
                     @if ($kendaraan->gambar_kiri)
                         <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_kiri) }}" data-bs-toggle="modal"
-                            data-bs-target="#modal-gambardepan-{{ $kendaraan->id }}" style="display: inline-block;"
+                            data-bs-target="#modal-gambarkiri-{{ $kendaraan->id }}" style="display: inline-block;"
                             alt="{{ $kendaraan->no_pol }}" height="130" width="100" class="w-100 rounded border">
                     @else
                         <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
@@ -199,7 +199,7 @@
                     <label for="">Foto Interior</label>
                     @if ($kendaraan->gambar_interior)
                         <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_interior) }}" data-bs-toggle="modal"
-                            data-bs-target="#modal-gambardepan-{{ $kendaraan->id }}" style="display: inline-block;"
+                            data-bs-target="#modal-gambarinterior-{{ $kendaraan->id }}" style="display: inline-block;"
                             alt="{{ $kendaraan->no_pol }}" height="130" width="100" class="w-100 rounded border">
                     @else
                         <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
@@ -208,7 +208,7 @@
                     <label for="">Foto BPKB</label>
                     @if (isset($kendaraan->gambar) && $kendaraan->gambar->first() && $kendaraan->gambar->first()->gambar)
                         <img src="{{ asset('storage/uploads/' . $kendaraan->gambar->first()->gambar) }}"
-                            data-bs-toggle="modal" data-bs-target="#modal-gambardepan-{{ $kendaraan->id }}"
+                            data-bs-toggle="modal" data-bs-target="#modal-gambarbpkb-{{ $kendaraan->id }}"
                             style="display: inline-block;" alt="{{ $kendaraan->no_pol }}" height="130" width="100"
                             class="w-100 rounded border">
                     @else
@@ -218,7 +218,7 @@
                     <label for="">Foto Faktur</label>
                     @if ($kendaraan->gambar_faktur)
                         <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_faktur) }}" data-bs-toggle="modal"
-                            data-bs-target="#modal-gambardepan-{{ $kendaraan->id }}" style="display: inline-block;"
+                            data-bs-target="#modal-gambarfaktur-{{ $kendaraan->id }}" style="display: inline-block;"
                             alt="{{ $kendaraan->no_pol }}" height="130" width="100" class="w-100 rounded border">
                     @else
                         <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
@@ -263,7 +263,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="modal-gambardepan-label">Gambar QR Code</h4>
+                        <h4 class="modal-title" id="modal-gambardepan-label">Foto Depan</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -288,6 +288,357 @@
                         <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
                         @if ($kendaraan->gambar_depan)
                             <a href="{{ asset('storage/uploads/' . $kendaraan->gambar_depan) }}"
+                                download="{{ $kendaraan->no_pol }}.jpg" class="btn btn-primary btn-sm">
+                                <i class="fas fa-download"></i> Download Image
+                            </a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modal-gambarbelakang-{{ $kendaraan->id }}" tabindex="-1"
+            aria-labelledby="modal-gambardepan-label" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-gambardepan-label">Foto Belakang</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div style="text-align: center;">
+                            <p style="font-size:20px; font-weight: bold;">{{ $kendaraan->kode_kendaraan }}</p>
+                            <div style="display: inline-block;">
+                                @if ($kendaraan->gambar_belakang)
+                                    <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_belakang) }}"
+                                        alt="{{ $kendaraan->no_pol }}" style="max-width: 100%; height: auto;"
+                                        class="rounded border">
+                                @else
+                                    <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
+                                        alt="No Image" style="max-width: 100%; height: auto;">
+                                @endif
+                            </div>
+                            <p style="font-size:20px; font-weight: bold;">{{ $kendaraan->no_pol }}</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
+                        @if ($kendaraan->gambar_belakang)
+                            <a href="{{ asset('storage/uploads/' . $kendaraan->gambar_belakang) }}"
+                                download="{{ $kendaraan->no_pol }}.jpg" class="btn btn-primary btn-sm">
+                                <i class="fas fa-download"></i> Download Image
+                            </a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modal-gambarkanan-{{ $kendaraan->id }}" tabindex="-1"
+            aria-labelledby="modal-gambardepan-label" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-gambardepan-label">Foto Kanan</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div style="text-align: center;">
+                            <p style="font-size:20px; font-weight: bold;">{{ $kendaraan->kode_kendaraan }}</p>
+                            <div style="display: inline-block;">
+                                @if ($kendaraan->gambar_kanan)
+                                    <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_kanan) }}"
+                                        alt="{{ $kendaraan->no_pol }}" style="max-width: 100%; height: auto;"
+                                        class="rounded border">
+                                @else
+                                    <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
+                                        alt="No Image" style="max-width: 100%; height: auto;">
+                                @endif
+                            </div>
+                            <p style="font-size:20px; font-weight: bold;">{{ $kendaraan->no_pol }}</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
+                        @if ($kendaraan->gambar_kanan)
+                            <a href="{{ asset('storage/uploads/' . $kendaraan->gambar_kanan) }}"
+                                download="{{ $kendaraan->no_pol }}.jpg" class="btn btn-primary btn-sm">
+                                <i class="fas fa-download"></i> Download Image
+                            </a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modal-gambarkiri-{{ $kendaraan->id }}" tabindex="-1"
+            aria-labelledby="modal-gambardepan-label" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-gambardepan-label">Foto Kanan</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div style="text-align: center;">
+                            <p style="font-size:20px; font-weight: bold;">{{ $kendaraan->kode_kendaraan }}</p>
+                            <div style="display: inline-block;">
+                                @if ($kendaraan->gambar_kiri)
+                                    <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_kiri) }}"
+                                        alt="{{ $kendaraan->no_pol }}" style="max-width: 100%; height: auto;"
+                                        class="rounded border">
+                                @else
+                                    <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
+                                        alt="No Image" style="max-width: 100%; height: auto;">
+                                @endif
+                            </div>
+                            <p style="font-size:20px; font-weight: bold;">{{ $kendaraan->no_pol }}</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
+                        @if ($kendaraan->gambar_kiri)
+                            <a href="{{ asset('storage/uploads/' . $kendaraan->gambar_kiri) }}"
+                                download="{{ $kendaraan->no_pol }}.jpg" class="btn btn-primary btn-sm">
+                                <i class="fas fa-download"></i> Download Image
+                            </a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modal-gambardashboard-{{ $kendaraan->id }}" tabindex="-1"
+            aria-labelledby="modal-gambardepan-label" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-gambardepan-label">Foto Dashboard</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div style="text-align: center;">
+                            <p style="font-size:20px; font-weight: bold;">{{ $kendaraan->kode_kendaraan }}</p>
+                            <div style="display: inline-block;">
+                                @if ($kendaraan->gambar_dashboard)
+                                    <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_dashboard) }}"
+                                        alt="{{ $kendaraan->no_pol }}" style="max-width: 100%; height: auto;"
+                                        class="rounded border">
+                                @else
+                                    <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
+                                        alt="No Image" style="max-width: 100%; height: auto;">
+                                @endif
+                            </div>
+                            <p style="font-size:20px; font-weight: bold;">{{ $kendaraan->no_pol }}</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
+                        @if ($kendaraan->gambar_dashboard)
+                            <a href="{{ asset('storage/uploads/' . $kendaraan->gambar_dashboard) }}"
+                                download="{{ $kendaraan->no_pol }}.jpg" class="btn btn-primary btn-sm">
+                                <i class="fas fa-download"></i> Download Image
+                            </a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modal-gambarinterior-{{ $kendaraan->id }}" tabindex="-1"
+            aria-labelledby="modal-gambardepan-label" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-gambardepan-label">Foto Interior</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div style="text-align: center;">
+                            <p style="font-size:20px; font-weight: bold;">{{ $kendaraan->kode_kendaraan }}</p>
+                            <div style="display: inline-block;">
+                                @if ($kendaraan->gambar_interior)
+                                    <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_interior) }}"
+                                        alt="{{ $kendaraan->no_pol }}" style="max-width: 100%; height: auto;"
+                                        class="rounded border">
+                                @else
+                                    <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
+                                        alt="No Image" style="max-width: 100%; height: auto;">
+                                @endif
+                            </div>
+                            <p style="font-size:20px; font-weight: bold;">{{ $kendaraan->no_pol }}</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
+                        @if ($kendaraan->gambar_interior)
+                            <a href="{{ asset('storage/uploads/' . $kendaraan->gambar_interior) }}"
+                                download="{{ $kendaraan->no_pol }}.jpg" class="btn btn-primary btn-sm">
+                                <i class="fas fa-download"></i> Download Image
+                            </a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modal-gambarstnk-{{ $kendaraan->id }}" tabindex="-1"
+            aria-labelledby="modal-gambardepan-label" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-gambardepan-label">Foto Stnk</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div style="text-align: center;">
+                            <p style="font-size:20px; font-weight: bold;">{{ $kendaraan->kode_kendaraan }}</p>
+                            <div style="display: inline-block;">
+                                @if ($kendaraan->gambar_stnk)
+                                    <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_stnk) }}"
+                                        alt="{{ $kendaraan->no_pol }}" style="max-width: 100%; height: auto;"
+                                        class="rounded border">
+                                @else
+                                    <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
+                                        alt="No Image" style="max-width: 100%; height: auto;">
+                                @endif
+                            </div>
+                            <p style="font-size:20px; font-weight: bold;">{{ $kendaraan->no_pol }}</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
+                        @if ($kendaraan->gambar_stnk)
+                            <a href="{{ asset('storage/uploads/' . $kendaraan->gambar_stnk) }}"
+                                download="{{ $kendaraan->no_pol }}.jpg" class="btn btn-primary btn-sm">
+                                <i class="fas fa-download"></i> Download Image
+                            </a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modal-gambarbpkb-{{ $kendaraan->id }}" tabindex="-1"
+            aria-labelledby="modal-gambardepan-label" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-gambardepan-label">Foto BPKB</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div style="text-align: center;">
+                            <p style="font-size:20px; font-weight: bold;">{{ $kendaraan->kode_kendaraan }}</p>
+                            <div style="display: inline-block;">
+                                @if ($kendaraan->gambar_bpkb)
+                                    <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_bpkb) }}"
+                                        alt="{{ $kendaraan->no_pol }}" style="max-width: 100%; height: auto;"
+                                        class="rounded border">
+                                @else
+                                    <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
+                                        alt="No Image" style="max-width: 100%; height: auto;">
+                                @endif
+                            </div>
+                            <p style="font-size:20px; font-weight: bold;">{{ $kendaraan->no_pol }}</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
+                        @if ($kendaraan->gambar_bpkb)
+                            <a href="{{ asset('storage/uploads/' . $kendaraan->gambar_bpkb) }}"
+                                download="{{ $kendaraan->no_pol }}.jpg" class="btn btn-primary btn-sm">
+                                <i class="fas fa-download"></i> Download Image
+                            </a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modal-gambardokumen-{{ $kendaraan->id }}" tabindex="-1"
+            aria-labelledby="modal-gambardepan-label" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-gambardepan-label">Foto Dokumen</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div style="text-align: center;">
+                            <p style="font-size:20px; font-weight: bold;">{{ $kendaraan->kode_kendaraan }}</p>
+                            <div style="display: inline-block;">
+                                @if ($kendaraan->gambar_dokumen)
+                                    <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_dokumen) }}"
+                                        alt="{{ $kendaraan->no_pol }}" style="max-width: 100%; height: auto;"
+                                        class="rounded border">
+                                @else
+                                    <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
+                                        alt="No Image" style="max-width: 100%; height: auto;">
+                                @endif
+                            </div>
+                            <p style="font-size:20px; font-weight: bold;">{{ $kendaraan->no_pol }}</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
+                        @if ($kendaraan->gambar_dokumen)
+                            <a href="{{ asset('storage/uploads/' . $kendaraan->gambar_dokumen) }}"
+                                download="{{ $kendaraan->no_pol }}.jpg" class="btn btn-primary btn-sm">
+                                <i class="fas fa-download"></i> Download Image
+                            </a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modal-gambarfaktur-{{ $kendaraan->id }}" tabindex="-1"
+            aria-labelledby="modal-gambardepan-label" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-gambardepan-label">Foto Faktur</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div style="text-align: center;">
+                            <p style="font-size:20px; font-weight: bold;">{{ $kendaraan->kode_kendaraan }}</p>
+                            <div style="display: inline-block;">
+                                @if ($kendaraan->gambar_faktur)
+                                    <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_faktur) }}"
+                                        alt="{{ $kendaraan->no_pol }}" style="max-width: 100%; height: auto;"
+                                        class="rounded border">
+                                @else
+                                    <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
+                                        alt="No Image" style="max-width: 100%; height: auto;">
+                                @endif
+                            </div>
+                            <p style="font-size:20px; font-weight: bold;">{{ $kendaraan->no_pol }}</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
+                        @if ($kendaraan->gambar_faktur)
+                            <a href="{{ asset('storage/uploads/' . $kendaraan->gambar_faktur) }}"
                                 download="{{ $kendaraan->no_pol }}.jpg" class="btn btn-primary btn-sm">
                                 <i class="fas fa-download"></i> Download Image
                             </a>
