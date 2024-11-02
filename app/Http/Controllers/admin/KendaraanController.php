@@ -238,9 +238,9 @@ class KendaraanController extends Controller
 
     public function show($id)
     {
-
         $kendaraan = Kendaraan::where('id', $id)->first();
-        return view('admin/kendaraan.show', compact('kendaraan'));
+        $gambar = Gambar::where('kendaraan_id', $kendaraan->id)->get();
+        return view('admin/kendaraan.show', compact('kendaraan', 'gambar'));
     }
 
     public function edit($id)

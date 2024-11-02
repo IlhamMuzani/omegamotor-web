@@ -205,16 +205,37 @@
                         <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
                             alt="AdminLTELogo" height="100" width="200">
                     @endif
+
                     <label for="">Foto BPKB</label>
                     @if (isset($kendaraan->gambar) && $kendaraan->gambar->first() && $kendaraan->gambar->first()->gambar)
-                        <img src="{{ asset('storage/uploads/' . $kendaraan->gambar->first()->gambar) }}"
-                            data-bs-toggle="modal" data-bs-target="#modal-gambarbpkb-{{ $kendaraan->id }}"
-                            style="display: inline-block;" alt="{{ $kendaraan->no_pol }}" height="130" width="100"
-                            class="w-100 rounded border">
+                        <div id="carouselKendaraan-{{ $kendaraan->id }}" class="carousel slide"
+                            data-bs-interval="false">
+                            <div class="carousel-inner">
+                                @foreach ($gambar as $key => $item)
+                                    <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                        <img src="{{ asset('storage/uploads/' . $item->gambar) }}"
+                                            alt="{{ $kendaraan->no_pol }}" height="130" width="100"
+                                            class="d-block w-100 rounded border" data-bs-toggle="modal"
+                                            data-bs-target="#modal-gambarbpkb-{{ $kendaraan->id }}">
+                                    </div>
+                                @endforeach
+                            </div>
+                            <button class="carousel-control-prev" type="button"
+                                data-bs-target="#carouselKendaraan-{{ $kendaraan->id }}" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button"
+                                data-bs-target="#carouselKendaraan-{{ $kendaraan->id }}" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
                     @else
                         <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
-                            alt="AdminLTELogo" height="100" width="200">
+                            alt="No Image Available" height="100" width="200">
                     @endif
+
                     <label for="">Foto Faktur</label>
                     @if ($kendaraan->gambar_faktur)
                         <img src="{{ asset('storage/uploads/' . $kendaraan->gambar_faktur) }}" data-bs-toggle="modal"
@@ -531,40 +552,56 @@
             </div>
         </div>
 
+        <!-- Modal untuk menampilkan gambar -->
         <div class="modal fade" id="modal-gambarbpkb-{{ $kendaraan->id }}" tabindex="-1"
             aria-labelledby="modal-gambardepan-label" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="modal-gambardepan-label">Foto BPKB</h4>
+                        <h4 class="modal-title" id="modal-gambardepan-label">Foto BPKB -
+                            {{ $kendaraan->kode_kendaraan }}</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div style="text-align: center;">
-                            <p style="font-size:20px; font-weight: bold;">{{ $kendaraan->kode_kendaraan }}</p>
-                            <div style="display: inline-block;">
-                                @if ($kendaraan->gambar->first())
-                                    <img src="{{ asset('storage/uploads/' . $kendaraan->gambar->first()->gambar) }}"
-                                        alt="{{ $kendaraan->no_pol }}" style="max-width: 100%; height: auto;"
-                                        class="rounded border">
-                                @else
-                                    <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
-                                        alt="No Image" style="max-width: 100%; height: auto;">
-                                @endif
+                        <!-- Carousel di dalam modal -->
+                        <div id="carouselModalKendaraan-{{ $kendaraan->id }}" class="carousel slide"
+                            data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                @foreach ($gambar as $key => $item)
+                                    <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                        <img src="{{ asset('storage/uploads/' . $item->gambar) }}"
+                                            alt="{{ $kendaraan->no_pol }}" class="d-block w-100 rounded border"
+                                            style="max-height: 500px;">
+                                        <!-- Tombol Download Gambar -->
+                                        <div class="text-center mt-3">
+                                            <a href="{{ asset('storage/uploads/' . $item->gambar) }}"
+                                                download="{{ $kendaraan->no_pol }}_{{ $key + 1 }}.jpg"
+                                                class="btn btn-primary btn-sm">
+                                                <i class="fas fa-download"></i> Download Gambar
+                                            </a>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
-                            <p style="font-size:20px; font-weight: bold;">{{ $kendaraan->no_pol }}</p>
+                            <!-- Kontrol Carousel -->
+                            <button class="carousel-control-prev" type="button"
+                                data-bs-target="#carouselModalKendaraan-{{ $kendaraan->id }}" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button"
+                                data-bs-target="#carouselModalKendaraan-{{ $kendaraan->id }}" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
                         </div>
+                        {{-- <!-- No. Polisi -->
+                        <p style="font-size:20px; font-weight: bold;" class="mt-3">{{ $kendaraan->no_pol }}</p> --}}
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
-                        @if ($kendaraan->gambar->first())
-                            <a href="{{ asset('storage/uploads/' . $kendaraan->gambar->first()->gambar) }}"
-                                download="{{ $kendaraan->no_pol }}.jpg" class="btn btn-primary btn-sm">
-                                <i class="fas fa-download"></i> Download Image
-                            </a>
-                        @endif
                     </div>
                 </div>
             </div>

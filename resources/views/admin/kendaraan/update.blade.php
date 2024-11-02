@@ -301,12 +301,6 @@
                                         <img src="{{ asset('storage/uploads/' . $gambar->gambar) }}"
                                             alt="{{ $kendaraan->nama }}" height="150" width="180"
                                             class="w-100 rounded">
-
-                                        <a href="{{ url('admin/hapus-gambar/' . $gambar->id) }}">
-                                            <img class="delete-icon"
-                                                src="{{ asset('storage/uploads/gambaricon/delete.png') }}"
-                                                alt="gambarsilang" height="20" width="20">
-                                        </a>
                                     </div>
                                 </div>
                             @endforeach
